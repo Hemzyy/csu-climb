@@ -1,31 +1,6 @@
-import bcrypt from "bcryptjs";
-import { v2 as cloudinary } from "cloudinary";
-
-//models
-import User from "../models/user.model.js";
 import Route from "../models/route.model.js";
-
-export const getUserProfile = async (req, res) => {
-    const {username} = req.params; 
-
-    try {
-        const user = await User.findOne({username}).select("-password -email");
-
-        if(!user){
-            return res.status(404).json({error: "User not found"});
-        }
-        res.status(200).json(user); //send the user data
-
-    } catch (error) {
-        console.log("Error in getUserProfile: ", error.message);
-        res.status(500).json({error:error.message});
-    }
-};
-
-//placeholder for rest of the functions
-export const updateUser = async (req, res) => {
-    res.send("updateUser");
-}
+import User from "../models/user.model.js";
+import Notification from "../models/notification.model.js";
 
 export const validateUnvalidateRoute = async (req, res) => {
     try {
@@ -91,12 +66,42 @@ const updateRanks = async () => {
     }
 };
 
+export const addRoute = async (req, res) => {
+    try {
+        const currentUser = await User.findById(req.user._id); // Find the logged-in user
 
-export const getUserStats = async (req, res) => {
-    res.send("getUserStats");
-}
+        if (!currentUser || !currentUser.isAdmin) {
+            return res.status(403).json({ error: "Only an Admin can add routes." });
+        }
 
-export const getUserLeaderboardPosition = async (req, res) => {
-    res.send("getUserLeaderboardPosition");
-}
+        const { name, grade, difficultyPoints, setter } = req.body;
 
+        if (!grade || !difficultyPoints) {
+            return res.status(400).json({ error: "Grade and difficulty points are required" });
+        }
+
+        const newRoute = new Route({
+            name,
+            grade,
+            difficultyPoints,
+            setter,
+        });
+
+        await newRoute.save();
+
+        // create a notification for all users
+        const newNotification = new Notification({
+            routeId: newRoute._id,
+            routeName: newRoute.name,
+            grade: newRoute.grade,
+            type: "newRoute",
+        });
+
+        await newNotification.save();
+
+        return res.status(201).json({ message: "Route added successfully", route: newRoute });
+    } catch (error) {
+        console.log("Error in addRoute: ", error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
