@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
         },
         rank: {
             type: Number,
-            default: 0, // Rank for leaderboard
+            default: null, // Rank for leaderboard
         },
         climbedRoutes: [
             {

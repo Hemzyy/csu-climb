@@ -10,6 +10,11 @@ const routeSchema = new mongoose.Schema({
     type: String,
     required: true, // The climbing grade (e.g., "7a", "6b").
   },
+  difficultyPoints: {
+    type: Number,
+    required: true, // The number of points awarded for climbing this route.
+    default: 0,
+  },
   setter: {
     type: mongoose.Schema.Types.Mixed, // Can hold a user ID (ObjectId) or a string
     required: false,
