@@ -1,20 +1,55 @@
-import { Route, Routes } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom';
 
-import HomePage from './pages/home/HomePage'
-import LoginPage from './pages/auth/login/LoginPage'
-import SignupPage from './pages/auth/signup/SignUpPage'
+import HomePage from './pages/home/HomePage';
+import SignUpPage from './pages/auth/signup/SignUpPage';
+import LoginPage from './pages/auth/login/LoginPage';
+
+import { Toaster } from 'react-hot-toast';
+import { useQuery } from '@tanstack/react-query';
+import LoadingSpinner from './components/common/LoadingSpinner';
 
 function App() {
+	const {data:authUser, isLoading }= useQuery({
+		// we use queryKey to give a name to the query so we can invalidate it later
+		queryKey: ['authUser'],
+		queryFn: async () => {
+			try {
+				const res = await fetch("/api/auth/me");
+				const data = await res.json();
+				if (data.error) return null;
+				if (!res.ok) {
+					throw new Error(data.error || "Something went wrong");
+				}
+				console.log("authUser is here:", data);
+				return data;
+			} catch (error) {
+				throw new Error(error);
+			}
+		},
+		retry: false,
+	})
 
-  return (
-    <div className="flex mx-auto m-0 p-0">
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-      </Routes>
-    </div>
-  )
+	if (isLoading) {
+		return(
+			<div className='h-screen flex justify-center items-center'>	
+			<LoadingSpinner size='lg' />
+			</div>
+		)
+	}
+
+
+	return (
+		<div className='flex max-w-6xl mx-auto'>
+        {/* common components because its not wrapped with routes*/}
+			<Routes>
+				<Route path='/' element={authUser ? <HomePage /> : <Navigate to='/login' />} />
+				<Route path='/login' element={!authUser ? <LoginPage /> : <Navigate to='/' />} />
+				<Route path='/signup' element={!authUser ? <SignUpPage /> : <Navigate to='/' />} />
+			</Routes>
+
+	  		<Toaster />
+		</div>
+	);
 }
 
-export default App
+export default App;
