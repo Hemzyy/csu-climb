@@ -96,7 +96,10 @@ export const logout = async (req, res) => {
 //get athenticated user to use it later
 export const getMe = async (req, res) => {
 	try {
-		const user = await User.findById(req.user._id).select("-password");
+		// Add .populate("climbedRoutes") to fetch the full Route objects
+		const user = await User.findById(req.user._id).select("-password")
+			.populate("climbedRoutes"); // Add this line
+
 		res.status(200).json(user);
 	} catch (error) {
 		console.log("Error in getMe controller", error.message);
