@@ -105,3 +105,13 @@ export const addRoute = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+export const getRoutes = async (req, res) => {
+    try {
+        const routes = await Route.find(); // Fetch all routes
+        res.status(200).json(routes);
+    } catch (error) {
+        console.error("Error fetching routes:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};

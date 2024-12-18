@@ -4,6 +4,7 @@ import HomePage from './pages/home/HomePage';
 import SignUpPage from './pages/auth/signup/SignUpPage';
 import LoginPage from './pages/auth/login/LoginPage';
 import Navbar from './components/common/Navbar';
+import VoiePage from './pages/voies/VoiePage';
 
 import { Toaster } from 'react-hot-toast';
 import { useQuery } from '@tanstack/react-query';
@@ -47,6 +48,7 @@ function App() {
 				<Route path='/' element={authUser ? <HomePage /> : <Navigate to='/login' />} />
 				<Route path='/login' element={!authUser ? <LoginPage /> : <Navigate to='/' />} />
 				<Route path='/signup' element={!authUser ? <SignUpPage /> : <Navigate to='/' />} />
+				<Route path='/voies' element={authUser ? <VoiePage /> : <Navigate to='/' />} />
 			</Routes>
 
 	  		<Toaster />

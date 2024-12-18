@@ -2,8 +2,6 @@ import React from "react";
 
 import { useQuery } from "@tanstack/react-query";
 
-import Navbar from "../../components/common/Navbar.jsx";
-
 const HomePage = () => {
   const { data: authUser } = useQuery({ queryKey: ["authUser"] });
 
@@ -42,7 +40,6 @@ const HomePage = () => {
 
   return (
     <>
-      <Navbar />
       <div className="flex justify-center w-screen min-h-screen bg-[#1D232A] pt-16">
         
         <div className="flex flex-col gap-y-20 w-[50%] items-center h-screen">
