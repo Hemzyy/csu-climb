@@ -1,7 +1,11 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const VoiePage = () => {
+  const queryClient = useQueryClient();
+
+  const { data: authUser } = useQuery({ queryKey: ["authUser"] });
+
   const { data: routes, isLoading } = useQuery({
     queryKey: ["routes"],
     queryFn: async () => {
@@ -17,6 +21,31 @@ const VoiePage = () => {
       }
     },
   });
+
+  const validateRouteMutation = useMutation({
+    mutationFn: async (routeId) => {
+      try {
+        const res = await fetch(`/api/routes/validate/${routeId}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!res.ok) {
+          throw new Error("Failed to validate route");
+        }
+        return await res.json();
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
+    onSuccess: () => {
+      // Invalidate the routes query to refresh the data
+      queryClient.invalidateQueries(["routes"]);
+    },
+  });
+
+  const handleValidate = (routeId) => {
+    validateRouteMutation.mutate(routeId);
+  };
 
   return (
     <div className="flex justify-center w-screen min-h-screen bg-[#1D232A] pt-16">
@@ -40,13 +69,21 @@ const VoiePage = () => {
                   className="bg-[#1D232A] p-4 rounded-lg shadow-md flex flex-col gap-y-2"
                 >
                   <h2 className="text-lg font-bold text-white">{route.name}</h2>
-                  <p className="text-sm text-gray-300">{route.description}</p>
                   <p className="text-sm text-gray-400">
                     <strong>Grade:</strong> {route.grade}
                   </p>
                   <p className="text-sm text-gray-400">
-                    <strong>Location:</strong> {route.location}
+                    <strong>Points:</strong> {route.difficultyPoints}
                   </p>
+                  <button
+                    className={`mt-4 px-4 py-2 rounded bg-[#2E4259] text-white font-bold hover:bg-[#3C566F] ${
+                      validateRouteMutation.isLoading ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    onClick={() => handleValidate(route._id)}
+                    disabled={validateRouteMutation.isLoading}
+                  >
+                    Validate
+                  </button>
                 </div>
               ))
             ) : (
