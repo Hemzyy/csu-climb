@@ -104,12 +104,6 @@ const Navbar = () => {
                             <a onClick={() => logout()}>Logout</a>
                         </li>
 
-                        {/* If the user is an admin, add "add route button" */}
-                        {isAdmin && (
-                            <li>
-                                <a className="text-primary">Add Route</a>
-                            </li>
-                        )}
                     </ul>
                 </div>
             </div>

@@ -1,9 +1,15 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
+import AddRouteModal from "./addRouteModal";
+
 const VoiePage = () => {
+  const { data: authUser } = useQuery({ queryKey: ["authUser"] });
+  const isAdmin = authUser?.isAdmin;
+  console.log("isAdmin", isAdmin);
+
   const { data: routes, isLoading } = useQuery({
     queryKey: ["routes"],
     queryFn: async () => {
@@ -29,6 +35,11 @@ const VoiePage = () => {
 
       {/* Routes Grid Section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8 w-[90%]">
+
+        {/* if isAdmin, show a button to add a new route that is the same size*/}
+        {isAdmin && <AddRouteModal />}
+
+        {/* if isLoading, show a loading message */}
         {isLoading ? (
           <p className="text-white text-center col-span-full">Loading...</p>
         ) : routes && routes.length > 0 ? (

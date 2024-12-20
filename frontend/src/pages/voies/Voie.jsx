@@ -53,6 +53,9 @@ const VoiePage = () => {
               <strong>Grade:</strong> {route.grade}
             </p>
             <p className="text-white">
+              <strong>Points: </strong> {route.difficultyPoints}
+            </p>
+            <p className="text-white">
               <strong>Setter: </strong> {route.setter}
             </p>
           </div>

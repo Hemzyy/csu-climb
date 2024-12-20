@@ -15,6 +15,11 @@ const routeSchema = new mongoose.Schema({
       required: true, // The number of points awarded for climbing this route.
       default: 0,
     },
+    img:{
+      type: String,
+      required: false, // The URL of the image of the route.
+      default: "https://via.placeholder.com/300",
+    },
     setter: {
       type: mongoose.Schema.Types.Mixed, // Can hold a user ID (ObjectId) or a string
       required: false,
