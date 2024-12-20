@@ -47,9 +47,9 @@ const HomePage = () => {
             {/* Avatar and username */}
             <div className="flex flex-col items-center">
               <img
-                src={user.profileImg || user.profileImg || "https://via.placeholder.com/100"}
+                src={user.profileImg || user?.profileImg || "https://via.placeholder.com/100"}
                 alt="avatar"
-                className="w-20 h-20 rounded-full"
+                className="w-28 h-28 rounded-full"
               />
               <div className="font-bold mt-2">{user.username}</div>
             </div>
