@@ -5,7 +5,7 @@ const HomePage = () => {
   const { data: authUser } = useQuery({ queryKey: ["authUser"] });
 
   const user = {
-    avatar: authUser?.avatar || "https://via.placeholder.com/100",
+    profileImg: authUser?.profileImg,
     username: authUser?.username,
     rank: authUser?.rank,
     leaderboardScore: authUser?.leaderboardScore,
@@ -47,7 +47,7 @@ const HomePage = () => {
             {/* Avatar and username */}
             <div className="flex flex-col items-center">
               <img
-                src={user.avatar}
+                src={user.profileImg || user.profileImg || "https://via.placeholder.com/100"}
                 alt="avatar"
                 className="w-20 h-20 rounded-full"
               />

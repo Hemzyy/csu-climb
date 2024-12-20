@@ -6,6 +6,8 @@ const Navbar = () => {
     const { data: authUser } = useQuery({ queryKey: ["authUser"] });
     const isAdmin = authUser?.isAdmin;
 
+    const profileImg = authUser?.profileImg;
+
     const queryClient = useQueryClient();
 
 	const {mutate:logout} = useMutation({
@@ -86,9 +88,7 @@ const Navbar = () => {
                 <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
-                            <img
-                                alt="User Avatar"
-                                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                            <img src={profileImg || user?.profileImg || "/avatar-placeholder.png"} />
                         </div>
                     </div>
                     <ul
