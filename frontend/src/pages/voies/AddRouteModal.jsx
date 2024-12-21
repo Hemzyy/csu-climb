@@ -20,7 +20,7 @@ const AddRouteModal = () => {
 	return (
 		<>
 			<button
-				className='btn btn-outline rounded-full btn-sm'
+				className='btn btn-outline btn-sm h-[230px]'
 				onClick={() => document.getElementById("add_route_modal").showModal()}
 			>
 				Add Route

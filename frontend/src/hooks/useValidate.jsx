@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 const useValidateRoute = () => {
   const queryClient = useQueryClient();
@@ -19,6 +20,7 @@ const useValidateRoute = () => {
       }
     },
     onSuccess: () => {
+      toast.success("success");
       queryClient.invalidateQueries(["authUser"]);
       queryClient.invalidateQueries(["voie"]);
     }
