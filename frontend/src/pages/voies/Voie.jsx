@@ -1,11 +1,15 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@tanstack/react-query";
+
 import useValidate from "../../hooks/useValidate";
+import EditRouteModal from "./EditRouteModal";
 
 const VoiePage = () => {
   const { id } = useParams();
-  const imageInputRef = useRef(null);
+  const [img, setimg] = useState(null);
+
+  const imgInputRef = useRef(null);
 
   const { data: authUser, isLoading: isAuthUserLoading } = useQuery({
     queryKey: ["authUser"],
@@ -13,7 +17,7 @@ const VoiePage = () => {
 
   const validateRouteMutation = useValidate();
 
-  const { data: route, isLoading, isError } = useQuery({
+  const { data: route, isLoading, refetch, isRefetching } = useQuery({
     queryKey: ["voie", id],
     queryFn: async () => {
       try {
@@ -35,27 +39,18 @@ const VoiePage = () => {
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append("image", file);
-
-      try {
-        const res = await fetch(`/api/routes/voie/${id}/image`, {
-          method: "POST",
-          body: formData,
-        });
-
-        if (!res.ok) {
-          throw new Error("Failed to upload image");
-        }
-
-        // Optionally refetch the route data to reflect the updated image
-        window.location.reload(); // Temporary reload for simplicity
-      } catch (error) {
-        console.error("Error uploading image:", error);
-      }
+    if(file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        state === "img" && setimg(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
+
+  useEffect(() => {
+    refetch();
+  }, [validateRouteMutation.isSuccess]);
 
   const isRouteValidated = authUser?.climbedRoutes.some(
     (climbedRoute) => climbedRoute._id === id
@@ -65,33 +60,24 @@ const VoiePage = () => {
     return <div className="text-white">Loading...</div>;
   }
 
-  if (isError) {
-    return <div className="text-white">Error: {error.message}</div>;
-  }
-
   return (
     <div className="flex flex-col items-center w-screen min-h-screen bg-[#1D232A] pt-16">
       <div className="text-white text-2xl font-bold mt-10">{route.name}</div>
-      <div className="w-[90%] lg:w-[50%] bg-[#2E4259] p-6 rounded-lg shadow-md mt-8">
+      <div className="w-[90%] lg:w-[50%] max-w-[600px] bg-[#dbe9f8] p-6 rounded-lg shadow-md mt-8">
         <div className="relative">
           <img
-            src={route.image || "https://via.placeholder.com/300"}
+            src={img || route?.img || "/route-img-placeholder.png"}
             alt={route.name}
             className="w-full h-64 object-cover rounded-lg mb-4"
           />
           {authUser?.isAdmin && (
-            <button
-              className="btn btn-primary rounded-full btn-sm absolute top-2 right-2"
-              onClick={() => imageInputRef.current.click()}
-            >
-              Edit Image
-            </button>
+            <EditRouteModal route={route} imageInputRef={imgInputRef} />
           )}
           <input
             type="file"
             hidden
             accept="image/*"
-            ref={imageInputRef}
+            ref={imgInputRef}
             onChange={handleImageChange}
           />
         </div>

@@ -46,7 +46,7 @@ const VoiePage = () => {
             );
             return (
               <Link to={`/voie/${route._id}`} key={route._id}>
-                <div className="bg-[#2E4259] rounded-lg shadow-md overflow-hidden relative">
+                <div className="bg-[#2E4259] rounded-lg shadow-md overflow-hidden relative hover:opacity-80 transition-opacity">
                   <div className="w-full h-32 bg-gray-400 flex items-center justify-center">
                     <span className="text-white text-sm">Image Placeholder</span>
                   </div>

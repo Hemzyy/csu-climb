@@ -1,3 +1,5 @@
+import { v2 as cloudinary } from "cloudinary";
+
 import Route from "../models/route.model.js";
 import User from "../models/user.model.js";
 import Notification from "../models/notification.model.js";
@@ -129,3 +131,48 @@ export const getVoie = async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
+export const editRoute = async (req, res) => {
+    try {
+        const currentUser = await User.findById(req.user._id); // Find the logged-in user
+
+        if (!currentUser || !currentUser.isAdmin) {
+            return res.status(403).json({ error: "Only an Admin can edit routes." });
+        }
+
+        const { routeId, name, grade, difficultyPoints, setter } = req.body;
+        let { img } = req.body;
+
+        let route = await Route.findById(routeId);
+
+        if (!route) {
+            return res.status(404).json({ error: "Route not found" });
+        }
+
+        if (!name || !grade || !difficultyPoints) {
+            return res.status(400).json({ error: "Name, grade, and difficulty points are required" });
+        }
+
+        if (img){
+            if(route.img) {
+                await cloudinary.uploader.destroy(route.img.split("/").pop().split(".")[0]);
+            }
+            const uploadedResponse = await cloudinary.uploader.upload(img);
+            img = uploadedResponse.secure_url;
+        } 
+
+        route.name = name || route.name;
+        route.grade = grade || route.grade;
+        route.difficultyPoints = difficultyPoints || route.difficultyPoints;
+        route.setter = setter || route.setter;
+        route.img = img || route.img;
+
+        route = await route.save();
+
+        return res.status(200).json({ message: "Route edited successfully", route });
+
+    } catch (error) {
+        console.log("Error in editRoute: ", error.message);
+        res.status(500).json({ error: error.message });
+    }
+}

@@ -18,7 +18,7 @@ const routeSchema = new mongoose.Schema({
     img:{
       type: String,
       required: false, // The URL of the image of the route.
-      default: "https://via.placeholder.com/300",
+      default: "",
     },
     setter: {
       type: mongoose.Schema.Types.Mixed, // Can hold a user ID (ObjectId) or a string
