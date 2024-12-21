@@ -35,7 +35,7 @@ const Classement = () => {
 
   return (
     <div className="flex justify-center w-screen min-h-screen bg-[#1D232A] pt-16">
-      <div className="flex flex-col gap-y-20 w-[90%] sm:w-[70%] lg:w-[50%] items-center">
+      <div className="flex flex-col gap-y-4 w-[90%] sm:w-[70%] lg:w-[50%] items-center">
         {/* Top 3 Section */}
         <div className="mt-10 bg-[#2E4259] shadow-lg rounded-lg p-6 flex flex-col gap-y-6 w-full">
           <div className="text-center text-white text-xl font-semibold">
@@ -115,6 +115,7 @@ const Classement = () => {
                 className="flex items-center justify-between bg-[#1D232A] rounded-lg p-4 mb-2"
               >
                 <div className="flex items-center gap-4">
+                  <span className="text-white font-bold">{index + 4}</span>
                   <img
                     src={user.profileImg || "https://via.placeholder.com/100"}
                     alt="avatar"
