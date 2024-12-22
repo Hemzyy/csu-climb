@@ -69,43 +69,50 @@ const updateRanks = async () => {
 };
 
 export const addRoute = async (req, res) => {
-    try {
-        const currentUser = await User.findById(req.user._id); // Find the logged-in user
+	try {
+		const { name, grade, difficultyPoints, setter, img } = req.body;
 
-        if (!currentUser || !currentUser.isAdmin) {
-            return res.status(403).json({ error: "Only an Admin can add routes." });
-        }
+		const currentUser = await User.findById(req.user._id);
+		if (!currentUser || !currentUser.isAdmin) {
+			return res.status(403).json({ error: "Only an Admin can add routes." });
+		}
 
-        const { name, grade, difficultyPoints, setter } = req.body;
+		if (!grade || !difficultyPoints) {
+			return res.status(400).json({ error: "Grade and difficulty points are required" });
+		}
 
-        if (!grade || !difficultyPoints) {
-            return res.status(400).json({ error: "Grade and difficulty points are required" });
-        }
+		let imageUrl = null;
+		if (img) {
+			const uploadedResponse = await cloudinary.uploader.upload(img, {
+				folder: "routes",
+			});
+			imageUrl = uploadedResponse.secure_url;
+		}
 
-        const newRoute = new Route({
-            name,
-            grade,
-            difficultyPoints,
-            setter,
-        });
+		const newRoute = new Route({
+			name,
+			grade,
+			difficultyPoints,
+			setter,
+			img: imageUrl,
+		});
 
-        await newRoute.save();
+		await newRoute.save();
 
-        // create a notification for all users
-        const newNotification = new Notification({
-            routeId: newRoute._id,
-            routeName: newRoute.name,
-            grade: newRoute.grade,
-            type: "newRoute",
-        });
+		const newNotification = new Notification({
+			routeId: newRoute._id,
+			routeName: newRoute.name,
+			grade: newRoute.grade,
+			type: "newRoute",
+		});
 
-        await newNotification.save();
+		await newNotification.save();
 
-        return res.status(201).json({ message: "Route added successfully", route: newRoute });
-    } catch (error) {
-        console.log("Error in addRoute: ", error.message);
-        res.status(500).json({ error: error.message });
-    }
+		return res.status(201).json({ message: "Route added successfully", route: newRoute });
+	} catch (error) {
+		console.log("Error in addRoute: ", error.message);
+		res.status(500).json({ error: error.message });
+	}
 };
 
 export const getRoutes = async (req, res) => {

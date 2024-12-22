@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
-import AddRouteModal from "./addRouteModal";
+import AddRouteModal from "./AddRouteModal";
 
 const VoiePage = () => {
   const { data: authUser } = useQuery({ queryKey: ["authUser"] });
@@ -48,7 +48,11 @@ const VoiePage = () => {
               <Link to={`/voie/${route._id}`} key={route._id}>
                 <div className="bg-[#2E4259] rounded-lg shadow-md overflow-hidden relative hover:opacity-80 transition-opacity">
                   <div className="w-full h-32 bg-gray-400 flex items-center justify-center">
-                    <span className="text-white text-sm">Image Placeholder</span>
+                    <img
+                      src={route.img || "/route-img-placeholder.png"}
+                      alt={route.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div className="p-4 text-white flex justify-between items-center">
                     <div>
