@@ -63,7 +63,7 @@ const VoiePage = () => {
   return (
     <div className="flex flex-col items-center w-screen min-h-screen bg-[#1D232A] pt-16">
       <div className="text-white text-2xl font-bold mt-10">{route.name}</div>
-      <div className="w-[90%] lg:w-[50%] max-w-[600px] bg-[#dbe9f8] p-6 rounded-lg shadow-md mt-8">
+      <div className="w-[90%] lg:w-[50%] max-w-[600px] bg-[#2E4259] p-6 rounded-lg shadow-md mt-8">
         <div className="relative">
           <img
             src={img || route?.img || "/route-img-placeholder.png"}

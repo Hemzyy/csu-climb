@@ -7,7 +7,21 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'custom-bg': "url('/bg-img.png')",
+      },
+    },
   },
   plugins: [daisyui],
+  daisyui: {
+    themes: [
+      {
+        myCustomTheme: {
+          "base-100": "#37393A",
+        },
+      },
+      "dark", // Fallback theme
+    ],
+  },
 }

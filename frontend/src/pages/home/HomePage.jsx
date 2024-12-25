@@ -1,8 +1,29 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 
+const fetchTopThree = async () => {
+  const res = await fetch("/api/leaderboard/topThree");
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.error || "Something went wrong");
+  }
+  return data;
+};
+
 const HomePage = () => {
   const { data: authUser } = useQuery({ queryKey: ["authUser"] });
+  const { data: topThree, isLoading, isError } = useQuery({
+    queryKey: ["topThree"],
+    queryFn: fetchTopThree,
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading top three data.</div>;
+  }
 
   const user = {
     profileImg: authUser?.profileImg,
@@ -11,8 +32,6 @@ const HomePage = () => {
     leaderboardScore: authUser?.leaderboardScore,
     climbedRoutes: authUser?.climbedRoutes || [],
   };
-
-  console.log("Climbed Routes:", user.climbedRoutes);
 
   const groupedRoutes = user.climbedRoutes.reduce((acc, route) => {
     acc[route.grade] = (acc[route.grade] || 0) + 1;
@@ -35,59 +54,55 @@ const HomePage = () => {
     });
 
   return (
-    <div className="flex justify-center w-screen min-h-screen bg-[#1D232A] pt-16">
-      <div className="flex flex-col gap-y-20 w-[90%] sm:w-[70%] lg:w-[50%] items-center">
-        {/* Main user stats section */}
-        <div className="mt-10 bg-[#2E4259] shadow-lg rounded-lg p-6 flex flex-col gap-y-6 w-full">
-          <div className="text-center text-white text-xl font-semibold">
-            VOS STATISTIQUES
-          </div>
+    // main div that will contain the three sectionsn (user stat, top 7, and newly ioened routes)
+    <div className="bg-custom-bg flex flex-col justify-center w-full max-w-6xl mx-auto min-h-screen pt-16 text-white">
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-[#1D232A] text-white p-4 rounded-lg">
-            {/* Avatar and username */}
-            <div className="flex flex-col items-center">
-              <img
-                src={user.profileImg || user?.profileImg || "https://via.placeholder.com/100"}
-                alt="avatar"
-                className="w-28 h-28 rounded-full"
-              />
-              <div className="font-bold mt-2">{user.username}</div>
-            </div>
-
-            {/* Rank and points */}
-            <div className="flex flex-col items-center justify-center gap-2 bg-[#2E4259] p-4 rounded-lg">
-              <div className="text-lg font-bold">
-                Rank: <span>{user.rank}</span>
-              </div>
-              <div className="text-lg font-bold">
-                Points: <span>{user.leaderboardScore}</span>
-              </div>
-            </div>
-
-            {/* Highest routes */}
-            <div className="grid grid-cols-2 gap-4 justify-center">
-              {sortedRoutes.length > 0 ? (
-                sortedRoutes.slice(0, 4).map((route, index) => (
-                  <div
-                    key={index}
-                    className="bg-[#2E4259] p-3 w-full rounded-lg text-center shadow-md flex flex-col justify-center"
-                  >
-                    <span className="text-lg font-bold text-white">
-                      {route.grade}
-                    </span>
-                    <span className="text-sm text-gray-300">{route.count}</span>
-                  </div>
-                ))
-              ) : (
-                <div className="text-white text-center col-span-2">
-                  No routes climbed yet
-                </div>
-              )}
-            </div>
-          </div>
+      {/* user stats */}
+      <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-evenly bg-[#525458] p-4 rounded-2xl shadow-lg space-y-2 sm:space-y-0 sm:space-x-4">
+        {/* User image and username */}
+        <div className="flex flex-col items-center text-center">
+          <img
+            src={user.profileImg}
+            alt="profile"
+            className="w-24 h-24 sm:w-40 sm:h-40 rounded-full"
+          />
+          <span className="text-xl sm:text-3xl mt-2">{user.username}</span>
         </div>
+
+        {/* Stats */}
+        {[{
+          icon: "/icons/podium.png",
+          value: user.rank,
+          label: "Rang"
+        }, {
+          icon: "/icons/points.png",
+          value: user.leaderboardScore,
+          label: "Points"
+        }, {
+          icon: "/icons/climbing.png",
+          value: user.climbedRoutes.length,
+          label: "Voies"
+        }].map(({ icon, value, label }, index) => (
+          <div key={index} className="flex flex-col items-center text-center">
+            <div className="flex flex-col bg-[#FE5F55] h-24 w-32 sm:h-32 sm:w-44 rounded-3xl items-center justify-center shadow-lg mt-4">
+              <img src={icon} alt={label} className="w-8 h-8 sm:w-12 sm:h-12 mb-2" />
+              <span className="text-black font-bold text-2xl sm:text-3xl">{value}</span>
+            </div>
+            <span className="mt-2 sm:mt-4 text-lg sm:text-2xl">{label}</span>
+          </div>
+        ))}
       </div>
+
+      {/* Top 3 followed by the next 4 inline*/}
+      <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-evenly bg-[#525458] p-4 rounded-2xl shadow-lg space-y-2 sm:space-y-0 sm:space-x-4 mt-4">
+      
+        
+
+      </div>
+      
+
     </div>
+
   );
 };
 
