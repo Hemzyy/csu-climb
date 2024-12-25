@@ -18,6 +18,7 @@ export default {
     themes: [
       {
         myCustomTheme: {
+          "primary": "#FE5F55",
           "base-100": "#37393A",
         },
       },
