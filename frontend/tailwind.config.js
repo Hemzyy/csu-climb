@@ -19,7 +19,7 @@ export default {
       {
         myCustomTheme: {
           "primary": "#FE5F55",
-          "base-100": "#37393A",
+          "base-100": "#252525",
         },
       },
       "dark", // Fallback theme

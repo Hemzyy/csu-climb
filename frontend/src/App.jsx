@@ -43,9 +43,10 @@ function App() {
 
 
 	return (
-		<div className='flex max-w-6xl mx-auto'>
+		<div>
         {/* common components because its not wrapped with routes*/}
 			{ authUser && <Navbar /> }
+			<div className='flex max-w-6xl mx-auto bg-custom-bg bg-fixed bg-center'>
 			<Routes>
 				<Route path='/' element={authUser ? <HomePage /> : <Navigate to='/login' />} />
 				<Route path='/login' element={!authUser ? <LoginPage /> : <Navigate to='/' />} />
@@ -54,6 +55,7 @@ function App() {
 				<Route path='/voie/:id' element={authUser ? <Voie /> : <Navigate to='/' />} />
 				<Route path='/classement' element={authUser ? <Classement /> : <Navigate to='/' />} />
 			</Routes>
+			</div>
 
 	  		<Toaster />
 		</div>

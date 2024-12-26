@@ -32,7 +32,7 @@ const Navbar = () => {
   });
 
   return (
-    <div className="navbar bg-[#525458] rounded-full fixed top-5 w-full max-w-6xl mx-auto z-50 shadow-md">
+    <div className="navbar bg-[#252525] fixed w-full mx-auto z-50 shadow-md">
 
         {/* Responsive Menu */}
       <div className="navbar-center lg:hidden">
