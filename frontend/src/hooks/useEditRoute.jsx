@@ -25,6 +25,7 @@ const useEditRoute = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries("routes");
+            queryClient.invalidateQueries("route");
             toast.success("Route edited successfully");
         },
         onError: (error) => {

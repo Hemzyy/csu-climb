@@ -50,21 +50,6 @@ const HomePage = () => {
     climbedRoutes: authUser?.climbedRoutes || [],
   };
 
-  // Group and sort climbed routes
-  const groupedRoutes = user.climbedRoutes.reduce((acc, route) => {
-    acc[route.grade] = (acc[route.grade] || 0) + 1;
-    return acc;
-  }, {});
-
-  const sortedRoutes = Object.entries(groupedRoutes)
-    .map(([grade, count]) => ({ grade, count }))
-    .sort((a, b) => {
-      const [aNum, aLetter] = parseGrade(a.grade);
-      const [bNum, bLetter] = parseGrade(b.grade);
-
-      return aNum !== bNum ? bNum - aNum : aLetter.localeCompare(bLetter);
-    });
-
   return (
     // main div that will contain the three sections
     <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen pt-16 text-white mt-20 gap-12">
