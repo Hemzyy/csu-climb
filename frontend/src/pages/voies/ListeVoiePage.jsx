@@ -47,14 +47,11 @@ const VoiePage = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen pt-16 text-white gap-4">
+    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white mt-12 gap-12">
       {/* Page Header */}
-      <div className="text-white text-2xl font-bold mt-10 text-center">
-        Explore Climbing Routes
-      </div>
 
       {/* Routes Grid Section */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8 sm:mx-0 mx-24">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:mx-0 mx-20 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
         {/* Admin Add Route Button */}
         {isAdmin && <AddRouteModal />}
 
@@ -69,7 +66,7 @@ const VoiePage = () => {
             return (
               <div
                 key={route._id}
-                className="bg-[#FE5F55] rounded-lg shadow-md overflow-hidden relative hover:opacity-80 transition-opacity cursor-pointer"
+                className="bg-[#3D5167] rounded-lg shadow-md overflow-hidden relative hover:opacity-80 transition-opacity cursor-pointer"
                 onClick={() => setSelectedRoute(route)} // Open modal on click
               >
                 <div className="w-full sm:h-32 h-72 bg-gray-400 flex items-center justify-center">

@@ -22,17 +22,17 @@ const HomePage = () => {
   // Queries
   const { data: authUser } = useQuery({ queryKey: ["authUser"], queryFn: () => fetchData("/api/auth/me") });
 
-  const { data: topThree, isLoading, isError } = useQuery({
+  const { data: topThree = [], isLoading, isError } = useQuery({
     queryKey: ["topThree"],
     queryFn: () => fetchData("/api/leaderboard/topThree"),
   });
 
-  const { data: restOfList, isLoading: loadingRest, isError: errorRest } = useQuery({
+  const { data: restOfList = [], isLoading: loadingRest, isError: errorRest } = useQuery({
     queryKey: ["restOfList"],
     queryFn: () => fetchData("/api/leaderboard/GetRestOfList"),
   });
 
-  const { data: routes } = useQuery({
+  const { data: routes = [] } = useQuery({
     queryKey: ["routes"],
     queryFn: () => fetchData("/api/routes"),
   });
@@ -55,11 +55,11 @@ const HomePage = () => {
     <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen pt-16 text-white mt-20 gap-12">
 
       {/* user stats */}
-      <div className="flex-col sm:flex-row items-center justify-center sm:justify-evenly sm:space-y-5 sm:space-x-4">
+      <div className="flex-col sm:flex-row items-center justify-center sm:space-y-0 sm:space-x-0 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
         {/* User image and username */}
         <div className="flex flex-col items-center text-center">
           <img
-            src={user.profileImg}
+            src={user.profileImg || "/avatar-placeholder.png"}
             alt="profile"
             className="w-24 h-24 sm:w-36 sm:h-36 rounded-full"
           />
@@ -67,36 +67,42 @@ const HomePage = () => {
         </div>
 
         {/* Stats */}
-        <div className="flex justify-center gap-4">
-        {[{
-          icon: "/icons/podium.png",
-          value: user.rank,
-          label: "Rang"
-        }, {
-          icon: "/icons/points.png",
-          value: user.leaderboardScore,
-          label: "Points"
-        }, {
-          icon: "/icons/climbing.png",
-          value: user.climbedRoutes.length,
-          label: "Voies"
-        }].map(({ icon, value, label }, index) => (
-          <div key={index} className="flex flex-col items-center text-center">
-            <div className="flex flex-col bg-[#FE5F55] h-16 w-24 sm:h-24 sm:w-40 rounded-3xl items-center justify-center shadow-lg mt-4">
-              <img src={icon} alt={label} className="w-7 h-7 sm:w-10 sm:h-10" />
-              <span className="text-black font-bold text-2xl sm:text-4xl">{value}</span>
-            </div>
-            <span className="mt-2 sm:mt-4 text-lg sm:text-2xl">{label}</span>
-          </div>
-        ))}
+        <div className="flex justify-center items-center space-x-0">
+          {[{
+            icon: "/icons/podium.png",
+            value: user.rank,
+            label: "Rang"
+          }, {
+            icon: "/icons/points.png",
+            value: user.leaderboardScore,
+            label: "Points"
+          }, {
+            icon: "/icons/climbing.png",
+            value: user.climbedRoutes.length,
+            label: "Voies"
+          }].map(({ icon, value, label }, index, array) => (
+            <React.Fragment key={index}>
+              <div className="flex flex-col items-center text-center">
+                <div className="flex flex-col h-16 w-24 sm:h-24 sm:w-40 rounded-3xl items-center justify-center mt-8">
+                  <img src={icon} alt={label} className="w-7 h-7 sm:w-10 sm:h-10" />
+                  <span className="text-white font-bold text-2xl sm:text-4xl">{value}</span>
+                  <span className="mt-2 sm:mt-4 text-lg sm:text-2xl">{label}</span>
+                </div>
+                
+              </div>
+              {/* Divider Line */}
+              {index < array.length - 1 && (
+                <div className="h-16 sm:h-24 w-px bg-gray-400 opacity-50"></div>
+              )}
+            </React.Fragment>
+          ))}
         </div>
-
       </div>
 
-      <hr className="border-gray-400 opacity-40 w-3/4 mx-auto mt-8 mb-8" />
+      {/* <hr className="border-gray-400 opacity-40 w-3/4 mx-auto mt-8 mb-8" /> */}
 
       {/* Top 3 then next 4 */}
-      <div className="flex flex-col items-center justify-center gap-6 sm:justify-evenly p-4 space-y-2 sm:space-y-0 mb-4 -mt-6">
+      <div className="flex flex-col items-center justify-center gap-6 sm:justify-evenly p-4 space-y-2 sm:space-y-0 mb-4 -mt-6 bg-[#626262] bg-opacity-20 rounded-xl">
 
         <h1 className="text-4xl"> Classement </h1>
         <div className="flex justify-evenly sm:gap-2"> {/* TOP 3 DIV */}
@@ -169,7 +175,7 @@ const HomePage = () => {
                 </div>
               </div>
             ))
-            ) : (
+          ) : (
             <div className="text-lg sm:text-2xl mt-4">Pas assez de joueurs pour afficher le reste du classement</div>
           )}
         </div>
@@ -180,13 +186,13 @@ const HomePage = () => {
 
       </div>
 
-      <hr className="border-gray-400 opacity-40 w-3/4 mx-auto mt-8 mb-8" />
+      {/* <hr className="border-gray-400 opacity-40 w-3/4 mx-auto mt-8 mb-8" /> */}
 
       {/* Newly opened routes  (2 latest roures) */}
-      <div className="flex flex-col items-center gap-8 justify-center p-4 space-y-2 sm:space-x-4 mb-8 -mt-8">
+      <div className="flex flex-col items-center gap-8 justify-center p-4 space-y-2 sm:space-x-4 mb-8 -mt-8 bg-[#626262] bg-opacity-20 rounded-xl">
         <h1 className="text-4xl"> Récemment ouvertes </h1>
         <div className="flex items-center justify-center gap-8">
-          {routes.length > 0 ? (
+          {routes?.length > 0 ? (
             routes.slice(0, 2).map((route, index) => (
               <Link to={`/voie/${route._id}`} key={route._id}>
                 <div key={index} className="relative w-full sm:w-60 h-64 rounded-2xl overflow-hidden shadow-lg m-2">
@@ -195,10 +201,10 @@ const HomePage = () => {
                     alt={route.name}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute flex bg-[#13C4A3] w-16 h-8 bottom-4 left-4 rounded-full text-center justify-center items-center text-black font-bold"> 
+                  <div className="absolute flex bg-[#13C4A3] w-16 h-8 bottom-4 left-4 rounded-full text-center justify-center items-center text-black font-bold">
                     <span> {route.grade} </span>
                   </div>
-                  <div className="absolute flex bg-[#13C4A3] w-16 h-8 bottom-4 right-4 rounded-full text-center justify-center items-center text-black font-bold"> 
+                  <div className="absolute flex bg-[#13C4A3] w-16 h-8 bottom-4 right-4 rounded-full text-center justify-center items-center text-black font-bold">
                     <span> {route.difficultyPoints} </span>
                   </div>
                 </div>
@@ -207,14 +213,15 @@ const HomePage = () => {
           ) : (
             <div className="text-lg sm:text-2xl mt-4">Pas de voies récemment ouvertes</div>
           )}
+
         </div>
 
-        <Link to="/classement">
+        <Link to="/listevoies">
           <button className="bg-primary text-black text-2xl font-bold rounded-full w-96 h-12 mt-4 shadow-lg hover:bg-red-600">Voir toutes les voies</button>
         </Link>
 
-      </div>  
-      
+      </div>
+
 
     </div>
 
