@@ -4,7 +4,6 @@ import { Link } from "react-router-dom"; // If you're using React Router
 
 const Navbar = () => {
   const { data: authUser } = useQuery({ queryKey: ["authUser"] });
-  const isAdmin = authUser?.isAdmin;
 
   const profileImg = authUser?.profileImg;
 
@@ -142,7 +141,11 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <a>Profile</a>
+              <Link
+                to={`/profile/${authUser?.username}`}
+                >
+                Profile
+              </Link>
             </li>
             <li>
               <a>Settings</a>
