@@ -36,8 +36,37 @@ const ProfilePage = () => {
     useEffect(() => {
         refetch();
     }, [username, refetch]);
+    
+    const { data: climbedRoutes, isLoading: climbedRoutesLoading } = useQuery({
+        queryKey: ["climbedRoutes"],
+        queryFn: async () => {
+            try {
+                const res = await fetch(`/api/users/climbedRoutes/${username}`);
+                const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data.error || "Something went wrong");
+                }
+                return data;
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        },
+    });
 
-   ;
+    const sortedClimbedRoutes = climbedRoutes?.grades
+    .sort((a, b) => {
+        const gradeOrder = ["a", "b", "c"];
+        const [gradeA, gradeB] = [a.grade, b.grade];
+        const [letterA, letterB] = [gradeA.slice(-1), gradeB.slice(-1)];
+        const [numA, numB] = [parseInt(gradeA, 10), parseInt(gradeB, 10)];
+
+        if (numA !== numB) {
+            return numB - numA; // Sort by number descending
+        }
+        return gradeOrder.indexOf(letterB) - gradeOrder.indexOf(letterA); // Sort by letter descending
+    })
+    .slice(0, 4); // Only take the top 4 grades
+
 
     return (
         <>
@@ -57,7 +86,7 @@ const ProfilePage = () => {
                 </div>
 
                 {/* detailed? stats */}
-                <div className="flex-col sm:flex-row items-center justify-center sm:space-y-0 sm:space-x-0 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
+                <div className="flex-col sm:flex-row items-center justify-center sm:space-y-20 sm:space-x-0 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
                     <div className="flex justify-center items-center space-x-0">
                         {[{
                             icon: "/icons/podium.png",
@@ -89,7 +118,17 @@ const ProfilePage = () => {
                         ))}
                     </div>
 
-                    {/* grade count */}
+                    {/* the highest grades user climed and their count in a grid */}
+                    <div className="flex justify-center items-center">
+                        <div className="grid grid-cols-4 gap-4 mt-4">
+                            {sortedClimbedRoutes?.map(({ grade, count }) => (
+                                <div key={grade} className="flex flex-col items-center">
+                                    <span className="text-lg sm:text-2xl font-bold">{grade}</span>
+                                    <span className="text-sm sm:text-lg text-gray-400">{count}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
 
                 </div>
 

@@ -21,6 +21,37 @@ export const getUserProfile = async (req, res) => {
     }
 };
 
+export const getClimbedRoutes = async (req, res) => {
+    try {
+        const { username } = req.params;
+
+        // Use findOne with an object to filter by username
+        const user = await User.findOne({ username }).populate("climbedRoutes");
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Group climbed routes by grade
+        const groupedRoutes = user.climbedRoutes.reduce((acc, route) => {
+            acc[route.grade] = (acc[route.grade] || 0) + 1;
+            return acc;
+        }, {});
+
+        // Format the result
+        const result = {
+            //totalRoutes: user.climbedRoutes.length,
+            grades: Object.entries(groupedRoutes).map(([grade, count]) => ({ grade, count })),
+        };
+
+        res.status(200).json(result);
+    } catch (error) {
+        console.error("Error in getClimbedRoutes:", error.message, error.stack);
+        res.status(500).json({ message: "An error occurred while fetching climbed routes" });
+    }
+};
+
+
 // export const updateUser = async (req, res) => {
 // 	const { email, username, currentPassword, newPassword, bio, link } = req.body;
 // 	let { profileImg, coverImg } = req.body;
