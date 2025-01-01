@@ -1,9 +1,12 @@
 import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { MdEdit } from 'react-icons/md';
+
 import React from 'react';
 
 import { formatMemberSinceDate } from '../../utils/date';
+import useUpdateUserProfile from '../../hooks/useUpdateUserProfile';
 
 
 const ProfilePage = () => {
@@ -30,13 +33,26 @@ const ProfilePage = () => {
         },
     });
 
+    const { isUpdatingProfile, updateProfile } = useUpdateUserProfile();
+
     const isMyProfile = authUser._id === user?._id;
     const memberSinceDate = formatMemberSinceDate(user?.createdAt);
 
     useEffect(() => {
         refetch();
     }, [username, refetch]);
-    
+
+    const handleImgChange = (e, state) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                state === "profileImg" && setProfileImg(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
     const { data: climbedRoutes, isLoading: climbedRoutesLoading } = useQuery({
         queryKey: ["climbedRoutes"],
         queryFn: async () => {
@@ -54,39 +70,69 @@ const ProfilePage = () => {
     });
 
     const sortedClimbedRoutes = climbedRoutes?.grades
-    .sort((a, b) => {
-        const gradeOrder = ["a", "b", "c"];
-        const [gradeA, gradeB] = [a.grade, b.grade];
-        const [letterA, letterB] = [gradeA.slice(-1), gradeB.slice(-1)];
-        const [numA, numB] = [parseInt(gradeA, 10), parseInt(gradeB, 10)];
+        .sort((a, b) => {
+            const gradeOrder = ["a", "b", "c"];
+            const [gradeA, gradeB] = [a.grade, b.grade];
+            const [letterA, letterB] = [gradeA.slice(-1), gradeB.slice(-1)];
+            const [numA, numB] = [parseInt(gradeA, 10), parseInt(gradeB, 10)];
 
-        if (numA !== numB) {
-            return numB - numA; // Sort by number descending
-        }
-        return gradeOrder.indexOf(letterB) - gradeOrder.indexOf(letterA); // Sort by letter descending
-    })
-    .slice(0, 4); // Only take the top 4 grades
+            if (numA !== numB) {
+                return numB - numA; // Sort by number descending
+            }
+            return gradeOrder.indexOf(letterB) - gradeOrder.indexOf(letterA); // Sort by letter descending
+        })
+    //.slice(0, 4); // Only take the top 4 grades
 
 
     return (
         <>
-            <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white gap-12">
+            <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white gap-12 pt-16 mt-20">
 
                 {/* Profile Info */}
                 <div className="flex-col sm:flex-row items-center justify-center sm:space-y-0 sm:space-x-0 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
+                    <input
+                        type="file"
+                        hidden
+                        accept='image/*'
+                        ref={profileImgRef}
+                        onChange={async (e) => handleImgChange(e, "profileImg")}
+                    />
                     <div className="flex flex-col items-center text-center">
+                        {/* edit pfp button */}
+                        {isMyProfile && (
+                            <div className=" absolute mt-1 ml-24 p-1 bg-primary rounded-full">
+
+                                <MdEdit
+                                    className="w-5 h-5 text-white"
+                                    onClick={() => profileImgRef.current.click()}
+                                />
+                            </div>
+
+                        )}
                         <img
                             src={profileImg || user?.profileImg || "/avatar-placeholder.png"}
                             alt="profile"
-                            className="w-24 h-24 sm:w-36 sm:h-36 rounded-full"
+                            className="w-28 h-28 sm:w-36 sm:h-36 rounded-full"
                         />
+
+                        {(profileImg) && (
+                            <button className="bg-primary text-white rounded-lg mt-2 px-2 py-1"
+                                onClick={async () => {
+                                    await updateProfile({ profileImg });
+                                    setProfileImg(null);
+                                }
+                                }>
+                                {isUpdatingProfile ? "Updating..." : "Save"}
+                            </button>
+                        )}
+
                         <span className="text-xl sm:text-3xl mt-2">{user?.username}</span>
                         <span className="text-sm sm:text-lg text-gray-400 mt-6">{memberSinceDate}</span>
                     </div>
                 </div>
 
                 {/* detailed? stats */}
-                <div className="flex-col sm:flex-row items-center justify-center sm:space-y-20 sm:space-x-0 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
+                <div className="flex-col sm:flex-row items-center justify-center space-y-6 sm:space-y-20 sm:space-x-0 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
                     <div className="flex justify-center items-center space-x-0">
                         {[{
                             icon: "/icons/podium.png",
@@ -118,17 +164,19 @@ const ProfilePage = () => {
                         ))}
                     </div>
 
-                    {/* the highest grades user climed and their count in a grid */}
+                    {/* The highest grades user climbed and their count in a horizontal wrapping layout */}
                     <div className="flex justify-center items-center">
-                        <div className="grid grid-cols-4 gap-4 mt-4">
+                        <div className="flex flex-wrap gap-4 mt-4 justify-center">
                             {sortedClimbedRoutes?.map(({ grade, count }) => (
-                                <div key={grade} className="flex flex-col items-center">
-                                    <span className="text-lg sm:text-2xl font-bold">{grade}</span>
+                                <div key={grade} className="flex flex-col items-center p-2 w-24 border rounded-md">
+                                    <span className="text-lg sm:text-4xl">{grade}</span>
                                     <span className="text-sm sm:text-lg text-gray-400">{count}</span>
                                 </div>
                             ))}
                         </div>
                     </div>
+
+
 
                 </div>
 
