@@ -69,15 +69,15 @@ const HomePage = () => {
         {/* Stats */}
         <div className="flex justify-center items-center space-x-0">
           {[{
-            icon: "/icons/podium.png",
+            icon: "/icons/podiumB.png",
             value: user.rank,
             label: "Rang"
           }, {
-            icon: "/icons/points.png",
+            icon: "/icons/pointsB.png",
             value: user.leaderboardScore,
             label: "Points"
           }, {
-            icon: "/icons/climbing.png",
+            icon: "/icons/climbingB.png",
             value: user.climbedRoutes.length,
             label: "Voies"
           }].map(({ icon, value, label }, index, array) => (
@@ -193,8 +193,7 @@ const HomePage = () => {
         <h1 className="text-4xl"> Récemment ouvertes </h1>
         <div className="flex items-center justify-center gap-8">
           {routes?.length > 0 ? (
-            routes.slice(0, 2).map((route, index) => (
-              <Link to={`/voie/${route._id}`} key={route._id}>
+            routes.slice(0, 2).map((route, index) => (        
                 <div key={index} className="relative w-full sm:w-60 h-64 rounded-2xl overflow-hidden shadow-lg m-2">
                   <img
                     src={route.img || "/route-img-placeholder.png"}
@@ -208,7 +207,6 @@ const HomePage = () => {
                     <span> {route.difficultyPoints} </span>
                   </div>
                 </div>
-              </Link>
             ))
           ) : (
             <div className="text-lg sm:text-2xl mt-4">Pas de voies récemment ouvertes</div>

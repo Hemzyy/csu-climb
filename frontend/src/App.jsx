@@ -5,7 +5,6 @@ import SignUpPage from './pages/auth/signup/SignUpPage';
 import LoginPage from './pages/auth/login/LoginPage';
 import Navbar from './components/common/Navbar';
 import ListeVoiePage from './pages/voies/ListeVoiePage';
-import Voie from './pages/voies/Voie';
 import Classement from './pages/classement/Classement';
 import ProfilePage from './pages/profile/ProfilePage';
 
@@ -53,7 +52,6 @@ function App() {
 				<Route path='/login' element={!authUser ? <LoginPage /> : <Navigate to='/' />} />
 				<Route path='/signup' element={!authUser ? <SignUpPage /> : <Navigate to='/' />} />
 				<Route path='/listevoies' element={authUser ? <ListeVoiePage /> : <Navigate to='/' />} />
-				<Route path='/voie/:id' element={authUser ? <Voie /> : <Navigate to='/' />} />
 				<Route path='/classement' element={authUser ? <Classement /> : <Navigate to='/' />} />
 				<Route path='/profile/:username' element={authUser ? <ProfilePage /> : <Navigate to='/login' />} />
 			</Routes>

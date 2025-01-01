@@ -135,15 +135,15 @@ const ProfilePage = () => {
                 <div className="flex-col sm:flex-row items-center justify-center space-y-6 sm:space-y-20 sm:space-x-0 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
                     <div className="flex justify-center items-center space-x-0">
                         {[{
-                            icon: "/icons/podium.png",
+                            icon: "/icons/podiumB.png",
                             value: user?.rank,
                             label: "Rang"
                         }, {
-                            icon: "/icons/points.png",
+                            icon: "/icons/pointsB.png",
                             value: user?.leaderboardScore,
                             label: "Points"
                         }, {
-                            icon: "/icons/climbing.png",
+                            icon: "/icons/climbingB.png",
                             value: user?.climbedRoutes.length,
                             label: "Voies"
                         }].map(({ icon, value, label }, index, array) => (
