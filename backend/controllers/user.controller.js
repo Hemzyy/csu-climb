@@ -21,6 +21,25 @@ export const getUserProfile = async (req, res) => {
     }
 };
 
+export const getUserdetails = async (req, res) => {
+	const { id } = req.params;
+
+	try {
+		const
+			user = await
+			User.findById(id).select("-password -email");
+
+		if (!user) {
+			return res.status(404).json({ error: "User not found" });
+		}
+		res.status(200).json(user); //send the user data
+
+	} catch (error) {
+		console.log("Error in getUserdetails: ", error.message);
+		res.status(500).json({ error: error.message });
+	}
+};
+
 export const getClimbedRoutes = async (req, res) => {
     try {
         const { username } = req.params;

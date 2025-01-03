@@ -32,6 +32,13 @@ const routeSchema = new mongoose.Schema({
       type: Number, 
       default: 0, // Number of successful climbs by users.
     },
+    validatedBy: [
+      {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          default: [],
+      }
+  ],
     
   }, { timestamps: true }
 );

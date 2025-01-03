@@ -1,5 +1,6 @@
-import React, { useRef } from "react";
+import React, { useState, useEffect } from "react";
 import EditRouteModal from "./EditRouteModal";
+import ValidatedByModal from "./ValidatedByModal"; // Import the new modal
 
 const RouteCardModal = ({
   selectedRoute,
@@ -11,11 +12,34 @@ const RouteCardModal = ({
   handleValidate,
   validateRouteMutation,
   authUser,
+  fetchUserDetails,
 }) => {
+  const [validatedUsers, setValidatedUsers] = useState([]);
+  const [showValidatedModal, setShowValidatedModal] = useState(false); // State for the new modal
+
+  useEffect(() => {
+    const fetchValidatedUsers = async () => {
+      if (selectedRoute?.validatedBy?.length) {
+        try {
+          const userDetails = await Promise.all(
+            selectedRoute.validatedBy.map((userId) => fetchUserDetails(userId))
+          );
+          setValidatedUsers(userDetails);
+        } catch (error) {
+          console.error("Error fetching validated users:", error);
+        }
+      }
+    };
+
+    fetchValidatedUsers();
+  }, [selectedRoute, fetchUserDetails]);
+
+  const validatedByCount = selectedRoute?.validatedBy?.length || 0;
+
   return (
     selectedRoute && (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-[#535353] text-white rounded-lg shadow-lg w-96 pb-4 relative">
+        <div className="bg-[#535353] text-white rounded-lg shadow-lg sm:w-96 w-80 pb-4 relative">
           <button
             className="absolute -right-8 -top-4 text-white text-4xl"
             onClick={closeModal}
@@ -77,10 +101,23 @@ const RouteCardModal = ({
               />
             </button>
           </div>
-          <p className="px-4">
-            <strong>Validated by:</strong> 18
-          </p>
+          {/* Validated by section */}
+          <div className="mt-4 px-4">
+            <button
+              className="text-sm text-blue-400 underline"
+              onClick={() => setShowValidatedModal(true)}
+            >
+              Validated by {validatedByCount}
+            </button>
+          </div>
         </div>
+        {/* Show ValidatedByModal */}
+        {showValidatedModal && (
+          <ValidatedByModal
+            validatedUsers={validatedUsers}
+            closeModal={() => setShowValidatedModal(false)}
+          />
+        )}
       </div>
     )
   );

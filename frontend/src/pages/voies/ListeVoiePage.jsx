@@ -46,6 +46,19 @@ const VoiePage = () => {
     setTempImg(null);
   };
 
+  // Fetch user details by ID
+  const fetchUserDetails = async (userId) => {
+    try {
+      const res = await fetch(`/api/users/${userId}`); // Adjust endpoint as needed
+      const user = await res.json();
+      if (!res.ok) throw new Error(user.error || "Error fetching user");
+      return user;
+    } catch (error) {
+      console.error(`Failed to fetch user details for ${userId}:`, error);
+      return null; // Fallback to prevent crashes
+    }
+  };
+
   return (
     <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white mt-12 gap-12">
       {/* Page Header */}
@@ -66,7 +79,7 @@ const VoiePage = () => {
             return (
               <div
                 key={route._id}
-                className="bg-[#3D5167] rounded-lg shadow-md overflow-hidden relative hover:opacity-80 transition-opacity cursor-pointer"
+                className="bg-[#808080] rounded-lg shadow-md overflow-hidden relative hover:opacity-80 transition-opacity cursor-pointer"
                 onClick={() => setSelectedRoute(route)} // Open modal on click
               >
                 <div className="w-full sm:h-32 h-72 bg-gray-400 flex items-center justify-center">
@@ -116,18 +129,20 @@ const VoiePage = () => {
       </div>
 
       {/* Route Details Modal */}
-      <RouteCardModal
-        selectedRoute={selectedRoute}
-        closeModal={closeModal}
-        isAdmin={isAdmin}
-        tempImg={tempImg}
-        imgInputRef={imgInputRef}
-        handleImageChange={handleImageChange}
-        handleValidate={handleValidate}
-        validateRouteMutation={validateRouteMutation}
-        authUser={authUser}
-      />
-
+      {selectedRoute && (
+        <RouteCardModal
+          selectedRoute={selectedRoute}
+          closeModal={closeModal}
+          isAdmin={isAdmin}
+          tempImg={tempImg}
+          imgInputRef={imgInputRef}
+          handleImageChange={handleImageChange}
+          handleValidate={handleValidate}
+          validateRouteMutation={validateRouteMutation}
+          authUser={authUser}
+          fetchUserDetails={fetchUserDetails} // Pass fetchUserDetails to the modal
+        />
+      )}
     </div>
   );
 };

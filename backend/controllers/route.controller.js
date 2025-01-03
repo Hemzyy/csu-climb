@@ -29,6 +29,11 @@ export const validateUnvalidateRoute = async (req, res) => {
             }
             route.successfulClimbs -= 1;
 
+            // Remove the user from the validatedBy array in the route
+            route.validatedBy = route.validatedBy.filter(
+                (id) => id.toString() !== currentUser._id.toString()
+            );
+
             // Save changes
             await currentUser.save();
             await route.save();
@@ -43,6 +48,9 @@ export const validateUnvalidateRoute = async (req, res) => {
             //add route's difficultyPoints to the user's leaderboardScore
             currentUser.leaderboardScore += route.difficultyPoints;
             route.successfulClimbs += 1;
+
+            // Add the user to the validatedBy array in the route
+            route.validatedBy.push(currentUser._id);
 
             // Save changes
             await currentUser.save();
