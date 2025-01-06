@@ -83,6 +83,25 @@ const ProfilePage = () => {
         })
     //.slice(0, 4); // Only take the top 4 grades
 
+    //endpoint to update the users visibility on the leaderboard
+    const toggleVisibility = async () => {
+        try {
+            const res = await fetch(`/api/leaderboard/leaderboard-visibility/${user._id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                throw new Error(data.error || "Something went wrong");
+            }
+            refetch();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
 
     return (
         <>
@@ -152,7 +171,7 @@ const ProfilePage = () => {
                                     <div className="flex flex-col h-16 w-24 sm:h-24 sm:w-40 rounded-3xl items-center justify-center mt-8">
                                         <img src={icon} alt={label} className="w-7 h-7 sm:w-10 sm:h-10" />
                                         <span className="text-white font-bold text-2xl sm:text-4xl">{value}</span>
-                                        <span className="mt-2 sm:mt-4 text-lg sm:text-2xl">{label}</span>
+                                        <span className="mt-2 text-lg sm:text-2xl">{label}</span>
                                     </div>
 
                                 </div>
@@ -176,9 +195,25 @@ const ProfilePage = () => {
                         </div>
                     </div>
 
-
-
                 </div>
+
+                {/* Leaderboard Visibility */}
+                {/* Add toggle for leaderboard visibility */}
+                {isMyProfile && (
+                    <div className="flex justify-center items-center bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
+                        <div className="flex flex-col items-center text-center">
+                            <span className="text-xl sm:text-3xl">Leaderboard Visibility</span>
+                            <span className="text-sm sm:text-lg text-gray-400 mt-2">Toggle your visibility on the leaderboard</span>
+                            <button
+                                className={`mt-4 px-4 py-2 rounded-lg ${user?.showOnLeaderboard ? "bg-primary" : "bg-gray-400"}`}
+                                onClick={toggleVisibility}
+                            >
+                                {user?.showOnLeaderboard ? "Visible" : "Hidden"}
+                            </button>
+                        </div>
+                    </div>
+                )}
+
 
             </div>
         </>

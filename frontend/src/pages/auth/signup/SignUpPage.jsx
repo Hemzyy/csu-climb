@@ -14,20 +14,19 @@ const SignUpPage = () => {
 	const [formData, setFormData] = useState({
 		email: "",
 		username: "",
-		fullName: "",
 		password: "",
 	});
 
 	//3rd part: using tanstack 
 	const { mutate, isError, isPending, error} = useMutation({
-		mutationFn: async ({ email, username, fullName, password }) => {
+		mutationFn: async ({ email, username, password }) => {
 			try {
 				const res = await fetch("/api/auth/signup", {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
 					},
-					body: JSON.stringify({ email, username, fullName, password }),
+					body: JSON.stringify({ email, username, password }),
 				});
 				
 				const data = await res.json();
@@ -87,17 +86,7 @@ const SignUpPage = () => {
 								value={formData.username}
 							/>
 						</label>
-						<label className='input input-bordered rounded flex items-center gap-2 flex-1'>
-							<MdDriveFileRenameOutline />
-							<input
-								type='text'
-								className='grow'
-								placeholder='Full Name'
-								name='fullName'
-								onChange={handleInputChange}
-								value={formData.fullName}
-							/>
-						</label>
+						
 					</div>
 					<label className='input input-bordered rounded flex items-center gap-2'>
 						<MdPassword />
@@ -116,7 +105,7 @@ const SignUpPage = () => {
 					{isError && <p className='text-red-500'>{error.message}</p>}
 				</form>
 				<div className='flex flex-col lg:w-2/3 gap-2 mt-4'>
-					<p className='text-white text-lg'>Already have an account?</p>
+					<p className='text-white text-lg text-center'>Already have an account?</p>
 					<Link to='/login'>
 						<button className='btn rounded-full btn-primary text-white btn-outline w-full'>Sign in</button>
 					</Link>

@@ -1,5 +1,3 @@
-//a model is gonna be like a table, since we're using mongodb, it's gonna be a collection
-
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
@@ -40,6 +38,10 @@ const userSchema = new mongoose.Schema({
     isAdmin: {
         type: Boolean,
         default: false,
+    },
+    showOnLeaderboard: {
+        type: Boolean,
+        default: true,
     },
 
     }, { timestamps: true } //timestamps: true will automatically add createdAt and updatedAt fields to the schema

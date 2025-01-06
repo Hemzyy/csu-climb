@@ -12,8 +12,8 @@ const seedData = async () => {
         console.log("Connected to MongoDB");
 
         // Clear existing data
-        // await User.deleteMany({});
-        await Route.deleteMany({});
+        await User.deleteMany({});
+        //await Route.deleteMany({});
 
         // Create dummy users
         // const users = await User.insertMany([
@@ -23,11 +23,11 @@ const seedData = async () => {
         // console.log("Users seeded:", users);
 
         // Create dummy routes
-        const routes = await Route.insertMany([
-            { name: "Easy Boulder", grade: "5c", difficultyPoints: 50, successfulClimbs: 0 },
-            { name: "Advanced Wall", grade: "7a", difficultyPoints: 100, successfulClimbs: 0 },
-        ]);
-        console.log("Routes seeded:", routes);
+        // const routes = await Route.insertMany([
+        //     { name: "Easy Boulder", grade: "5c", difficultyPoints: 50, successfulClimbs: 0 },
+        //     { name: "Advanced Wall", grade: "7a", difficultyPoints: 100, successfulClimbs: 0 },
+        // ]);
+        console.log("users deleted");
 
         process.exit(); // Exit script
     } catch (error) {

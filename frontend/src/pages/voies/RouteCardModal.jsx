@@ -48,8 +48,9 @@ const RouteCardModal = ({
           </button>
           {/* Route top details */}
           <div className="flex items-center justify-between px-4">
-            <h2 className="text-2xl font-bold m-2">{selectedRoute.name}</h2>
-            <div className="flex items-center gap-2">
+            <p className="text-xl">{selectedRoute.grade}</p>
+            <h2 className="text-2xl font-bold m-2 pl-6">{selectedRoute.name}</h2>
+            <div className="flex items-center gap-1">
               <p className="text-xl">{selectedRoute.difficultyPoints}</p>
               <img src="/icons/pointsB.png" alt="points" className="w-6 h-6" />
             </div>
@@ -104,7 +105,7 @@ const RouteCardModal = ({
           {/* Validated by section */}
           <div className="mt-4 px-4">
             <button
-              className="text-sm text-blue-400 underline"
+              className="text-sm underline"
               onClick={() => setShowValidatedModal(true)}
             >
               Validated by {validatedByCount}

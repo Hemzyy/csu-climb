@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import AddRouteModal from "./AddRouteModal";
 import EditRouteModal from "./EditRouteModal";
@@ -25,20 +25,29 @@ const VoiePage = () => {
   const [tempImg, setTempImg] = useState(null);
   const imgInputRef = useRef(null);
 
-  // Validate Route Mutation
-  const validateRouteMutation = useValidate();
+  // State for filters and sorting
+  const [filterGrade, setFilterGrade] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc"); // 'asc' or 'desc'
+  const [sortField, setSortField] = useState("difficultyPoints"); // Default sorting by points
 
-  const handleValidate = (routeId) => {
-    validateRouteMutation.mutate(routeId);
+  // Filter and sort logic
+  const filteredAndSortedRoutes = routes
+    ?.filter((route) => (filterGrade ? route.grade === filterGrade : true))
+    ?.sort((a, b) => {
+      const comparison =
+        sortField === "difficultyPoints"
+          ? a.difficultyPoints - b.difficultyPoints
+          : a.grade.localeCompare(b.grade);
+      return sortOrder === "asc" ? comparison : -comparison;
+    });
+
+  const handleFilterChange = (e) => {
+    setFilterGrade(e.target.value);
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => setTempImg(reader.result);
-      reader.readAsDataURL(file);
-    }
+  const handleSortChange = (field) => {
+    setSortField(field);
+    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   };
 
   const closeModal = () => {
@@ -46,22 +55,28 @@ const VoiePage = () => {
     setTempImg(null);
   };
 
-  // Fetch user details by ID
-  const fetchUserDetails = async (userId) => {
-    try {
-      const res = await fetch(`/api/users/${userId}`); // Adjust endpoint as needed
-      const user = await res.json();
-      if (!res.ok) throw new Error(user.error || "Error fetching user");
-      return user;
-    } catch (error) {
-      console.error(`Failed to fetch user details for ${userId}:`, error);
-      return null; // Fallback to prevent crashes
-    }
-  };
-
   return (
-    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white mt-12 gap-12">
-      {/* Page Header */}
+    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white mt-4 gap-5">
+
+      <h1 className="text-3xl font-bold text-center">List des voies</h1>
+
+      {/* Filters and Sorting */}
+      <div className="flex justify-between  items-center">
+        <div>
+          <button
+            onClick={() => handleSortChange("difficultyPoints")}
+            className="bg-gray-700 text-white rounded px-2 py-1 mx-2"
+          >
+            Sort by Points ({sortOrder === "asc" ? "↑" : "↓"})
+          </button>
+          <button
+            onClick={() => handleSortChange("grade")}
+            className="bg-gray-700 text-white rounded px-2 py-1"
+          >
+            Sort by Grade ({sortOrder === "asc" ? "↑" : "↓"})
+          </button>
+        </div>
+      </div>
 
       {/* Routes Grid Section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:mx-0 mx-20 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
@@ -71,8 +86,8 @@ const VoiePage = () => {
         {/* Routes */}
         {isLoading ? (
           <p className="text-white text-center col-span-full">Loading...</p>
-        ) : routes && routes.length > 0 ? (
-          routes.map((route) => {
+        ) : filteredAndSortedRoutes && filteredAndSortedRoutes.length > 0 ? (
+          filteredAndSortedRoutes.map((route) => {
             const isValidated = authUser?.climbedRoutes.some(
               (climbedRoute) => climbedRoute._id === route._id
             );
@@ -82,39 +97,26 @@ const VoiePage = () => {
                 className="bg-[#808080] rounded-lg shadow-md overflow-hidden relative hover:opacity-80 transition-opacity cursor-pointer"
                 onClick={() => setSelectedRoute(route)} // Open modal on click
               >
-                <div className="w-full sm:h-32 h-72 bg-gray-400 flex items-center justify-center">
+                <div className="w-full sm:h-44 h-72 bg-gray-400 flex items-center justify-center">
                   <img
                     src={route.img || "/route-img-placeholder.png"}
                     alt={route.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="p-4 text-black flex justify-between items-center">
+                <div className="px-4 pb-2 text-gray-200 flex justify-between items-center">
                   <div>
                     <h2 className="text-lg font-bold">{route.name}</h2>
-                    <p className="text-sm text-black mt-2">
+                    <p className="text-sm text-gray-200">
                       <strong>Grade:</strong> {route.grade}
                     </p>
-                    <p className="text-sm text-black">
+                    <p className="text-sm text-gray-200">
                       <strong>Points:</strong> {route.difficultyPoints}
                     </p>
                   </div>
                   {isValidated && (
                     <div className="text-green-400">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="2"
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
+                      <img src="/icons/check.png" alt="check" className="w-8 h-8" />
                     </div>
                   )}
                 </div>
@@ -136,11 +138,9 @@ const VoiePage = () => {
           isAdmin={isAdmin}
           tempImg={tempImg}
           imgInputRef={imgInputRef}
-          handleImageChange={handleImageChange}
           handleValidate={handleValidate}
           validateRouteMutation={validateRouteMutation}
           authUser={authUser}
-          fetchUserDetails={fetchUserDetails} // Pass fetchUserDetails to the modal
         />
       )}
     </div>

@@ -50,6 +50,9 @@ const HomePage = () => {
     climbedRoutes: authUser?.climbedRoutes || [],
   };
 
+  // Check if there are valid users in the top 3 with points
+  const validTopThree = topThree.filter(user => user?.leaderboardScore > 0);
+
   return (
     // main div that will contain the three sections
     <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen pt-16 text-white mt-20 gap-12">
@@ -102,89 +105,98 @@ const HomePage = () => {
       {/* <hr className="border-gray-400 opacity-40 w-3/4 mx-auto mt-8 mb-8" /> */}
 
       {/* Top 3 then next 4 */}
-      <div className="flex flex-col items-center justify-center gap-6 sm:justify-evenly p-4 space-y-2 sm:space-y-0 mb-4 -mt-6 bg-[#626262] bg-opacity-20 rounded-xl">
+      {validTopThree.length > 0 && (
+        <div className="flex flex-col items-center justify-center gap-6 sm:justify-evenly p-4 space-y-2 sm:space-y-0 mb-4 -mt-6 bg-[#626262] bg-opacity-20 rounded-xl">
 
-        <h1 className="text-4xl"> Classement </h1>
-        <div className="flex justify-evenly sm:gap-2"> {/* TOP 3 DIV */}
-          {/* first place */}
-          <div className="flex flex-col items-center order-1 sm:order-2 p-4 mt-4">
-            <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#FFD700] flex items-center justify-center shadow-lg">
-              <img
-                src={topThree[0]?.profileImg || "/avatar-placeholder.png"}
-                alt="avatar"
-                className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover"
-              />
-              <div className="absolute -top-2 right-1 bg-[#FFD700] text-black rounded-full w-8 h-8 flex items-center justify-center text-xl font-semibold shadow-sm">1</div>
+          <h1 className="text-4xl"> Classement </h1>
+          <div className="flex justify-evenly sm:gap-2"> {/* TOP 3 DIV */}
+            {/* first place */}
+            <div className="flex flex-col items-center order-1 sm:order-2 p-4 mt-4">
+              <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#FFD700] flex items-center justify-center shadow-lg">
+                <img
+                  src={topThree[0]?.profileImg || "/avatar-placeholder.png"}
+                  alt="avatar"
+                  className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover"
+                />
+                <div className="absolute -top-2 right-1 bg-[#FFD700] text-black rounded-full w-8 h-8 flex items-center justify-center text-xl font-semibold shadow-sm">1</div>
+              </div>
+              <span className="text-lg sm:text-2xl mt-2">{topThree[0]?.username}</span>
+              <div className="flex justify-center gap-2 items-center bg-[#FFD700] text-black rounded-lg w-24 h-10 mt-2 shadow-lg">
+                <span className="text-lg sm:text-2xl font-bold pb-0.5">{topThree[0]?.leaderboardScore}</span>
+                <img src="/icons/points.png" alt="points" className="w-6 h-6" />
+              </div>
             </div>
-            <span className="text-lg sm:text-2xl mt-2">{topThree[0]?.username}</span>
-            <div className="flex justify-center gap-3 items-center bg-[#FFD700] text-black rounded-lg w-24 h-10 mt-2 shadow-lg">
-              <img src="/icons/points.png" alt="points" className="w-6 h-6" />
-              <span className="text-lg sm:text-2xl font-bold">{topThree[0]?.leaderboardScore}</span>
-            </div>
-          </div>
-          {/* second place */}
-          <div className="flex flex-col items-center order-2 sm:order-1 p-4 mt-4 sm:mt-12">
-            <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#C0C0C0] flex items-center justify-center shadow-lg">
-              <img
-                src={topThree[1]?.profileImg || "/avatar-placeholder.png"}
-                alt="avatar"
-                className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover"
-              />
-              <div className="absolute -top-2 right-1 bg-[#C0C0C0] text-black rounded-full w-8 h-8 flex items-center justify-center text-xl font-semibold shadow-sm">2</div>
-            </div>
-            <span className="text-lg sm:text-2xl mt-2">{topThree[1]?.username}</span>
-            <div className="flex justify-center gap-3 items-center bg-[#C0C0C0] text-black rounded-lg w-24 h-10 mt-2 shadow-lg">
-              <img src="/icons/points.png" alt="points" className="w-6 h-6" />
-              <span className="text-lg sm:text-2xl font-bold">{topThree[1]?.leaderboardScore}</span>
-            </div>
-          </div>
-          {/* third place */}
-          <div className="flex flex-col items-center order-3 sm:order-3 p-4 mt-4 sm:mt-12">
-            <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#cd7f32] flex items-center justify-center shadow-lg">
-              <img
-                src={topThree[2]?.profileImg || "/avatar-placeholder.png"}
-                alt="avatar"
-                className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover"
-              />
-              <div className="absolute -top-2 right-1 bg-[#cd7f32] text-black rounded-full w-8 h-8 flex items-center justify-center text-xl font-semibold shadow-sm">3</div>
-            </div>
-            <span className="text-lg sm:text-2xl mt-2">{topThree[2]?.username}</span>
-            <div className="flex justify-center gap-3 items-center bg-[#cd7f32] text-black rounded-lg w-24 h-10 mt-2 shadow-lg">
-              <img src="/icons/points.png" alt="points" className="w-6 h-6" />
-              <span className="text-lg sm:text-2xl font-bold">{topThree[2]?.leaderboardScore}</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap justify-evenly sm:gap-6"> {/* NEXT 4 DIV */}
-          {restOfList.length > 0 ? (
-            restOfList.slice(0, 4).map((user, index) => (
-              <div key={index} className="flex flex-col items-center p-4 mt-4">
-                <div className="relative w-32 h-32 sm:w-28 sm:h-28 rounded-full bg-[#808080] flex items-center justify-center shadow-lg">
+            {/* second place */}
+            {topThree[1] && topThree[1]?.leaderboardScore > 0 && (
+              <div className="flex flex-col items-center order-2 sm:order-1 p-4 mt-4 sm:mt-12">
+                <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#C0C0C0] flex items-center justify-center shadow-lg">
                   <img
-                    src={user.profileImg || "/avatar-placeholder.png"}
+                    src={topThree[1]?.profileImg || "/avatar-placeholder.png"}
                     alt="avatar"
-                    className="w-28 h-28 sm:w-24 sm:h-24 rounded-full object-cover"
+                    className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover"
                   />
-                  <div className="absolute -top-2 right-1 bg-[#808080] text-black rounded-full w-8 h-8 flex items-center justify-center text-xl font-semibold shadow-sm">{index + 4}</div>
+                  <div className="absolute -top-2 right-1 bg-[#C0C0C0] text-black rounded-full w-8 h-8 flex items-center justify-center text-xl font-semibold shadow-sm">2</div>
                 </div>
-                <span className="text-lg sm:text-2xl mt-2">{user.username}</span>
-                <div className="flex justify-center gap-3 items-center bg-[#808080] text-black rounded-lg w-24 h-10 mt-2 shadow-lg">
+                <span className="text-lg sm:text-2xl mt-2">{topThree[1]?.username}</span>
+                <div className="flex justify-center gap-2 items-center bg-[#C0C0C0] text-black rounded-lg w-24 h-10 mt-2 shadow-lg">
+                  <span className="text-lg sm:text-2xl font-bold pb-0.5">{topThree[1]?.leaderboardScore}</span>
                   <img src="/icons/points.png" alt="points" className="w-6 h-6" />
-                  <span className="text-lg sm:text-2xl font-bold">{user.leaderboardScore}</span>
                 </div>
               </div>
-            ))
-          ) : (
-            <div className="text-lg sm:text-2xl mt-4">Pas assez de joueurs pour afficher le reste du classement</div>
-          )}
+            )}
+            
+            {/* third place */}
+            {topThree[2] && topThree[2]?.leaderboardScore > 0 && (
+              <div className="flex flex-col items-center order-3 sm:order-3 p-4 mt-4 sm:mt-12">
+                <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#cd7f32] flex items-center justify-center shadow-lg">
+                  <img
+                    src={topThree[2]?.profileImg || "/avatar-placeholder.png"}
+                    alt="avatar"
+                    className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover"
+                  />
+                  <div className="absolute -top-2 right-1 bg-[#cd7f32] text-black rounded-full w-8 h-8 flex items-center justify-center text-xl font-semibold shadow-sm">3</div>
+                </div>
+                <span className="text-lg sm:text-2xl mt-2">{topThree[2]?.username}</span>
+                <div className="flex justify-center gap-3 items-center bg-[#cd7f32] text-black rounded-lg w-24 h-10 mt-2 shadow-lg">
+                  <img src="/icons/points.png" alt="points" className="w-6 h-6" />
+                  <span className="text-lg sm:text-2xl font-bold">{topThree[2]?.leaderboardScore}</span>
+                </div>
+              </div>
+            )}
+            
+          </div>
+
+          <div className="flex flex-wrap justify-evenly sm:gap-6"> {/* NEXT 4 DIV */}
+            {restOfList.length > 0 ? (
+              restOfList.slice(0, 4).map((user, index) => (
+                <div key={index} className="flex flex-col items-center p-4 mt-4">
+                  <div className="relative w-32 h-32 sm:w-28 sm:h-28 rounded-full bg-[#808080] flex items-center justify-center shadow-lg">
+                    <img
+                      src={user.profileImg || "/avatar-placeholder.png"}
+                      alt="avatar"
+                      className="w-28 h-28 sm:w-24 sm:h-24 rounded-full object-cover"
+                    />
+                    <div className="absolute -top-2 right-1 bg-[#808080] text-black rounded-full w-8 h-8 flex items-center justify-center text-xl font-semibold shadow-sm">{index + 4}</div>
+                  </div>
+                  <span className="text-lg sm:text-2xl mt-2">{user.username}</span>
+                  <div className="flex justify-center gap-3 items-center bg-[#808080] text-black rounded-lg w-24 h-10 mt-2 shadow-lg">
+                    <img src="/icons/points.png" alt="points" className="w-6 h-6" />
+                    <span className="text-lg sm:text-2xl font-bold">{user.leaderboardScore}</span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              // <div className="text-lg sm:text-2xl mt-4">Pas assez de joueurs pour afficher le reste du classement</div>
+              <div></div>
+            )}
+          </div>
+
+          <Link to="/classement">
+            <button className="bg-primary text-black text-2xl font-bold rounded-full w-96 h-12 mt-4 shadow-lg hover:bg-red-600">Voir le classement</button>
+          </Link>
+
         </div>
-
-        <Link to="/classement">
-          <button className="bg-primary text-black text-2xl font-bold rounded-full w-96 h-12 mt-4 shadow-lg hover:bg-red-600">Voir le classement</button>
-        </Link>
-
-      </div>
+      )}
 
       {/* <hr className="border-gray-400 opacity-40 w-3/4 mx-auto mt-8 mb-8" /> */}
 
@@ -194,17 +206,12 @@ const HomePage = () => {
         <div className="flex items-center justify-center gap-8">
           {routes?.length > 0 ? (
             routes.slice(0, 2).map((route, index) => (        
-                <div key={index} className="relative w-full sm:w-60 h-64 rounded-2xl overflow-hidden shadow-lg m-2">
-                  <img
-                    src={route.img || "/route-img-placeholder.png"}
-                    alt={route.name}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute flex bg-[#13C4A3] w-16 h-8 bottom-4 left-4 rounded-full text-center justify-center items-center text-black font-bold">
-                    <span> {route.grade} </span>
-                  </div>
-                  <div className="absolute flex bg-[#13C4A3] w-16 h-8 bottom-4 right-4 rounded-full text-center justify-center items-center text-black font-bold">
-                    <span> {route.difficultyPoints} </span>
+                <div key={index} className="relative sm:w-60 w-56 h-64 rounded-2xl overflow-hidden shadow-lg m-2">
+                  <img src={route.img} alt={route.name} className="w-full h-full object-cover" />
+                  <div className="absolute flex justify-between bottom-0 left-0 right-0 bg-[#808080] py-2 px-4">
+                    <span className="text-lg sm:text-xl">{route.grade}</span>
+                    <span className="text-lg sm:text-xl font-bold">{route.name}</span>
+                    <span className="text-lg sm:text-xl">{route.difficultyPoints}</span>
                   </div>
                 </div>
             ))
