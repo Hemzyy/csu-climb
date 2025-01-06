@@ -20,6 +20,22 @@ const VoiePage = () => {
     },
   });
 
+  // Validate Route Mutation
+  const validateRouteMutation = useValidate();
+
+  const handleValidate = (routeId) => {
+    validateRouteMutation.mutate(routeId);
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => setTempImg(reader.result);
+      reader.readAsDataURL(file);
+    }
+  };
+
   // State for selected route and modal visibility
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [tempImg, setTempImg] = useState(null);
@@ -53,6 +69,19 @@ const VoiePage = () => {
   const closeModal = () => {
     setSelectedRoute(null);
     setTempImg(null);
+  };
+
+  // Fetch user details by ID
+  const fetchUserDetails = async (userId) => {
+    try {
+      const res = await fetch(`/api/users/${userId}`); // Adjust endpoint as needed
+      const user = await res.json();
+      if (!res.ok) throw new Error(user.error || "Error fetching user");
+      return user;
+    } catch (error) {
+      console.error(`Failed to fetch user details for ${userId}:`, error);
+      return null; // Fallback to prevent crashes
+    }
   };
 
   return (
@@ -138,9 +167,11 @@ const VoiePage = () => {
           isAdmin={isAdmin}
           tempImg={tempImg}
           imgInputRef={imgInputRef}
+          handleImageChange={handleImageChange}
           handleValidate={handleValidate}
           validateRouteMutation={validateRouteMutation}
           authUser={authUser}
+          fetchUserDetails={fetchUserDetails} // Pass fetchUserDetails to the modal
         />
       )}
     </div>

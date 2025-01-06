@@ -35,6 +35,13 @@ const userSchema = new mongoose.Schema({
             default: [],
         }
     ],
+    projects: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Route",
+            default: [],
+        }
+    ],
     isAdmin: {
         type: Boolean,
         default: false,

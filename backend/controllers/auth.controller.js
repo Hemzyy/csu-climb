@@ -46,6 +46,7 @@ export const signup = async (req, res) => {
 				leaderboardScore: newUser.leaderboardScore,
                 rank: newUser.rank,
                 climbedRoutes: newUser.climbedRoutes,
+				projects: newUser.projects,
 			});
 		} else {
 			res.status(400).json({ error: "Invalid user data" });
@@ -76,6 +77,7 @@ export const login = async (req, res) => {
 			leaderboardScore: user.leaderboardScore,
 			rank: user.rank,
 			climbedRoutes: user.climbedRoutes,
+			projects: user.projects,
 		});
 	} catch (error) {
 		console.log("Error in login controller", error.message);
