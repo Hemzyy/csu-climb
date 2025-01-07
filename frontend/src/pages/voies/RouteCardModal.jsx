@@ -11,6 +11,8 @@ const RouteCardModal = ({
   handleImageChange,
   handleValidate,
   validateRouteMutation,
+  handleAddAsProject,
+  addAsProjectMutation,
   authUser,
   fetchUserDetails,
 }) => {
@@ -75,7 +77,18 @@ const RouteCardModal = ({
               onChange={handleImageChange}
             />
             {/* Bottom-right save project Button */}
-            <button className="absolute bottom-24 right-6 h-12 w-12 rounded-full shadow-md flex items-center justify-center transition-colors bg-[#FE5F55] text-black">
+            <button 
+              className={`absolute bottom-24 right-6 h-12 w-12 rounded-full shadow-md flex items-center justify-center transition-colors ${
+                authUser?.projects.some(
+                  (project) => project._id === selectedRoute._id
+                )
+                  ? "bg-green-500 text-black"
+                  : "bg-[#FE5F55] text-black"
+              }`}
+              onClick={() => handleAddAsProject(selectedRoute._id)}
+              disabled={addAsProjectMutation.isLoading}
+              title="Ajouter cette voie à mes projets"
+            >
               <img
                 src="/icons/mark.png"
                 alt="Checkmark Icon"

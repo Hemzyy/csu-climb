@@ -76,6 +76,46 @@ const updateRanks = async () => {
     }
 };
 
+export const addRemoveAsProject = async (req, res) => {
+    try {
+        const { routeId } = req.params;
+        const currentUser = await User.findById(req.user._id); // Find the logged-in user
+        const route = await Route.findById(routeId); // Find the route to add as project
+
+        if (!currentUser || !route) {
+            return res.status(404).json({ error: "User or route not found" });
+        }
+
+        // Check if the route is already added as project by the user
+        const isRouteAddedAsProject = currentUser.projects.includes(routeId);
+
+        if (isRouteAddedAsProject) {
+            // Remove the route as project
+            currentUser.projects = currentUser.projects.filter(
+                (id) => id.toString() !== routeId
+            );
+
+            // Save changes
+            await currentUser.save();
+            await route.save();
+
+            return res.status(200).json({ message: "Route removed as project successfully" });
+        } else {
+            // Add the route as project
+            currentUser.projects.push(routeId);
+
+            // Save changes
+            await currentUser.save();
+            await route.save();
+
+            return res.status(200).json({ message: "Route added as project successfully" });
+        }
+    } catch (error) {
+        console.log("Error in addRemoveAsProject: ", error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
 export const addRoute = async (req, res) => {
 	try {
 		const { name, grade, difficultyPoints, setter, img } = req.body;

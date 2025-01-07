@@ -63,7 +63,7 @@ const Navbar = () => {
               <Link to="/listevoies">Voies</Link>
             </li>
             <li>
-              <Link to="/">Mes Projets</Link>
+              <Link to="/listeprojets">Mes Projets</Link>
             </li>
           </ul>
         </div>
@@ -90,7 +90,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/" className="btn btn-sm btn-ghost">
+            <Link to="/listeprojets" className="btn btn-sm btn-ghost">
               Mes Projets
             </Link>
           </li>

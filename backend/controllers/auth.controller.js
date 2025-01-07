@@ -100,7 +100,8 @@ export const getMe = async (req, res) => {
 	try {
 		// Add .populate("climbedRoutes") to fetch the full Route objects
 		const user = await User.findById(req.user._id).select("-password")
-			.populate("climbedRoutes"); // Add this line
+			.populate("climbedRoutes") // Add this line
+			.populate("projects"); // Add this line
 
 		res.status(200).json(user);
 	} catch (error) {

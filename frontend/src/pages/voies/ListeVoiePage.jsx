@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import AddRouteModal from "./AddRouteModal";
 import EditRouteModal from "./EditRouteModal";
 import useValidate from "../../hooks/useValidate";
+import useAddAsProject from "../../hooks/useAddAsProject";
 import RouteCardModal from "./RouteCardModal";
 
 const VoiePage = () => {
@@ -25,6 +26,13 @@ const VoiePage = () => {
 
   const handleValidate = (routeId) => {
     validateRouteMutation.mutate(routeId);
+  };
+
+  // Add as Project Mutation
+  const addAsProjectMutation = useAddAsProject();
+
+  const handleAddAsProject = (routeId) => {
+    addAsProjectMutation.mutate(routeId);
   };
 
   const handleImageChange = (e) => {
@@ -170,6 +178,8 @@ const VoiePage = () => {
           handleImageChange={handleImageChange}
           handleValidate={handleValidate}
           validateRouteMutation={validateRouteMutation}
+          handleAddAsProject={handleAddAsProject}
+          addAsProjectMutation={addAsProjectMutation}
           authUser={authUser}
           fetchUserDetails={fetchUserDetails} // Pass fetchUserDetails to the modal
         />
