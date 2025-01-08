@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ValidatedByModal = ({ validatedUsers, closeModal }) => {
   return (
@@ -13,17 +14,19 @@ const ValidatedByModal = ({ validatedUsers, closeModal }) => {
         <h2 className="text-xl font-bold mb-4">Validated By</h2>
         <div className="space-y-2">
           {validatedUsers.map((user) => (
-            <div
-              key={user._id}
-              className="flex items-center gap-2 border-b border-gray-500 pb-2"
-            >
-              <img
-                src={user.profileImg || "/avatar-placeholder.png"}
-                alt={user.username}
-                className="w-8 h-8 rounded-full"
-              />
-              <p className="text-sm">{user.username}</p>
-            </div>
+            <Link to={`/profile/${user?.username}`} >
+              <div
+                key={user._id}
+                className="flex items-center gap-2 border-b border-gray-500 py-2"
+              >
+                <img
+                  src={user.profileImg || "/avatar-placeholder.png"}
+                  alt={user.username}
+                  className="w-8 h-8 rounded-full"
+                />
+                <p className="text-sm">{user.username}</p>
+              </div>
+            </Link>
           ))}
         </div>
       </div>
