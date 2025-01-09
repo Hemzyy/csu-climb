@@ -217,7 +217,7 @@ const HomePage = () => {
       {/* Newly opened routes  (2 latest roures) */}
       <div className="flex flex-col items-center gap-8 justify-center p-4 space-y-2 sm:space-x-4 mb-8 bg-[#626262] bg-opacity-20 rounded-xl">
         <h1 className="text-4xl"> Récemment ouvertes </h1>
-        <div className="flex items-center justify-center gap-8">
+        <div className="flex flex-wrap justify-center gap-4">
           {routes?.length > 0 ? (
             routes.slice(0, 2).map((route, index) => (        
                 <div key={index} className="relative sm:w-60 w-56 h-64 rounded-2xl overflow-hidden shadow-lg m-2">

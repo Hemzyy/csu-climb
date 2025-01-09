@@ -75,8 +75,8 @@ const About = () => {
                 className="textarea textarea-bordered"
               ></textarea>
             </div>
-            <button type="submit" className="btn btn-primary w-full">
-              Submit Feedback
+            <button type="submit" className="btn btn-primary w-full" disabled>
+              Submit Feedback (Currently Unavailable)
             </button>
           </form>
         </section>
