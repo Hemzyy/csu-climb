@@ -8,6 +8,7 @@ import ListeVoiePage from './pages/voies/ListeVoiePage';
 import ListeProjetPage from './pages/voies/ListeProjetPage';
 import Classement from './pages/classement/Classement';
 import ProfilePage from './pages/profile/ProfilePage';
+import AboutPage from './pages/about/AboutPage';
 
 import { Toaster } from 'react-hot-toast';
 import { useQuery } from '@tanstack/react-query';
@@ -55,7 +56,8 @@ function App() {
 				<Route path='/listevoies' element={authUser ? <ListeVoiePage /> : <Navigate to='/' />} />
 				<Route path='/listeprojets' element={authUser ? <ListeProjetPage /> : <Navigate to='/' />} />
 				<Route path='/classement' element={authUser ? <Classement /> : <Navigate to='/' />} />
-				<Route path='/profile/:username' element={authUser ? <ProfilePage /> : <Navigate to='/login' />} />
+				<Route path='/profile/:username' element={authUser ? <ProfilePage /> : <Navigate to='/' />} />
+				<Route path='/about' element={authUser ? <AboutPage /> : <Navigate to='/' />} />
 			</Routes>
 			</div>
 

@@ -202,13 +202,13 @@ const ProfilePage = () => {
                 {isMyProfile && (
                     <div className="flex justify-center items-center bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
                         <div className="flex flex-col items-center text-center">
-                            <span className="text-xl sm:text-3xl">Leaderboard Visibility</span>
-                            <span className="text-sm sm:text-lg text-gray-400 mt-2">Toggle your visibility on the leaderboard</span>
+                            <span className="text-xl sm:text-3xl">Visibilité dans le classement</span>
+                            <span className="text-sm sm:text-lg text-gray-400 mt-2">Cliquez pour changer la visibilité</span>
                             <button
                                 className={`mt-4 px-4 py-2 rounded-lg ${user?.showOnLeaderboard ? "bg-primary" : "bg-gray-400"}`}
                                 onClick={toggleVisibility}
                             >
-                                {user?.showOnLeaderboard ? "Visible" : "Hidden"}
+                                {user?.showOnLeaderboard ? "Visible" : "non visible"}
                             </button>
                         </div>
                     </div>

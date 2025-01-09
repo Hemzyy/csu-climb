@@ -93,24 +93,24 @@ const VoiePage = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white mt-4 gap-5">
+    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white gap-5">
 
       <h1 className="text-3xl font-bold text-center">List des voies</h1>
 
       {/* Filters and Sorting */}
-      <div className="flex justify-between  items-center">
+      <div className="flex justify-between self-center">
         <div>
           <button
             onClick={() => handleSortChange("difficultyPoints")}
             className="bg-gray-700 text-white rounded px-2 py-1 mx-2"
           >
-            Sort by Points ({sortOrder === "asc" ? "↑" : "↓"})
+            Trier par points ({sortOrder === "asc" ? "↑" : "↓"})
           </button>
           <button
             onClick={() => handleSortChange("grade")}
             className="bg-gray-700 text-white rounded px-2 py-1"
           >
-            Sort by Grade ({sortOrder === "asc" ? "↑" : "↓"})
+            Trier par niveau ({sortOrder === "asc" ? "↑" : "↓"})
           </button>
         </div>
       </div>
@@ -145,7 +145,7 @@ const VoiePage = () => {
                   <div>
                     <h2 className="text-lg font-bold">{route.name}</h2>
                     <p className="text-sm text-gray-200">
-                      <strong>Grade:</strong> {route.grade}
+                      <strong>Niveau:</strong> {route.grade}
                     </p>
                     <p className="text-sm text-gray-200">
                       <strong>Points:</strong> {route.difficultyPoints}

@@ -44,12 +44,12 @@ const Classement = () => {
   const restOfListFiltered = restOfList.filter(user => user.leaderboardScore > 0);
 
   return (
-    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white gap-4">
+    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white mt-1 gap-5">
 
-      <h1 className="text-3xl font-bold text-center mt-4">Classement</h1>
+      <h1 className="text-3xl font-bold text-center">Classement</h1>
 
       {/* Top 3 */}
-      <div className="sm:flex justify-center gap-2 mt-14">
+      <div className="sm:flex justify-center gap-2 mt-10">
 
         {/* 1st place */}
         {topThree[0]?.leaderboardScore > 0 && (
@@ -61,9 +61,9 @@ const Classement = () => {
                   <img
                     src={topThree[0]?.profileImg || "/avatar-placeholder.png"}
                     alt="profile"
-                    className="w-12 h-12 sm:w-16 sm:h-16 rounded-full mt-5"
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full mt-5"
                   />
-                  <span className="text-xl sm:text-2xl mt-2">{topThree[0]?.username}</span>
+                  <span className="text-2xl mt-2">{topThree[0]?.username}</span>
 
                 </div>
               </Link>
@@ -86,9 +86,9 @@ const Classement = () => {
                     <React.Fragment key={index}>
                       {/* Stat Block */}
                       <div className="flex flex-col items-center text-center pb-2">
-                        <img src={icon} alt="icon" className="w-8 h-8 sm:w-7 sm:h-7" />
+                        <img src={icon} alt="icon" className="w-9 h-9 sm:w-7 sm:h-7" />
                         <div className="flex flex-col justify-around sm:h-12 sm:w-10 rounded-2xl items-center">
-                          <span className="text-[#FFD700] font-bold text-1xl sm:text-2xl">{value}</span>
+                          <span className="text-[#FFD700] font-bold text-2xl sm:text-2xl">{value}</span>
                           <span className="text-lg text-gray-500 sm:text-1xl mx-4">{label}</span>
                         </div>
                       </div>
@@ -115,9 +115,9 @@ const Classement = () => {
                   <img
                     src={topThree[1]?.profileImg || "/avatar-placeholder.png"}
                     alt="profile"
-                    className="w-12 h-12 sm:w-16 sm:h-16 rounded-full mt-5"
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full mt-5"
                   />
-                  <span className="text-xl sm:text-2xl mt-2">{topThree[1]?.username}</span>
+                  <span className="text-2xl mt-2">{topThree[1]?.username}</span>
 
                 </div>
               </Link>
@@ -140,9 +140,9 @@ const Classement = () => {
                     <React.Fragment key={index}>
                       {/* Stat Block */}
                       <div className="flex flex-col items-center text-center">
-                        <img src={icon} alt="icon" className="w-8 h-8 sm:w-7 sm:h-7" />
+                        <img src={icon} alt="icon" className="w-9 h-9 sm:w-7 sm:h-7" />
                         <div className="flex flex-col justify-around sm:h-12 sm:w-10 rounded-2xl items-center">
-                          <span className="text-[#C0C0C0] font-bold text-1xl sm:text-2xl">{value}</span>
+                          <span className="text-[#C0C0C0] font-bold text-2xl sm:text-2xl">{value}</span>
                           <span className="text-lg text-gray-500 sm:text-1xl mx-4">{label}</span>
                         </div>
                       </div>
@@ -169,9 +169,9 @@ const Classement = () => {
                   <img
                     src={topThree[2]?.profileImg || "/avatar-placeholder.png"}
                     alt="profile"
-                    className="w-12 h-12 sm:w-16 sm:h-16 rounded-full mt-5"
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full mt-5"
                   />
-                  <span className="text-xl sm:text-2xl mt-2">{topThree[2]?.username}</span>
+                  <span className="text-2xl mt-2">{topThree[2]?.username}</span>
 
                 </div>
               </Link>
@@ -194,9 +194,9 @@ const Classement = () => {
                     <React.Fragment key={index}>
                       {/* Stat Block */}
                       <div className="flex flex-col items-center text-center">
-                        <img src={icon} alt="icon" className="w-8 h-8 sm:w-7 sm:h-7" />
+                        <img src={icon} alt="icon" className="w-9 h-9 sm:w-7 sm:h-7" />
                         <div className="flex flex-col justify-around sm:h-12 sm:w-10 rounded-2xl items-center">
-                          <span className="text-[#cd7f32] font-bold text-1xl sm:text-2xl">{value}</span>
+                          <span className="text-[#cd7f32] font-bold text-2xl sm:text-2xl">{value}</span>
                           <span className="text-lg text-gray-500 sm:text-1xl mx-4">{label}</span>
                         </div>
                       </div>

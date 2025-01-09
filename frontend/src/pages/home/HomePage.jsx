@@ -58,7 +58,10 @@ const HomePage = () => {
 
   return (
     // main div that will contain the three sections
-    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen pt-16 text-white mt-20 gap-12">
+    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white mt-32 gap-5">
+
+      <h1 className="text-3xl font-bold text-center">Page d'acceuil</h1>
+
 
       {/* user stats */}
       <div className="flex-col sm:flex-row items-center justify-center sm:space-y-0 sm:space-x-0 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
@@ -109,7 +112,7 @@ const HomePage = () => {
 
       {/* Top 3 then next 4 */}
       {validTopThree.length > 0 && (
-        <div className="flex flex-col items-center justify-center gap-6 sm:justify-evenly p-4 space-y-2 sm:space-y-0 mb-4 -mt-6 bg-[#626262] bg-opacity-20 rounded-xl">
+        <div className="flex flex-col items-center justify-center gap-6 sm:justify-evenly p-4 space-y-2 sm:space-y-0 bg-[#626262] bg-opacity-20 rounded-xl">
 
           <h1 className="text-4xl"> Classement </h1>
           <div className="flex justify-evenly sm:gap-2"> {/* TOP 3 DIV */}
@@ -212,7 +215,7 @@ const HomePage = () => {
       {/* <hr className="border-gray-400 opacity-40 w-3/4 mx-auto mt-8 mb-8" /> */}
 
       {/* Newly opened routes  (2 latest roures) */}
-      <div className="flex flex-col items-center gap-8 justify-center p-4 space-y-2 sm:space-x-4 mb-8 -mt-8 bg-[#626262] bg-opacity-20 rounded-xl">
+      <div className="flex flex-col items-center gap-8 justify-center p-4 space-y-2 sm:space-x-4 mb-8 bg-[#626262] bg-opacity-20 rounded-xl">
         <h1 className="text-4xl"> Récemment ouvertes </h1>
         <div className="flex items-center justify-center gap-8">
           {routes?.length > 0 ? (

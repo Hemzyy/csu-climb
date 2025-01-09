@@ -121,7 +121,7 @@ const RouteCardModal = ({
               className="text-sm underline"
               onClick={() => setShowValidatedModal(true)}
             >
-              Validated by {validatedByCount}
+              Validée par {validatedByCount}
             </button>
           </div>
         </div>
