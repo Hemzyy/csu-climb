@@ -119,59 +119,59 @@ const HomePage = () => {
             {/* first place */}
             <div className="flex flex-col items-center order-1 sm:order-2 p-4 mt-4">
               <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#FFD700] flex items-center justify-center shadow-lg">
-                <Link to={`/profile/${topThree[0]?.username}`} >
+                <Link to={`/profile/${validTopThree[0]?.username}`} >
                   <img
-                    src={topThree[0]?.profileImg || "/avatar-placeholder.png"}
+                    src={validTopThree[0]?.profileImg || "/avatar-placeholder.png"}
                     alt="avatar"
                     className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover"
                   />
                 </Link>
                 <div className="absolute -top-2 right-1 bg-[#FFD700] text-black rounded-full w-8 h-8 flex items-center justify-center text-xl font-semibold shadow-sm">1</div>
               </div>
-              <span className="text-lg sm:text-2xl mt-2">{topThree[0]?.username}</span>
+              <span className="text-lg sm:text-2xl mt-2">{validTopThree[0]?.username}</span>
               <div className="flex justify-center gap-2 items-center bg-[#FFD700] text-black rounded-lg w-24 h-10 mt-2 shadow-lg">
-                <span className="text-lg sm:text-2xl font-bold pb-0.5">{topThree[0]?.leaderboardScore}</span>
+                <span className="text-lg sm:text-2xl font-bold pb-0.5">{validTopThree[0]?.leaderboardScore}</span>
                 <img src="/icons/points.png" alt="points" className="w-6 h-6" />
               </div>
             </div>
             {/* second place */}
-            {topThree[1] && topThree[1]?.leaderboardScore > 0 && (
+            {validTopThree[1] && validTopThree[1]?.leaderboardScore > 0 && (
               <div className="flex flex-col items-center order-2 sm:order-1 p-4 mt-4 sm:mt-12">
                 <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#C0C0C0] flex items-center justify-center shadow-lg">
-                  <Link to={`/profile/${topThree[1]?.username}`} >
+                  <Link to={`/profile/${validTopThree[1]?.username}`} >
                     <img
-                      src={topThree[1]?.profileImg || "/avatar-placeholder.png"}
+                      src={validTopThree[1]?.profileImg || "/avatar-placeholder.png"}
                       alt="avatar"
                       className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover"
                     />
                   </Link>
                   <div className="absolute -top-2 right-1 bg-[#C0C0C0] text-black rounded-full w-8 h-8 flex items-center justify-center text-xl font-semibold shadow-sm">2</div>
                 </div>
-                <span className="text-lg sm:text-2xl mt-2">{topThree[1]?.username}</span>
+                <span className="text-lg sm:text-2xl mt-2">{validTopThree[1]?.username}</span>
                 <div className="flex justify-center gap-2 items-center bg-[#C0C0C0] text-black rounded-lg w-24 h-10 mt-2 shadow-lg">
-                  <span className="text-lg sm:text-2xl font-bold pb-0.5">{topThree[1]?.leaderboardScore}</span>
+                  <span className="text-lg sm:text-2xl font-bold pb-0.5">{validTopThree[1]?.leaderboardScore}</span>
                   <img src="/icons/points.png" alt="points" className="w-6 h-6" />
                 </div>
               </div>
             )}
             
             {/* third place */}
-            {topThree[2] && topThree[2]?.leaderboardScore > 0 && (
+            {validTopThree[2] && validTopThree[2]?.leaderboardScore > 0 && (
               <div className="flex flex-col items-center order-3 sm:order-3 p-4 mt-4 sm:mt-12">
                 <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#cd7f32] flex items-center justify-center shadow-lg">
-                  <Link to={`/profile/${topThree[2]?.username}`} >
+                  <Link to={`/profile/${validTopThree[2]?.username}`} >
                     <img
-                      src={topThree[2]?.profileImg || "/avatar-placeholder.png"}
+                      src={validTopThree[2]?.profileImg || "/avatar-placeholder.png"}
                       alt="avatar"
                       className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover"
                     />
                   </Link>
                   <div className="absolute -top-2 right-1 bg-[#cd7f32] text-black rounded-full w-8 h-8 flex items-center justify-center text-xl font-semibold shadow-sm">3</div>
                 </div>
-                <span className="text-lg sm:text-2xl mt-2">{topThree[2]?.username}</span>
+                <span className="text-lg sm:text-2xl mt-2">{validTopThree[2]?.username}</span>
                 <div className="flex justify-center gap-3 items-center bg-[#cd7f32] text-black rounded-lg w-24 h-10 mt-2 shadow-lg">
                   <img src="/icons/points.png" alt="points" className="w-6 h-6" />
-                  <span className="text-lg sm:text-2xl font-bold">{topThree[2]?.leaderboardScore}</span>
+                  <span className="text-lg sm:text-2xl font-bold">{validTopThree[2]?.leaderboardScore}</span>
                 </div>
               </div>
             )}
