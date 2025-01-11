@@ -201,7 +201,7 @@ const HomePage = () => {
               ))
             ) : (
               // <div className="text-lg sm:text-2xl mt-4">Pas assez de joueurs pour afficher le reste du classement</div>
-              <div>Pas assez de jouer ayant des points pour afficher le reste du classement</div>
+              <div>Pas assez de joueurs ayant des points pour afficher le reste du classement</div>
             )}
           </div>
 
