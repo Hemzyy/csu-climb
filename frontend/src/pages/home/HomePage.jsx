@@ -58,7 +58,7 @@ const HomePage = () => {
 
   return (
     // main div that will contain the three sections
-    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white mt-32 gap-5">
+    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white gap-5 sm:pt-[10rem] pt-[5rem]">
 
       <h1 className="text-3xl font-bold text-center">Page d'acceuil</h1>
 
@@ -182,12 +182,12 @@ const HomePage = () => {
             {validRestOfList.length > 0 ? (
               validRestOfList.slice(0, 4).map((user, index) => (
                 <div key={index} className="flex flex-col items-center p-4 mt-4">
-                  <div className="relative w-32 h-32 sm:w-28 sm:h-28 rounded-full bg-[#808080] flex items-center justify-center shadow-lg">
+                  <div className="relative w-28 h-28 sm:w-28 sm:h-28 rounded-full bg-[#808080] flex items-center justify-center shadow-lg">
                     <Link to={`/profile/${user?.username}`} >
                       <img
                         src={user.profileImg || "/avatar-placeholder.png"}
                         alt="avatar"
-                        className="w-28 h-28 sm:w-24 sm:h-24 rounded-full object-cover"
+                        className="w-24 h-24 sm:w-24 sm:h-24 rounded-full object-cover"
                       />
                     </Link>
                     <div className="absolute -top-2 right-1 bg-[#808080] text-black rounded-full w-8 h-8 flex items-center justify-center text-xl font-semibold shadow-sm">{index + 4}</div>

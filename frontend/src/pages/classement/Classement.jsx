@@ -44,12 +44,12 @@ const Classement = () => {
   const restOfListFiltered = restOfList.filter(user => user.leaderboardScore > 0);
 
   return (
-    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white mt-1 gap-5">
+    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white mt-1 gap-5 pt-[5rem]">
 
       <h1 className="text-3xl font-bold text-center">Classement</h1>
 
       {/* Top 3 */}
-      <div className="sm:flex justify-center gap-2 mt-10">
+      <div className="sm:flex justify-center gap-2 sm:mt-10">
 
         {/* 1st place */}
         {topThree[0]?.leaderboardScore > 0 && (
