@@ -37,11 +37,6 @@ const Classement = () => {
   if (loadingTopThree || loadingRest) return <div>Loading...</div>;
   if (errorTopThree || errorRest) return <div>Error loading leaderboard!</div>;
 
-  //check if topthree all have valid score to be ranked
-  const validTopThree = topThree.some(user => user?.leaderboardScore > 0);
-
-  //remove all players with leaderboardScore = 0 from restOfList
-  const restOfListFiltered = restOfList.filter(user => user.leaderboardScore > 0);
 
   return (
     <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white mt-1 gap-5 pt-[5rem]">
@@ -218,9 +213,9 @@ const Classement = () => {
       </div>
 
       {/* Rest of list */}
-      {validTopThree && restOfListFiltered.length > 0 && (
+      {topThree && restOfList.length > 0 && (
         <div className="flex flex-col gap-4 bg-[#626262] bg-opacity-20 py-4 sm:px-20 rounded-xl">
-          {restOfListFiltered.map((user, index) => (
+          {restOfList.map((user, index) => (
             <div key={index} className="flex flex-col justify-center">
               <Link to={`/profile/${user?.username}`} >
                 <div className={`flex justify-between items-center ${user.username === authUser?.username ? "text-[#FE5F55]" : ""}`}>
@@ -244,7 +239,7 @@ const Classement = () => {
         </div>
       )}
 
-      {!validTopThree && (
+      {!topThree && (
         <div className="text-center text-lg mt-4">Aucun autre grimpeur n'a encore validé de voie</div>
       )}
 

@@ -20,10 +20,11 @@ import User from "../models/user.model.js";
 //     }
 // };
 
+//function get top three: sort users by leaderboardScore and get the top 3 while filtering out users who don't want to be shown on the leaderboard and who have 0 points
 export const getTopThree = async (req, res) => {
     try {
-        const topThree = await User.find({ showOnLeaderboard: true })
-            .sort({ rank: 1 })
+        const topThree = await User.find({ showOnLeaderboard: true, leaderboardScore: { $gt: 0 } })
+            .sort({ leaderboardScore: -1 })
             .limit(3);
         res.status(200).json(topThree);
     } catch (error) {
@@ -31,11 +32,11 @@ export const getTopThree = async (req, res) => {
     }
 };
 
-// Get the rest of the list from users collection
+// function get rest of list: same as getTopThree but skip the first 3 users
 export const getRestOfList = async (req, res) => {
     try {
-        const restOfList = await User.find({ showOnLeaderboard: true })
-            .sort({ rank: 1 })
+        const restOfList = await User.find({ showOnLeaderboard: true, leaderboardScore: { $gt: 0 } })
+            .sort({ leaderboardScore: -1 })
             .skip(3);
         res.status(200).json(restOfList);
     } catch (error) {
