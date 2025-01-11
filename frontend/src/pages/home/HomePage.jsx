@@ -70,7 +70,7 @@ const HomePage = () => {
           <img
             src={user.profileImg || "/avatar-placeholder.png"}
             alt="profile"
-            className="w-24 h-24 sm:w-36 sm:h-36 rounded-full"
+            className="w-24 h-24 sm:w-36 sm:h-36 rounded-full object-cover"
           />
           <span className="text-xl sm:text-3xl mt-2">{user.username}</span>
         </div>

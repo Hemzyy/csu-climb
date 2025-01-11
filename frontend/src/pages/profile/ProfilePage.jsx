@@ -131,7 +131,7 @@ const ProfilePage = () => {
                         <img
                             src={profileImg || user?.profileImg || "/avatar-placeholder.png"}
                             alt="profile"
-                            className="w-28 h-28 sm:w-36 sm:h-36 rounded-full"
+                            className="w-28 h-28 sm:w-36 sm:h-36 rounded-full object-cover"
                         />
 
                         {(profileImg) && (

@@ -61,7 +61,7 @@ const Classement = () => {
                   <img
                     src={topThree[0]?.profileImg || "/avatar-placeholder.png"}
                     alt="profile"
-                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full mt-5"
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover mt-5"
                   />
                   <span className="text-2xl mt-2">{topThree[0]?.username}</span>
 
@@ -115,7 +115,7 @@ const Classement = () => {
                   <img
                     src={topThree[1]?.profileImg || "/avatar-placeholder.png"}
                     alt="profile"
-                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full mt-5"
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover mt-5"
                   />
                   <span className="text-2xl mt-2">{topThree[1]?.username}</span>
 
@@ -169,7 +169,7 @@ const Classement = () => {
                   <img
                     src={topThree[2]?.profileImg || "/avatar-placeholder.png"}
                     alt="profile"
-                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full mt-5"
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover mt-5"
                   />
                   <span className="text-2xl mt-2">{topThree[2]?.username}</span>
 
@@ -230,7 +230,7 @@ const Classement = () => {
                     <img
                       src={user.profileImg || "/avatar-placeholder.png"}
                       alt="profile"
-                      className="w-12 h-12 rounded-full"
+                      className="w-12 h-12 rounded-full object-cover"
                     />
                     <span>{user.username}</span>
                   </div>
