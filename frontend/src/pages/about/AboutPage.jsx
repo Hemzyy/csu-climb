@@ -51,7 +51,7 @@ const About = () => {
             le formulaire ci-dessous avec vos suggestions ou signalements.
           </p>
           <form
-            action="https://csu-climb.onrender.comfeedback"
+            action="/api/feedback"
             method="POST"
             className="space-y-4"
           >

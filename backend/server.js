@@ -12,7 +12,6 @@ import leaderboardRoutes from "./routes/leaderboard.route.js";
 import connectMongoDB from "./db/connectMongoDB.js";
 
 import path from "path";
-import cors from "cors";
 
 dotenv.config();
 
@@ -37,18 +36,14 @@ app.use("/api/routes", routeRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
 app.use("/api/notifications", notificationRoutes);
 
-// if(process.env.NODE_ENV === "production") {
-//     app.use(express.static(path.join(__dirname, "/frontend/dist")));
+if(process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
-//     app.get("*", (req, res) => {
-//         res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
-//     });
-// }
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+    });
+}
 
-app.use(cors({
-    origin: "https://csu-climb.netlify.app", // Replace with your Netlify app URL
-    credentials: true,
-  }));
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

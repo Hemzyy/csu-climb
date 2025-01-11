@@ -21,7 +21,7 @@ const SignUpPage = () => {
 	const { mutate, isError, isPending, error} = useMutation({
 		mutationFn: async ({ email, username, password }) => {
 			try {
-				const res = await fetch("https://csu-climb.onrender.comauth/signup", {
+				const res = await fetch("/api/auth/signup", {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",

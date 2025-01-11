@@ -12,7 +12,7 @@ const Navbar = () => {
   const { mutate: logout } = useMutation({
     mutationFn: async () => {
       try {
-        const res = await fetch("https://csu-climb.onrender.comauth/logout", { method: "POST" });
+        const res = await fetch("/api/auth/logout", { method: "POST" });
         const data = await res.json();
 
         if (!res.ok) {

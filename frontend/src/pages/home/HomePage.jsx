@@ -20,21 +20,21 @@ const parseGrade = (grade) => {
 
 const HomePage = () => {
   // Queries
-  const { data: authUser } = useQuery({ queryKey: ["authUser"], queryFn: () => fetchData("https://csu-climb.onrender.comauth/me") });
+  const { data: authUser } = useQuery({ queryKey: ["authUser"], queryFn: () => fetchData("/api/auth/me") });
 
   const { data: topThree = [], isLoading, isError } = useQuery({
     queryKey: ["topThree"],
-    queryFn: () => fetchData("https://csu-climb.onrender.comleaderboard/topThree"),
+    queryFn: () => fetchData("/api/leaderboard/topThree"),
   });
 
   const { data: restOfList = [], isLoading: loadingRest, isError: errorRest } = useQuery({
     queryKey: ["restOfList"],
-    queryFn: () => fetchData("https://csu-climb.onrender.comleaderboard/GetRestOfList"),
+    queryFn: () => fetchData("/api/leaderboard/GetRestOfList"),
   });
 
   const { data: routes = [] } = useQuery({
     queryKey: ["routes"],
-    queryFn: () => fetchData("https://csu-climb.onrender.comroutes"),
+    queryFn: () => fetchData("/api/routes"),
   });
 
   // Handle loading and error states
