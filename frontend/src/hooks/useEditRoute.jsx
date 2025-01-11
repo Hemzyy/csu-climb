@@ -7,7 +7,7 @@ const useEditRoute = () => {
     const editRouteMutation = useMutation({
         mutationFn: async (formData) => {
             try {
-                const res = await fetch('/api/routes/editRoute', {
+                const res = await fetch('https://csu-climb.onrender.comroutes/editRoute', {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

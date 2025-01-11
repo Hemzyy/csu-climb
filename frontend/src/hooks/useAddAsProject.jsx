@@ -7,7 +7,7 @@ const useAddAsProject = () => {
     const addAsProjectMutation = useMutation({
         mutationFn: async (id) => {
         try {
-            const res = await fetch(`/api/routes/addAsProject/${id}`, {
+            const res = await fetch(`https://csu-climb.onrender.comroutes/addAsProject/${id}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             });

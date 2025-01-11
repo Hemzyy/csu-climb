@@ -7,7 +7,7 @@ const useValidateRoute = () => {
   const validateRouteMutation = useMutation({
     mutationFn: async (id) => {
       try {
-        const res = await fetch(`/api/routes/validate/${id}`, {
+        const res = await fetch(`https://csu-climb.onrender.comroutes/validate/${id}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
         });

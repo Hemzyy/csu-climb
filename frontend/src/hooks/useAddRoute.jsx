@@ -6,7 +6,7 @@ const useAddRoute = () => {
 
 	const addRouteMutation = useMutation({
 		mutationFn: async (newRoute) => {
-			const res = await fetch("/api/routes/addRoute", {
+			const res = await fetch("https://csu-climb.onrender.comroutes/addRoute", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",

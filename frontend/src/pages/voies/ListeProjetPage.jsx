@@ -8,7 +8,7 @@ const ProjectsPage = () => {
     const { data: routes, isLoading } = useQuery({
         queryKey: ["routes"],
         queryFn: async () => {
-            const res = await fetch("/api/routes");
+            const res = await fetch("https://csu-climb.onrender.comroutes");
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || "Something went wrong");
             return data;

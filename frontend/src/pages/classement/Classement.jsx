@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
 const fetchTopThree = async () => {
-  const res = await fetch("/api/leaderboard/topThree");
+  const res = await fetch("https://csu-climb.onrender.comleaderboard/topThree");
   const data = await res.json();
   if (!res.ok) {
     throw new Error(data.error || "Something went wrong");
@@ -12,7 +12,7 @@ const fetchTopThree = async () => {
 };
 
 const fetchRestOfList = async () => {
-  const res = await fetch("/api/leaderboard/GetRestOfList");
+  const res = await fetch("https://csu-climb.onrender.comleaderboard/GetRestOfList");
   const data = await res.json();
   if (!res.ok) {
     throw new Error(data.error || "Something went wrong");

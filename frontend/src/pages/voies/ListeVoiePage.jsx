@@ -14,7 +14,7 @@ const VoiePage = () => {
   const { data: routes, isLoading } = useQuery({
     queryKey: ["routes"],
     queryFn: async () => {
-      const res = await fetch("/api/routes");
+      const res = await fetch("https://csu-climb.onrender.comroutes");
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong");
       return data;
@@ -82,7 +82,7 @@ const VoiePage = () => {
   // Fetch user details by ID
   const fetchUserDetails = async (userId) => {
     try {
-      const res = await fetch(`/api/users/${userId}`); // Adjust endpoint as needed
+      const res = await fetch(`https://csu-climb.onrender.comusers/${userId}`); // Adjust endpoint as needed
       const user = await res.json();
       if (!res.ok) throw new Error(user.error || "Error fetching user");
       return user;

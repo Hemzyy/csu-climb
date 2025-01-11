@@ -21,7 +21,7 @@ const ProfilePage = () => {
         queryKey: ["userProfile"],
         queryFn: async () => {
             try {
-                const res = await fetch(`/api/users/profile/${username}`);
+                const res = await fetch(`https://csu-climb.onrender.comusers/profile/${username}`);
                 const data = await res.json();
                 if (!res.ok) {
                     throw new Error(data.error || "Something went wrong");
@@ -57,7 +57,7 @@ const ProfilePage = () => {
         queryKey: ["climbedRoutes"],
         queryFn: async () => {
             try {
-                const res = await fetch(`/api/users/climbedRoutes/${username}`);
+                const res = await fetch(`https://csu-climb.onrender.comusers/climbedRoutes/${username}`);
                 const data = await res.json();
                 if (!res.ok) {
                     throw new Error(data.error || "Something went wrong");
@@ -86,7 +86,7 @@ const ProfilePage = () => {
     //endpoint to update the users visibility on the leaderboard
     const toggleVisibility = async () => {
         try {
-            const res = await fetch(`/api/leaderboard/leaderboard-visibility/${user._id}`, {
+            const res = await fetch(`https://csu-climb.onrender.comleaderboard/leaderboard-visibility/${user._id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
