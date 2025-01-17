@@ -60,7 +60,7 @@ const HomePage = () => {
     // main div that will contain the three sections
     <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white gap-5 sm:pt-[10rem] pt-[5rem]">
 
-      <h1 className="text-3xl font-bold text-center">Page d'acceuil</h1>
+      <h1 className="text-3xl font-bold text-center">Acceuil</h1>
 
 
       {/* user stats */}

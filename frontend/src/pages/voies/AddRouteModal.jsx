@@ -115,7 +115,7 @@ const AddRouteModal = () => {
 								onChange={handleImgChange}
 							/>
 							<button className="btn btn-primary rounded-full btn-sm text-white">
-								{isAddingRoute ? "Adding..." : "Add Route"}
+								{isAddingRoute ? <span className="loading loading-spinner loading-xs"></span> : "Add Route"}
 							</button>
 						</div>
 					</form>

@@ -12,10 +12,16 @@ const About = () => {
       <main className="container mx-auto py-8 px-4 space-y-12">
         {/* Project Description Section */}
         <section className="bg-base-100 shadow-md rounded-lg p-6">
+          <p className="text-xl font-semibold text-center">
+            ⚠️ Ce site est toujours en cours de développement et contuinera à être amélioré.
+          </p>
+        </section>
+
+        <section className="bg-base-100 shadow-md rounded-lg p-6">
           <h2 className="text-2xl font-semibold mb-4">À propos du projet</h2>
           <p>
-            Bienvenue sur CSU-climb ! Ce site web est un projet personnel créé
-            pour le plaisir. Il vise à permettre aux grimpeurs de suivre leurs
+            Bienvenue sur CSU-climb ! Ce site web est un projet personnel.
+            Il vise à permettre aux grimpeurs de suivre leurs
             progrès et de se fixer des objectifs. Ce projet n'est pas affilié à
             l'université. C'est une initiative personnelle destinée aux
             grimpeurs de l'université!

@@ -231,3 +231,49 @@ export const editRoute = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+
+//function deleteRoute that will go through every user and check if the route id passed in the request is in the user's climbedRoutes array. If it is, it will remove it from the array and decrement the user's leaderboardScore by the route's difficultyPoints. then it will save the user. After that, it will delete the route from the database
+export const deleteRoute = async (req, res) => {
+    try {
+        const currentUser = await User.findById(req.user._id); // Find the logged-in user
+
+        if (!currentUser || !currentUser.isAdmin) {
+            return res.status(403).json({ error: "Only an Admin can delete routes." });
+        }
+
+        const { routeId } = req.params;
+        const route = await Route.findById(routeId);
+
+        if (!route) {
+            return res.status(404).json({ error: "Route not found" });
+        }
+
+        const users = await User.find();
+
+        for (let user of users) {
+            if (user.climbedRoutes.includes(routeId)) {
+                user.climbedRoutes = user.climbedRoutes.filter(
+                    (id) => id.toString() !== routeId
+                );
+                user.leaderboardScore -= route.difficultyPoints;
+                if (user.leaderboardScore < 0) {
+                    user.leaderboardScore = 0;
+                }
+                await user.save();
+            }
+        }
+
+        if(route.img) {
+            await cloudinary.uploader.destroy(route.img.split("/").pop().split(".")[0]);
+        }
+
+        // remove the route from the database
+        await Route.findByIdAndDelete(routeId);
+
+        return res.status(200).json({ message: "Route deleted successfully" });
+
+    } catch (error) {
+        console.log("Error in deleteRoute: ", error.message);
+        res.status(500).json({ error: error.message });
+    }
+}
