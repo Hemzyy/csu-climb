@@ -165,7 +165,7 @@ export const addRoute = async (req, res) => {
 
 export const getRoutes = async (req, res) => {
     try {
-        const routes = await Route.find(); // Fetch all routes
+        const routes = await Route.find().sort({createdAt: -1}); // Fetch all routes
         res.status(200).json(routes);
     } catch (error) {
         console.error("Error fetching routes:", error.message);

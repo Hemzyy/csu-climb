@@ -58,10 +58,15 @@ const VoiePage = () => {
   const filteredAndSortedRoutes = routes
     ?.filter((route) => (filterGrade ? route.grade === filterGrade : true))
     ?.sort((a, b) => {
-      const comparison =
-        sortField === "difficultyPoints"
-          ? a.difficultyPoints - b.difficultyPoints
-          : a.grade.localeCompare(b.grade);
+      let comparison;
+      if (sortField === "difficultyPoints") {
+        comparison = a.difficultyPoints - b.difficultyPoints;
+      } else if (sortField === "grade") {
+        comparison = a.grade.localeCompare(b.grade);
+      } else if (sortField === "createdAt") {
+        // Handle sorting by date
+        comparison = new Date(a.createdAt) - new Date(b.createdAt);
+      }
       return sortOrder === "asc" ? comparison : -comparison;
     });
 
@@ -108,9 +113,15 @@ const VoiePage = () => {
           </button>
           <button
             onClick={() => handleSortChange("grade")}
-            className="bg-gray-700 text-white rounded px-2 py-1"
+            className="bg-gray-700 text-white rounded px-2 py-1 mx-2"
           >
             Trier par niveau ({sortOrder === "asc" ? "↑" : "↓"})
+          </button>
+          <button  
+            onClick={() => handleSortChange("createdAt")}
+            className="bg-gray-700 text-white rounded px-2 py-1 mx-2"
+            >
+            Trier par date ({sortOrder === "asc" ? "↑" : "↓"})
           </button>
         </div>
       </div>
@@ -149,6 +160,9 @@ const VoiePage = () => {
                     </p>
                     <p className="text-sm text-gray-200">
                       <strong>Points:</strong> {route.difficultyPoints}
+                    </p>
+                    <p className="text-sm text-gray-200">
+                      <strong>Validations: </strong> {route.successfulClimbs}
                     </p>
                   </div>
                   {isValidated && (
