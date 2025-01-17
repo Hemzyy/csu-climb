@@ -8,6 +8,7 @@ import userRoutes from "./routes/user.route.js";
 import routeRoutes from "./routes/route.route.js";
 import notificationRoutes from "./routes/notification.route.js";
 import leaderboardRoutes from "./routes/leaderboard.route.js";
+import feedbackRoutes from "./routes/feedback.route.js";
 
 import connectMongoDB from "./db/connectMongoDB.js";
 
@@ -35,6 +36,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/routes", routeRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
 if(process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "/frontend/dist")));
