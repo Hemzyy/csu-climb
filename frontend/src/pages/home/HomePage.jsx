@@ -58,10 +58,9 @@ const HomePage = () => {
 
   return (
     // main div that will contain the three sections
-    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white gap-5 sm:pt-[10rem] pt-[5rem]">
+    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white gap-5 sm:pt-[10rem] pt-[5rem] sm:pb-0 pb-10">
 
       <h1 className="text-3xl font-bold text-center">Acceuil</h1>
-
 
       {/* user stats */}
       <div className="flex-col sm:flex-row items-center justify-center sm:space-y-0 sm:space-x-0 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">

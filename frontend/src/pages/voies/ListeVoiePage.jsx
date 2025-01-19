@@ -98,33 +98,32 @@ const VoiePage = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white gap-5 pt-[5rem]">
+    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white gap-5 pt-[5rem] sm:pb-0 pb-20">
 
       <h1 className="text-3xl font-bold text-center">List des voies</h1>
 
       {/* Filters and Sorting */}
-      <div className="flex justify-between self-center">
-        <div>
-          <button
-            onClick={() => handleSortChange("difficultyPoints")}
-            className="bg-gray-700 text-white rounded px-2 py-1 mx-2"
-          >
-            Trier par points ({sortOrder === "asc" ? "↑" : "↓"})
-          </button>
-          <button
-            onClick={() => handleSortChange("grade")}
-            className="bg-gray-700 text-white rounded px-2 py-1 mx-2"
-          >
-            Trier par niveau ({sortOrder === "asc" ? "↑" : "↓"})
-          </button>
-          <button  
-            onClick={() => handleSortChange("createdAt")}
-            className="bg-gray-700 text-white rounded px-2 py-1 mx-2"
-            >
-            Trier par date ({sortOrder === "asc" ? "↑" : "↓"})
-          </button>
-        </div>
+      <div className="flex flex-wrap justify-center gap-2 p-2 sm:justify-between sm:flex-nowrap">
+        <button
+          onClick={() => handleSortChange("difficultyPoints")}
+          className="bg-gray-700 text-white rounded px-2 py-1"
+        >
+          Trier par points ({sortOrder === "asc" ? "↑" : "↓"})
+        </button>
+        <button
+          onClick={() => handleSortChange("grade")}
+          className="bg-gray-700 text-white rounded px-2 py-1"
+        >
+          Trier par niveau ({sortOrder === "asc" ? "↑" : "↓"})
+        </button>
+        <button
+          onClick={() => handleSortChange("createdAt")}
+          className="bg-gray-700 text-white rounded px-2 py-1"
+        >
+          Trier par date ({sortOrder === "asc" ? "↑" : "↓"})
+        </button>
       </div>
+
 
       {/* Routes Grid Section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:mx-0 mx-12 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">

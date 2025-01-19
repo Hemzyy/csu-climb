@@ -43,7 +43,7 @@ const About = () => {
   };
 
   return (
-    <div className="min-h-screen bg-base-200 text-base-content mt-28">
+    <div className="min-h-screen bg-base-200 text-base-content mt-28 sm:pb-4 pb-20">
       <header className="bg-primary text-primary-content py-4">
         <div className="container mx-auto text-center">
           <h1 className="text-3xl font-bold">À propos</h1>
@@ -67,6 +67,26 @@ const About = () => {
             l'université. C'est une initiative personnelle destinée aux
             grimpeurs de l'université!
           </p>
+        </section>
+
+         {/* Validation and Features Section */}
+         <section className="bg-base-100 shadow-md rounded-lg p-6">
+          <h2 className="text-2xl font-semibold mb-4">Guide d'utilisation</h2>
+          <ul className="list-disc pl-5 space-y-2">
+            <li>
+              <strong>Validation d'une voie:</strong> Connectez-vous à votre
+              compte, sélectionnez la voie que vous avez complétée et cliquez
+              sur le bouton contenant le symbole ✅. Une voie est considérée
+              comme validée lorsque vous arriver à la grimper en une fois sans
+              vous arrêter et sans tomber.
+            </li>
+            <li>
+              <strong>Afficher ou masquer le classement:</strong> Vous avez la
+              liberté de choisir si vous souhaitez être affiché dans le
+              classement ou non. Pour cela, rendez-vous dans votre profil et
+              appuyez sur le bouton "Afficher dans le classement".
+            </li>
+          </ul>
         </section>
 
         {/* Feedback Section */}

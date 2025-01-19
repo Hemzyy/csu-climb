@@ -105,7 +105,9 @@ const ProfilePage = () => {
 
     return (
         <>
-            <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white gap-12 pt-16 mt-20">
+            <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white sm:gap-12 gap-5 sm:pt-16 mt-20 sm:pb-4 pb-20">
+
+            <h1 className="text-3xl font-bold text-center">Profile</h1>
 
                 {/* Profile Info */}
                 <div className="flex-col sm:flex-row items-center justify-center sm:space-y-0 sm:space-x-0 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
