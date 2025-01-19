@@ -1,13 +1,8 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import { FaTrophy, FaTasks, FaHome, FaInfoCircle, FaBookmark} from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { FaTrophy, FaMountain, FaTasks, FaHome, FaInfoCircle} from "react-icons/fa";
 
 const MobileNavbar = ({ profileImg, logout, authUser }) => {
-
-  const location = useLocation(); //get current path
-
-  const isActive = (path) => location.pathname === path;
-
   return (
     <div className="lg:hidden fixed w-full z-50">
 
@@ -64,7 +59,7 @@ const MobileNavbar = ({ profileImg, logout, authUser }) => {
           to="/listevoies"
           className="flex flex-col items-center text-white text-sm hover:text-gray-400"
         >
-          <FaTasks size={24} />
+          <FaMountain size={24} />
           <span className="text-xs">Voies</span>
         </Link>
         <Link
@@ -77,7 +72,7 @@ const MobileNavbar = ({ profileImg, logout, authUser }) => {
           to="/listeprojets"
           className="flex flex-col items-center text-white text-sm hover:text-gray-400"
         >
-          <FaBookmark size={24} />
+          <FaTasks size={24} />
           <span className="text-xs">Projets</span>
         </Link>
         <Link
