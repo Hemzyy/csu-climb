@@ -68,7 +68,7 @@ const ProjectsPage = () => {
             </div>
 
             {/* Projects Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:mx-0 mx-12 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:mx-0 mx-20 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
                 {isLoading ? (
                     <div className="text-white text-center col-span-full">Loading...</div>
                 ) :
