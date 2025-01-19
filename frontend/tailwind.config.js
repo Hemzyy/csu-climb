@@ -1,4 +1,5 @@
 import daisyui from "daisyui";
+import tailwindcssMotion from "tailwindcss-motion";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -13,7 +14,7 @@ export default {
       },
     },
   },
-  plugins: [daisyui, require("tailwindcss-motion")],
+  plugins: [daisyui, tailwindcssMotion],
   daisyui: {
     themes: [
       {
