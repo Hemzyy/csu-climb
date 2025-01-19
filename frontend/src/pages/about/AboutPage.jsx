@@ -70,7 +70,7 @@ const About = () => {
         </section>
 
          {/* Validation and Features Section */}
-         <section className="bg-base-100 shadow-md rounded-lg p-6 motion-preset-slide-up motion-delay-200">
+         <section className="bg-base-100 shadow-md rounded-lg p-6">
           <h2 className="text-2xl font-semibold mb-4">Guide d'utilisation</h2>
           <ul className="list-disc pl-5 space-y-2">
             <li>
