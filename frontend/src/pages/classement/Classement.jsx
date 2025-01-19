@@ -39,7 +39,7 @@ const Classement = () => {
 
 
   return (
-    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white mt-1 gap-5 pt-[5rem]">
+    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white mt-1 gap-5 sm:pt-[5rem]">
 
       <h1 className="text-3xl font-bold text-center">Classement</h1>
 
@@ -48,7 +48,7 @@ const Classement = () => {
 
         {/* 1st place */}
         {topThree[0]?.leaderboardScore > 0 && (
-          <div className="flex flex-col bg-[#626262] bg-opacity-20 sm:w-1/3 w-full sm:mb-0 mb-2 rounded-xl p-2">
+          <div className="flex flex-col bg-[#626262] bg-opacity-20 sm:w-1/3 w-full sm:mb-0 mb-2 rounded-xl p-2 motion-preset-expand">
             <div className="flex-col sm:flex-row items-center justify-center sm:justify-evenly sm:space-y-5 sm:space-x-0 space-y-4">
               {/* User image and username */}
               <Link to={`/profile/${topThree[0]?.username}`} >
@@ -102,7 +102,7 @@ const Classement = () => {
 
         {/* 2nd place */}
         {topThree[1]?.leaderboardScore > 0 && (
-          <div className="flex flex-col bg-[#626262] bg-opacity-20 sm:w-1/3 w-full sm:mb-0 mb-2 rounded-xl p-2">
+          <div className="flex flex-col bg-[#626262] bg-opacity-20 sm:w-1/3 w-full sm:mb-0 mb-2 rounded-xl p-2 motion-preset-expand motion-delay-100">
             <div className="flex-col sm:flex-row items-center justify-center sm:justify-evenly sm:space-y-5 sm:space-x-0 space-y-4">
               {/* User image and username */}
               <Link to={`/profile/${topThree[1]?.username}`} >
@@ -156,7 +156,7 @@ const Classement = () => {
 
         {/* 3rd place */}
         {topThree[2]?.leaderboardScore > 0 && (
-          <div className="flex flex-col bg-[#626262] bg-opacity-20 sm:w-1/3 w-full sm:mb-0 mb-2 rounded-xl p-2">
+          <div className="flex flex-col bg-[#626262] bg-opacity-20 sm:w-1/3 w-full sm:mb-0 mb-2 rounded-xl p-2 motion-preset-expand motion-delay-200">
             <div className="flex-col sm:flex-row items-center justify-center sm:justify-evenly sm:space-y-5 sm:space-x- space-y-4">
               {/* User image and username */}
               <Link to={`/profile/${topThree[2]?.username}`} >

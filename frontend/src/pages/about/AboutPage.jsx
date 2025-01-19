@@ -52,13 +52,13 @@ const About = () => {
 
       <main className="container mx-auto py-8 px-4 space-y-12">
         {/* Project Description Section */}
-        <section className="bg-base-100 shadow-md rounded-lg p-6">
+        <section className="bg-base-100 shadow-md rounded-lg p-6 motion-preset-slide-up">
           <p className="text-xl font-semibold text-center">
             ⚠️ Ce site est toujours en cours de développement et continuera à être amélioré.
           </p>
         </section>
 
-        <section className="bg-base-100 shadow-md rounded-lg p-6">
+        <section className="bg-base-100 shadow-md rounded-lg p-6 motion-preset-slide-up motion-delay-100">
           <h2 className="text-2xl font-semibold mb-4">À propos du projet</h2>
           <p>
             Bienvenue sur CSU-climb ! Ce site web est un projet personnel.
@@ -70,7 +70,7 @@ const About = () => {
         </section>
 
          {/* Validation and Features Section */}
-         <section className="bg-base-100 shadow-md rounded-lg p-6">
+         <section className="bg-base-100 shadow-md rounded-lg p-6 motion-preset-slide-up motion-delay-200">
           <h2 className="text-2xl font-semibold mb-4">Guide d'utilisation</h2>
           <ul className="list-disc pl-5 space-y-2">
             <li>
@@ -90,7 +90,7 @@ const About = () => {
         </section>
 
         {/* Feedback Section */}
-        <section className="bg-base-100 shadow-md rounded-lg p-6">
+        <section className="bg-base-100 shadow-md rounded-lg p-6 motion-preset-slide-up motion-delay-300">
           <h2 className="text-2xl font-semibold mb-4">Feedback</h2>
           <p className="mb-4">
             Vous avez des suggestions pour améliorer le site ? Trouvé un bug ? 

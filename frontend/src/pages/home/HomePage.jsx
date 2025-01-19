@@ -63,7 +63,7 @@ const HomePage = () => {
       <h1 className="text-3xl font-bold text-center">Acceuil</h1>
 
       {/* user stats */}
-      <div className="flex-col sm:flex-row items-center justify-center sm:space-y-0 sm:space-x-0 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
+      <div className="flex-col sm:flex-row items-center justify-center sm:space-y-0 sm:space-x-0 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8 motion-preset-expand">
         {/* User image and username */}
         <div className="flex flex-col items-center text-center">
           <img
@@ -90,7 +90,7 @@ const HomePage = () => {
             label: "Voies"
           }].map(({ icon, value, label }, index, array) => (
             <React.Fragment key={index}>
-              <div className="flex flex-col items-center text-center">
+              <div className="flex flex-col items-center text-center motion-preset-slide-up motion-delay-500">
                 <div className="flex flex-col h-16 w-24 sm:h-24 sm:w-40 rounded-3xl items-center justify-center mt-8">
                     <img src={icon} alt={label} className="w-7 h-7 sm:w-10 sm:h-10" />
                     <span className="text-white font-bold text-2xl sm:text-4xl">{value}</span>
@@ -111,12 +111,12 @@ const HomePage = () => {
 
       {/* Top 3 then next 4 */}
       {validTopThree.length > 0 && (
-        <div className="flex flex-col items-center justify-center gap-6 sm:justify-evenly p-4 space-y-2 sm:space-y-0 bg-[#626262] bg-opacity-20 rounded-xl">
+        <div className="flex flex-col items-center justify-center gap-6 sm:justify-evenly p-4 space-y-2 sm:space-y-0 bg-[#626262] bg-opacity-20 rounded-xl motion-preset-expand motion-delay-100">
 
           <h1 className="text-4xl"> Classement </h1>
           <div className="flex justify-evenly sm:gap-2"> {/* TOP 3 DIV */}
             {/* first place */}
-            <div className="flex flex-col items-center order-1 sm:order-2 p-4 mt-4">
+            <div className="flex flex-col items-center order-1 sm:order-2 p-4 mt-4 motion-preset-pop motion-delay-150">
               <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#FFD700] flex items-center justify-center shadow-lg">
                 <Link to={`/profile/${validTopThree[0]?.username}`} >
                   <img
@@ -135,7 +135,7 @@ const HomePage = () => {
             </div>
             {/* second place */}
             {validTopThree[1] && validTopThree[1]?.leaderboardScore > 0 && (
-              <div className="flex flex-col items-center order-2 sm:order-1 p-4 mt-4 sm:mt-12">
+              <div className="flex flex-col items-center order-2 sm:order-1 p-4 mt-4 sm:mt-12 motion-preset-pop motion-delay-200">
                 <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#C0C0C0] flex items-center justify-center shadow-lg">
                   <Link to={`/profile/${validTopThree[1]?.username}`} >
                     <img
@@ -156,7 +156,7 @@ const HomePage = () => {
             
             {/* third place */}
             {validTopThree[2] && validTopThree[2]?.leaderboardScore > 0 && (
-              <div className="flex flex-col items-center order-3 sm:order-3 p-4 mt-4 sm:mt-12">
+              <div className="flex flex-col items-center order-3 sm:order-3 p-4 mt-4 sm:mt-12 motion-preset-pop motion-delay-300">
                 <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#cd7f32] flex items-center justify-center shadow-lg">
                   <Link to={`/profile/${validTopThree[2]?.username}`} >
                     <img
@@ -200,7 +200,7 @@ const HomePage = () => {
               ))
             ) : (
               // <div className="text-lg sm:text-2xl mt-4">Pas assez de joueurs pour afficher le reste du classement</div>
-              <div>Pas assez de joueurs ayant des points pour afficher le reste du classement</div>
+              <div className="text-center">Pas assez de joueurs ayant des points pour afficher le reste du classement</div>
             )}
           </div>
 
@@ -214,7 +214,7 @@ const HomePage = () => {
       {/* <hr className="border-gray-400 opacity-40 w-3/4 mx-auto mt-8 mb-8" /> */}
 
       {/* Newly opened routes  (2 latest roures) */}
-      <div className="flex flex-col items-center gap-8 justify-center p-4 space-y-2 sm:space-x-4 mb-8 bg-[#626262] bg-opacity-20 rounded-xl">
+      <div className="flex flex-col items-center gap-8 justify-center p-4 space-y-2 sm:space-x-4 mb-8 bg-[#626262] bg-opacity-20 rounded-xl motion-preset-expand motion-delay-300">
         <h1 className="text-4xl"> Récemment ouvertes </h1>
         <div className="flex flex-wrap justify-center gap-4">
           {routes?.length > 0 ? (

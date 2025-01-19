@@ -38,6 +38,26 @@ const RouteCardModal = ({
 
   const validatedByCount = selectedRoute?.validatedBy?.length || 0;
 
+  // animation -----------------
+  const [animateValidateButton, setAnimateValidateButton] = useState(false);
+
+  const handleValidateClick = (routeId) => {
+    // Check if the route is currently validated
+    const isCurrentlyValidated = authUser?.climbedRoutes.some(
+      (climbedRoute) => climbedRoute._id === routeId
+    );
+
+    // Call handleValidate function and pass a callback to check the updated state
+    handleValidate(routeId);
+
+    // Trigger animation only if the route was not already validated
+    if (!isCurrentlyValidated) {
+      setAnimateValidateButton(true);
+      setTimeout(() => setAnimateValidateButton(false), 1000);
+    }
+  };
+
+
   return (
     selectedRoute && (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -77,14 +97,13 @@ const RouteCardModal = ({
               onChange={handleImageChange}
             />
             {/* Bottom-right save project Button */}
-            <button 
-              className={`absolute bottom-24 right-6 h-12 w-12 rounded-full shadow-md flex items-center justify-center transition-colors ${
-                authUser?.projects.some(
-                  (project) => project._id === selectedRoute._id
-                )
+            <button
+              className={`absolute bottom-24 right-6 h-12 w-12 rounded-full shadow-md flex items-center justify-center transition-colors ${authUser?.projects.some(
+                (project) => project._id === selectedRoute._id
+              )
                   ? "bg-green-500 text-black"
                   : "bg-[#FE5F55] text-black"
-              }`}
+                }`}
               onClick={() => handleAddAsProject(selectedRoute._id)}
               disabled={addAsProjectMutation.isLoading}
               title="Ajouter cette voie à mes projets"
@@ -97,14 +116,14 @@ const RouteCardModal = ({
             </button>
             {/* Bottom-right Validate Button */}
             <button
-              className={`absolute bottom-4 right-4 h-16 w-16 rounded-full shadow-md flex items-center justify-center transition-colors ${
-                authUser?.climbedRoutes.some(
+              className={`absolute bottom-4 right-4 h-16 w-16 rounded-full shadow-md flex items-center justify-center transition-colors ${animateValidateButton ? "motion-preset-confetti motion-duration-2000" : ""
+                } ${authUser?.climbedRoutes.some(
                   (climbedRoute) => climbedRoute._id === selectedRoute._id
                 )
                   ? "bg-green-500 text-black"
                   : "bg-[#FE5F55] text-black"
-              }`}
-              onClick={() => handleValidate(selectedRoute._id)}
+                }`}
+              onClick={() => handleValidateClick(selectedRoute._id)}
               disabled={validateRouteMutation.isLoading}
               title="Valider cette voie"
             >
