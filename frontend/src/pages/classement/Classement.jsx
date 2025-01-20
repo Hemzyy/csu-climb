@@ -39,7 +39,7 @@ const Classement = () => {
 
 
   return (
-    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white mt-1 gap-5 sm:pt-[5rem]">
+    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white mt-1 gap-5 pt-[5rem] sm:pb-0 pb-20">
 
       <h1 className="text-3xl font-bold text-center">Classement</h1>
 

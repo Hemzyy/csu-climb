@@ -110,7 +110,7 @@ const ProfilePage = () => {
             <h1 className="text-3xl font-bold text-center">Profile</h1>
 
                 {/* Profile Info */}
-                <div className="flex-col sm:flex-row items-center justify-center sm:space-y-0 sm:space-x-0 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
+                <div className="flex-col sm:flex-row items-center justify-center sm:space-y-0 sm:space-x-0 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8 motion-preset-slide-up">
                     <input
                         type="file"
                         hidden
@@ -118,7 +118,7 @@ const ProfilePage = () => {
                         ref={profileImgRef}
                         onChange={async (e) => handleImgChange(e, "profileImg")}
                     />
-                    <div className="flex flex-col items-center text-center">
+                    <div className="flex flex-col items-center text-center  motion-preset-pop motion-delay-300">
                         {/* edit pfp button */}
                         {isMyProfile && (
                             <div className=" absolute mt-1 ml-24 p-1 bg-primary rounded-full">
@@ -153,7 +153,7 @@ const ProfilePage = () => {
                 </div>
 
                 {/* detailed? stats */}
-                <div className="flex-col sm:flex-row items-center justify-center space-y-6 sm:space-y-20 sm:space-x-0 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
+                <div className="flex-col sm:flex-row items-center justify-center space-y-6 sm:space-y-20 sm:space-x-0 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8 motion-preset-slide-up motion-delay-100">
                     <div className="flex justify-center items-center space-x-0">
                         {[{
                             icon: "/icons/podiumB.png",
@@ -169,7 +169,7 @@ const ProfilePage = () => {
                             label: "Voies"
                         }].map(({ icon, value, label }, index, array) => (
                             <React.Fragment key={index}>
-                                <div className="flex flex-col items-center text-center">
+                                <div className="flex flex-col items-center text-center motion-preset-slide-up motion-delay-500">
                                     <div className="flex flex-col h-16 w-24 sm:h-24 sm:w-40 rounded-3xl items-center justify-center mt-8">
                                         <img src={icon} alt={label} className="w-7 h-7 sm:w-10 sm:h-10" />
                                         <span className="text-white font-bold text-2xl sm:text-4xl">{value}</span>
@@ -202,7 +202,7 @@ const ProfilePage = () => {
                 {/* Leaderboard Visibility */}
                 {/* Add toggle for leaderboard visibility */}
                 {isMyProfile && (
-                    <div className="flex justify-center items-center bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
+                    <div className="flex justify-center items-center bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8 motion-preset-slide-up motion-delay-200">
                         <div className="flex flex-col items-center text-center">
                             <span className="text-xl sm:text-3xl">Visibilité dans le classement</span>
                             <span className="text-sm sm:text-lg text-gray-400 mt-2">Cliquez pour changer la visibilité</span>
