@@ -14,7 +14,7 @@ export default {
       },
     },
   },
-  plugins: [daisyui, tailwindcssMotion],
+  plugins: [tailwindcssMotion, daisyui],
   daisyui: {
     themes: [
       {
