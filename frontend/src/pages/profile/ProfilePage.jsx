@@ -70,18 +70,29 @@ const ProfilePage = () => {
     });
 
     const sortedClimbedRoutes = climbedRoutes?.grades
-        .sort((a, b) => {
-            const gradeOrder = ["a", "b", "c"];
-            const [gradeA, gradeB] = [a.grade, b.grade];
-            const [letterA, letterB] = [gradeA.slice(-1), gradeB.slice(-1)];
-            const [numA, numB] = [parseInt(gradeA, 10), parseInt(gradeB, 10)];
+    .sort((a, b) => {
+        const parseGrade = (grade) => {
+            const regex = /^(\d+)([a-c]?)(\+?)$/;
+            const match = grade.match(regex);
 
-            if (numA !== numB) {
-                return numB - numA; // Sort by number descending
-            }
+            if (!match) return [0, "", ""]; // Return default for unrecognized formats
+            const [, number, letter, plus] = match;
+            return [parseInt(number, 10), letter || "", plus || ""];
+        };
+
+        const [numA, letterA, plusA] = parseGrade(a.grade);
+        const [numB, letterB, plusB] = parseGrade(b.grade);
+
+        if (numA !== numB) {
+            return numB - numA; // Sort by number descending
+        }
+        if (letterA !== letterB) {
+            const gradeOrder = ["a", "b", "c"];
             return gradeOrder.indexOf(letterB) - gradeOrder.indexOf(letterA); // Sort by letter descending
-        })
-    //.slice(0, 4); // Only take the top 4 grades
+        }
+        return plusB.length - plusA.length; // "+" grades come last
+    })
+    .slice(0, 4); // Only take the top 4 grades
 
     //endpoint to update the users visibility on the leaderboard
     const toggleVisibility = async () => {
@@ -200,7 +211,6 @@ const ProfilePage = () => {
                 </div>
 
                 {/* Leaderboard Visibility */}
-                {/* Add toggle for leaderboard visibility */}
                 {isMyProfile && (
                     <div className="flex justify-center items-center bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8 motion-preset-slide-up motion-delay-200">
                         <div className="flex flex-col items-center text-center">

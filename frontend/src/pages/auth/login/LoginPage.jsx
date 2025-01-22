@@ -88,7 +88,7 @@ const LoginPage = () => {
 
 			{/* login form */}
 			{/* <div id="login-form" className="flex-1 flex flex-col justify-center items-center pb-32"> */}
-			<div id="login-form" className={`flex-1 flex flex-col justify-center items-center pb-32 ${animateForm ? "motion-preset-slide-right motion-delay-500" : ""}`}>
+			<div id="login-form" className={`flex-1 flex flex-col justify-center items-center pb-32 mt-14 ${animateForm ? "motion-preset-slide-right motion-delay-500" : ""}`}>
 				<form className="flex gap-4 flex-col" onSubmit={handleSubmit}>
 					{/* <XSvg className='w-24 lg:hidden fill-white' /> */}
 					<h1 className="text-4xl font-extrabold text-white">Connectez vous</h1>
