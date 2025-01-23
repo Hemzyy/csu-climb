@@ -12,12 +12,6 @@ const fetchData = async (endpoint) => {
   return data;
 };
 
-// Grade parser for sorting
-const parseGrade = (grade) => {
-  const [number, letter] = grade.match(/(\d+)([a-zA-Z]*)/).slice(1);
-  return [parseInt(number, 10), letter];
-};
-
 const HomePage = () => {
   // Queries
   const { data: authUser } = useQuery({ queryKey: ["authUser"], queryFn: () => fetchData("/api/auth/me") });
@@ -60,7 +54,7 @@ const HomePage = () => {
     // main div that will contain the three sections
     <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white gap-5 sm:pt-[6rem] pt-[5rem] sm:pb-0 pb-10">
 
-      <h1 className="text-3xl font-bold text-center">Acceuil</h1>
+      <h1 className="text-3xl font-bold text-center">Accueil</h1>
 
       {/* user stats */}
       <div className="flex-col sm:flex-row items-center justify-center sm:space-y-0 sm:space-x-0 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8 motion-preset-expand">
@@ -114,7 +108,7 @@ const HomePage = () => {
         <div className="flex flex-col items-center justify-center gap-6 sm:justify-evenly p-4 space-y-2 sm:space-y-0 bg-[#626262] bg-opacity-20 rounded-xl motion-preset-expand motion-delay-100">
 
           <h1 className="text-4xl"> Classement </h1>
-          <div className="flex justify-evenly sm:gap-2"> {/* TOP 3 DIV */}
+          <div className="flex justify-center sm:justify-evenly sm:gap-8 px-4 sm:px-8"> {/* TOP 3 DIV */}
             {/* first place */}
             <div className="flex flex-col items-center order-1 sm:order-2 p-4 mt-4 motion-preset-pop motion-delay-150">
               <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#FFD700] flex items-center justify-center shadow-lg">

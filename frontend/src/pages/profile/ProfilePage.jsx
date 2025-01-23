@@ -168,7 +168,7 @@ const ProfilePage = () => {
                     <div className="flex justify-center items-center space-x-0">
                         {[{
                             icon: "/icons/podiumB.png",
-                            value: user?.rank,
+                            value: user?.showOnLeaderboard ? user?.rank : "N/A",
                             label: "Rang"
                         }, {
                             icon: "/icons/pointsB.png",
