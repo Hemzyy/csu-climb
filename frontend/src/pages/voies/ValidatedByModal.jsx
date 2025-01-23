@@ -14,9 +14,12 @@ const ValidatedByModal = ({ validatedUsers, closeModal }) => {
         <h2 className="text-xl font-bold mb-4">Validated By</h2>
         <div className="space-y-2">
           {validatedUsers.map((user) => (
-            <Link to={`/profile/${user?.username}`} >
+            <Link 
+                to={`/profile/${user?.username}`}
+                key={user._id} 
+              >
               <div
-                key={user._id}
+                //key={user._id}
                 className="flex items-center gap-2 border-b border-gray-500 py-2"
               >
                 <img

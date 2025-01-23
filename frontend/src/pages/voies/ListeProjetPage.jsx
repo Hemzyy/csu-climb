@@ -1,5 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
+
+import AddRouteModal from "./AddRouteModal";
+import EditRouteModal from "./EditRouteModal";
+import useValidate from "../../hooks/useValidate";
+import useAddAsProject from "../../hooks/useAddAsProject";
+import RouteCardModal from "./RouteCardModal";
 
 
 const ProjectsPage = () => {
@@ -15,11 +21,38 @@ const ProjectsPage = () => {
         },
     });
 
+    // Validate Route Mutation
+    const validateRouteMutation = useValidate();
+
+    const handleValidate = (routeId) => {
+        validateRouteMutation.mutate(routeId);
+    };
+
+    // Add as Project Mutation
+    const addAsProjectMutation = useAddAsProject();
+
+    const handleAddAsProject = (routeId) => {
+        addAsProjectMutation.mutate(routeId);
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => setTempImg(reader.result);
+            reader.readAsDataURL(file);
+        }
+    };
+
+    // State for selected route and modal visibility
+    const [selectedRoute, setSelectedRoute] = useState(null);
+    const [tempImg, setTempImg] = useState(null);
+    const imgInputRef = useRef(null);
+
     // State for filters and sorting
     const [filterGrade, setFilterGrade] = useState("");
     const [sortOrder, setSortOrder] = useState("asc"); // 'asc' or 'desc'
     const [sortField, setSortField] = useState("difficultyPoints"); // Default sorting by points
-
 
     // Filter and sort projects
     const filteredAndSortedProjects = authUser?.projects
@@ -39,6 +72,24 @@ const ProjectsPage = () => {
     const handleSortChange = (field) => {
         setSortField(field);
         setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
+    };
+
+    const closeModal = () => {
+        setSelectedRoute(null);
+        setTempImg(null);
+    };
+
+    // Fetch user details by ID
+    const fetchUserDetails = async (userId) => {
+        try {
+            const res = await fetch(`/api/users/${userId}`); // Adjust endpoint as needed
+            const user = await res.json();
+            if (!res.ok) throw new Error(user.error || "Error fetching user");
+            return user;
+        } catch (error) {
+            console.error(`Failed to fetch user details for ${userId}:`, error);
+            return null; // Fallback to prevent crashes
+        }
     };
 
     return (
@@ -73,37 +124,68 @@ const ProjectsPage = () => {
                     <div className="text-white text-center col-span-full">Loading...</div>
                 ) :
                     filteredAndSortedProjects && filteredAndSortedProjects.length > 0 ? (
-                        filteredAndSortedProjects.map((project) => (
-                            <div
-                                key={project._id}
-                                className="bg-[#808080] rounded-lg shadow-md overflow-hidden relative hover:opacity-80 transition-opacity cursor-pointer"
-                            >
-                                <div className="w-full sm:h-44 h-72 bg-gray-400 flex items-center justify-center">
-                                    <img
-                                        src={project.img || "/route-img-placeholder.png"}
-                                        alt={project.name}
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                                <div className="px-4 pb-2 text-gray-200 flex justify-between items-center">
-                                    <div>
-                                        <h2 className="text-lg font-bold">{project.name}</h2>
-                                        <p className="text-sm text-gray-200">
-                                            <strong>Grade:</strong> {project.grade}
-                                        </p>
-                                        <p className="text-sm text-gray-200">
-                                            <strong>Points:</strong> {project.difficultyPoints}
-                                        </p>
+                        filteredAndSortedProjects.map((project) => {
+                            const isValidated = authUser?.climbedRoutes.some(
+                                (climbedRoute) => climbedRoute._id === project._id
+                            );
+                            return (
+
+                                <div
+                                    key={project._id}
+                                    className="bg-[#808080] rounded-lg shadow-md overflow-hidden relative hover:opacity-80 transition-opacity cursor-pointer"
+                                    onClick={() => setSelectedRoute(project)}
+                                >
+                                    <div className="w-full sm:h-44 h-72 bg-gray-400 flex items-center justify-center">
+                                        <img
+                                            src={project.img || "/route-img-placeholder.png"}
+                                            alt={project.name}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                    <div className="px-4 pb-2 text-gray-200 flex justify-between items-center">
+                                        <div>
+                                            <h2 className="text-lg font-bold">{project.name}</h2>
+                                            <p className="text-sm text-gray-200">
+                                                <strong>Grade:</strong> {project.grade}
+                                            </p>
+                                            <p className="text-sm text-gray-200">
+                                                <strong>Points:</strong> {project.difficultyPoints}
+                                            </p>
+                                        </div>
+                                        {isValidated && (
+                                            <div className="text-green-400">
+                                                <img src="/icons/check.png" alt="check" className="w-8 h-8" />
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
-                            </div>
-                        ))
+                            );
+                        })
                     ) : (
                         <div className="text-white text-center col-span-full">
                             No projects available
                         </div>
                     )}
             </div>
+
+            {/* Route Details Modal */}
+            {selectedRoute && (
+                <RouteCardModal
+                    selectedRoute={selectedRoute}
+                    closeModal={closeModal}
+                    //isAdmin={isAdmin}
+                    tempImg={tempImg}
+                    imgInputRef={imgInputRef}
+                    handleImageChange={handleImageChange}
+                    handleValidate={handleValidate}
+                    validateRouteMutation={validateRouteMutation}
+                    handleAddAsProject={handleAddAsProject}
+                    addAsProjectMutation={addAsProjectMutation}
+                    authUser={authUser}
+                    fetchUserDetails={fetchUserDetails} // Pass fetchUserDetails to the modal
+                />
+            )}
+
         </div>
     );
 };

@@ -1,8 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { FaTrophy, FaMountain, FaTasks, FaHome, FaInfoCircle} from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
+import { FaTrophy, FaTasks, FaHome, FaInfoCircle, FaBookmark} from "react-icons/fa";
 
 const MobileNavbar = ({ profileImg, logout, authUser }) => {
+
+  const location = useLocation(); // Hook to get the current route
+  
+  // Function to check if a link is active
+  const isActive = (path) => location.pathname === path;
+  
   return (
     <div className="lg:hidden fixed w-full z-50">
 
@@ -50,34 +56,45 @@ const MobileNavbar = ({ profileImg, logout, authUser }) => {
       <div className="bg-[#222222] fixed bottom-0 w-full flex justify-around py-3">
         <Link
           to="/classement"
-          className="flex flex-col items-center text-white text-sm hover:text-gray-400"
+          className={`flex flex-col items-center text-sm ${
+            isActive("/classement") ? "text-[#FE5F55]" : "text-white hover:text-gray-400"
+          }`}
         >
           <FaTrophy size={24} />
           <span className="text-xs">Classement</span>
         </Link>
         <Link
           to="/listevoies"
-          className="flex flex-col items-center text-white text-sm hover:text-gray-400"
+          className={`flex flex-col items-center text-sm ${
+            isActive("/listevoies") ? "text-[#FE5F55]" : "text-white hover:text-gray-400"
+          }`}
         >
-          <FaMountain size={24} />
+          <FaTasks size={24} />
           <span className="text-xs">Voies</span>
         </Link>
         <Link
-            to="/" className="flex flex-col items-center text-white text-sm hover:text-gray-400"
+            to="/" 
+            className={`flex flex-col items-center text-sm ${
+              isActive("/") ? "text-[#FE5F55]" : "text-white hover:text-gray-400"
+            }`}
         >
             <FaHome size={24} />
             <span className="text-xs">Accueil</span>
         </Link>
         <Link
           to="/listeprojets"
-          className="flex flex-col items-center text-white text-sm hover:text-gray-400"
+          className={`flex flex-col items-center text-sm  ${
+            isActive("/listeprojets") ? "text-[#FE5F55]" : "text-white hover:text-gray-400"
+          }`}
         >
-          <FaTasks size={24} />
+          <FaBookmark size={24} />
           <span className="text-xs">Projets</span>
         </Link>
         <Link
           to="/about"
-          className="flex flex-col items-center text-white text-sm hover:text-gray-400"
+          className={`flex flex-col items-center text-sm ${
+            isActive("/about") ? "text-[#FE5F55]" : "text-white hover:text-gray-400"
+          }`}
           >
             <FaInfoCircle size={24} />
             <span className="text-xs">À propos</span>

@@ -64,8 +64,7 @@ const About = () => {
             Bienvenue sur CSU-climb ! Ce site web est un projet personnel.
             Il vise à permettre aux grimpeurs de suivre leurs
             progrès et de se fixer des objectifs. Ce projet n'est pas affilié à
-            l'université. C'est une initiative personnelle destinée aux
-            grimpeurs de l'université!
+            l'université.
           </p>
         </section>
 
