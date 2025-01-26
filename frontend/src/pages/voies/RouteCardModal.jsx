@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import EditRouteModal from "./EditRouteModal";
 import ValidatedByModal from "./ValidatedByModal"; // Import the new modal
 
+import toast from 'react-hot-toast';
+
 const RouteCardModal = ({
   selectedRoute,
   closeModal,
@@ -46,7 +48,6 @@ const RouteCardModal = ({
     const isCurrentlyValidated = authUser?.climbedRoutes.some(
       (climbedRoute) => climbedRoute._id === routeId
     );
-
     // Call handleValidate function and pass a callback to check the updated state
     handleValidate(routeId);
 
@@ -54,6 +55,9 @@ const RouteCardModal = ({
     if (!isCurrentlyValidated) {
       setAnimateValidateButton(true);
       setTimeout(() => setAnimateValidateButton(false), 1000);
+      toast.success("Voie validée !");
+    } else {
+      toast("Voie retirée de vos voies validées");
     }
   };
 

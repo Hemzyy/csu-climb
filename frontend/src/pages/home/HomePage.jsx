@@ -108,7 +108,7 @@ const HomePage = () => {
         <div className="flex flex-col items-center justify-center gap-6 sm:justify-evenly p-4 space-y-2 sm:space-y-0 bg-[#626262] bg-opacity-20 rounded-xl motion-preset-expand motion-delay-100">
 
           <h1 className="text-4xl"> Classement </h1>
-          <div className="flex justify-center sm:justify-evenly sm:gap-8 px-4 sm:px-8"> {/* TOP 3 DIV */}
+          <div className="flex justify-evenly sm:gap-8 px-4 sm:px-8"> {/* TOP 3 DIV */}
             {/* first place */}
             <div className="flex flex-col items-center order-1 sm:order-2 p-4 mt-4 motion-preset-pop motion-delay-150">
               <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#FFD700] flex items-center justify-center shadow-lg">

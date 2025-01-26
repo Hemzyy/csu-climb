@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import NotificationBell from "./NotificationBell";
+
+
 const DesktopNavbar = ({ profileImg, logout, authUser }) => {
   return (
     <div className="navbar hidden lg:flex bg-[#252525] fixed w-full mx-auto z-50 shadow-md">
@@ -34,7 +37,11 @@ const DesktopNavbar = ({ profileImg, logout, authUser }) => {
         </ul>
       </div>
       <div className="navbar-end flex gap-2">
-      <div className="dropdown dropdown-end">
+        {/* Notifications */}
+        <NotificationBell />
+
+        {/* Avatar */}
+        <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
             role="button"
@@ -54,7 +61,7 @@ const DesktopNavbar = ({ profileImg, logout, authUser }) => {
             <li>
               <Link
                 to={`/profile/${authUser?.username}`}
-                >
+              >
                 Profile
               </Link>
             </li>

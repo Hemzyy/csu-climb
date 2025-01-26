@@ -20,10 +20,12 @@ const notificationSchema = new mongoose.Schema(
 			required: true,
 			enum: ["newRoute", "event"],
 		},
-		read: {
-			type: Boolean,
-			default: false,
-		},
+		readBy: [
+			{
+			  type: mongoose.Schema.Types.ObjectId,
+			  ref: "User",
+			},
+		  ],
 	},
 	{ timestamps: true }
 );

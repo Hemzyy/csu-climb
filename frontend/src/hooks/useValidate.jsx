@@ -20,7 +20,7 @@ const useValidateRoute = () => {
       }
     },
     onSuccess: () => {
-      toast.success("success");
+      //toast.success("success");
       queryClient.invalidateQueries(["authUser"]);
       queryClient.invalidateQueries(["voie"]);
     }
