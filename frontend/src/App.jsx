@@ -9,6 +9,7 @@ import ListeProjetPage from './pages/voies/ListeProjetPage';
 import Classement from './pages/classement/Classement';
 import ProfilePage from './pages/profile/ProfilePage';
 import AboutPage from './pages/about/AboutPage';
+import PrivacyPolicy from './pages/privacy-policy/PrivacyPolicy';
 
 import { Toaster } from 'react-hot-toast';
 import { useQuery } from '@tanstack/react-query';
@@ -58,6 +59,7 @@ function App() {
 				<Route path='/classement' element={authUser ? <Classement /> : <Navigate to='/' />} />
 				<Route path='/profile/:username' element={authUser ? <ProfilePage /> : <Navigate to='/' />} />
 				<Route path='/about' element={authUser ? <AboutPage /> : <Navigate to='/' />} />
+				<Route path="/privacy-policy" element={<PrivacyPolicy />} />
 			</Routes>
 			</div>
 

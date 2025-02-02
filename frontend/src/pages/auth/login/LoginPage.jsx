@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { MdOutlineMail } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 import { MdPassword } from "react-icons/md";
 
@@ -97,7 +96,7 @@ const LoginPage = () => {
 						<input
 							type='text'
 							className='grow'
-							placeholder='username'
+							placeholder="Nom d'utilisateur"
 							name='username'
 							onChange={handleInputChange}
 							value={formData.username}
@@ -109,7 +108,7 @@ const LoginPage = () => {
 						<input
 							type='password'
 							className='grow'
-							placeholder='Password'
+							placeholder='Mot de passe'
 							name='password'
 							onChange={handleInputChange}
 							value={formData.password}
