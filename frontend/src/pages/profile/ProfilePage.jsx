@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { MdEdit } from 'react-icons/md';
 import { formatMemberSinceDate } from '../../utils/date';
+import EditProfileModal from "./EditProfileModal";
 import React from 'react';
 
 const ProfilePage = () => {
@@ -82,6 +83,9 @@ const ProfilePage = () => {
         return plusB.length - plusA.length; // "+" grades come last
     });
 
+    const [isExpanded, setIsExpanded] = useState(false);
+    const displayedRoutes = isExpanded ? sortedClimbedRoutes : sortedClimbedRoutes?.slice(0, 4);
+
 
     // Handle profile image change
     const handleImgChange = (e) => {
@@ -151,6 +155,19 @@ const ProfilePage = () => {
                     )}
                     <span className="text-xl sm:text-3xl mt-2">{user?.username}</span>
                     <span className="text-sm sm:text-lg text-gray-400 mt-6">{memberSinceDate}</span>
+
+                    {/*Edit Profile Button */}
+                    {isMyProfile && <EditProfileModal authUser={authUser} />}
+
+                    {/* {isMyProfile && (
+                        <button
+                            className="bg-primary text-white rounded-lg px-4 py-2 mt-4"
+                            onClick={() => history.push("/edit-profile")}
+                        >
+                            Edit Profile
+                        </button>
+                    )} */}
+
                 </div>
             </div>
 
@@ -197,7 +214,7 @@ const ProfilePage = () => {
                 {/* Centered List Container */}
                 <div className="flex flex-col items-center"> {/* Center the list horizontally */}
                     <div className="flex flex-col gap-2 sm:w-[40%] w-full"> {/* Adjust width as needed */}
-                        {sortedClimbedRoutes?.map((route) => (
+                        {displayedRoutes?.map((route) => (
                             <div
                                 key={route._id}
                                 className="bg-[#808080] rounded-lg shadow-md overflow-hidden relative transition-opacity p-2 w-full"
@@ -226,6 +243,17 @@ const ProfilePage = () => {
                             </div>
                         ))}
                     </div>
+
+                    {/* Expand/Collapse Button */}
+                    {sortedClimbedRoutes?.length > 4 && (
+                        <button
+                            className="mt-4 px-4 py-2 rounded-lg bg-primary text-white"
+                            onClick={() => setIsExpanded(!isExpanded)}
+                        >
+                            {isExpanded ? "Voir moins" : "Voir plus"}
+                        </button>
+                    )}
+
                 </div>
             </div>
 
