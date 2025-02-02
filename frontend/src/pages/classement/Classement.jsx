@@ -216,7 +216,10 @@ const Classement = () => {
       {topThree && restOfList.length > 0 && (
         <div className="flex flex-col gap-4 bg-[#626262] bg-opacity-20 py-4 sm:px-20 rounded-xl">
           {restOfList.map((user, index) => (
-            <div key={index} className="flex flex-col justify-center">
+            <div 
+              key={index} 
+              className="flex flex-col justify-center"
+            >
               <Link to={`/profile/${user?.username}`} >
                 <div className={`flex justify-between items-center ${user.username === authUser?.username ? "text-[#FE5F55]" : ""}`}>
 
