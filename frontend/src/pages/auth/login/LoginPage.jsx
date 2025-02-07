@@ -77,7 +77,7 @@ const LoginPage = () => {
 					🏆 <strong>Progressez dans le classement</strong>  Et suivez votre progression. <br />
 					🤝 <strong>Participez à des contests</strong> : directement via l'application.
 				</p>
-				<button 
+				<button
 					onClick={handleArrowclick}
 					className="btn btn-primary rounded-full text-white px-6 py-2 animate-bounce mt-6"
 				>
@@ -87,7 +87,7 @@ const LoginPage = () => {
 
 			{/* login form */}
 			{/* <div id="login-form" className="flex-1 flex flex-col justify-center items-center pb-32"> */}
-			<div id="login-form" className={`flex-1 flex flex-col justify-center items-center pb-32 mt-14 ${animateForm ? "motion-preset-slide-right motion-delay-500" : ""}`}>
+			<div id="login-form" className={`flex-1 flex flex-col justify-center items-center pb-32 mt-40 ${animateForm ? "motion-preset-slide-right motion-delay-500" : ""}`}>
 				<form className="flex gap-4 flex-col" onSubmit={handleSubmit}>
 					{/* <XSvg className='w-24 lg:hidden fill-white' /> */}
 					<h1 className="text-4xl font-extrabold text-white">Connectez vous</h1>
@@ -122,13 +122,16 @@ const LoginPage = () => {
 					</p>}
 				</form>
 				<div className="flex flex-col gap-2 mt-4">
-					<p className='text-white text-lg'>Pas de compte ?</p>
+					<p className='text-white text-lg text-center'>Pas de compte ?</p>
 					<Link to='/signup'>
 						<button className="btn rounded-full btn-primary text-white btn-outline w-full"> Créer un compte</button>
+					</Link>
+					<Link to='/forgot-password'>
+						<span className="text-white">Mot de passe oublié ?</span>
 					</Link>
 				</div>
 			</div>
 		</div>
 	);
-};	
+};
 export default LoginPage;

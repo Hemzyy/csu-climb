@@ -2,6 +2,9 @@ import { generateTokenAndSetCookie } from "../lib/utils/generateToken.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 
+import crypto from "crypto";
+import nodemailer from "nodemailer";
+
 export const signup = async (req, res) => {
 	try {
 		const { username, email, password } = req.body;
@@ -108,4 +111,90 @@ export const getMe = async (req, res) => {
 		console.log("Error in getMe controller", error.message);
 		res.status(500).json({ error: "Internal Server Error" });
 	}
+};
+
+
+export const forgotPassword = async (req, res) => {
+	try {
+		const { email } = req.body;
+
+		// Check if user exists
+		const user = await User.findOne({ email });
+		if (!user) {
+			return res.status(400).json({ error: "User with this email does not exist" });
+		}
+
+		// Generate reset token
+		const resetToken = crypto.randomBytes(32).toString("hex");
+		const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+
+		// Save reset token to user model
+		user.resetToken = hashedToken;
+		user.resetTokenExpire = Date.now() + 30 * 60 * 1000; // Token expires in 10 min
+		await user.save();
+
+		// Send reset email
+		const resetUrl = `https://csu-climb.onrender.com/reset-password/${resetToken}`; // Update with your frontend URL
+
+		const transporter = nodemailer.createTransport({
+			service: "gmail",
+			auth: {
+				user: process.env.EMAIL_USER,
+				pass: process.env.EMAIL_PASS,
+			},
+		});
+
+		const mailOptions = {
+			from: `"CSU Climb" <${process.env.EMAIL_USER}>`,
+			to: user.email,
+			subject: "Password Reset Request",
+			html: `
+				<p>You have requested to reset your password.</p>
+				<p>Click the link below to reset your password. This link will expire in 30 minutes.</p>
+				<a href="${resetUrl}">${resetUrl}</a>
+				<p>If you did not request this, please ignore this email.</p>
+			`,
+		};
+
+		await transporter.sendMail(mailOptions);
+
+		res.status(200).json({ message: "Reset password link sent to email" });
+	} catch (error) {
+		console.log("Error in forgotPassword controller", error.message);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
+};
+
+export const resetPassword = async (req, res) => {
+    try {
+        const { token } = req.params;  // Get token from URL params
+        const { password } = req.body; // Get the new password from the request body
+
+        // Hash the received token to compare with the stored hashed token
+        const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+        // Find the user by the hashed token and check if the token has expired
+        const user = await User.findOne({
+            resetToken: hashedToken,
+            resetTokenExpire: { $gt: Date.now() },  // Token must not be expired
+        });
+
+        if (!user) {
+            return res.status(400).json({ error: "Invalid or expired token" });
+        }
+
+        // Hash the new password before saving it
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
+
+        // Clear the reset token fields after a successful password reset
+        user.resetToken = undefined;
+        user.resetTokenExpire = undefined;
+        await user.save();
+
+        res.status(200).json({ message: "Password reset successful" });
+    } catch (error) {
+        console.log("Error in resetPassword controller", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 };

@@ -50,9 +50,15 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: true,
     },
+    resetToken: {
+        type: String,
+    },
+    resetTokenExpire: {
+        type: Date,
+    },
 
     }, { timestamps: true } //timestamps: true will automatically add createdAt and updatedAt fields to the schema
-); 
+);
 
 //after creating the schema, we need to create a model
 const User = mongoose.model("User", userSchema); // User is the name of the model, and userSchema is the schema we created

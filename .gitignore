@@ -28,3 +28,4 @@ backend/seed.js
 
 # Local Netlify folder
 .netlify
+backend/seed.js

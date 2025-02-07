@@ -10,6 +10,8 @@ import Classement from './pages/classement/Classement';
 import ProfilePage from './pages/profile/ProfilePage';
 import AboutPage from './pages/about/AboutPage';
 import PrivacyPolicy from './pages/privacy-policy/PrivacyPolicy';
+import ForgotPasswordPage from './pages/auth/reset-password/ForgotPasswordPage';
+import ResetPasswordPage from './pages/auth/reset-password/ResetPasswordPage';
 
 import { Toaster } from 'react-hot-toast';
 import { useQuery } from '@tanstack/react-query';
@@ -60,6 +62,8 @@ function App() {
 				<Route path='/profile/:username' element={authUser ? <ProfilePage /> : <Navigate to='/' />} />
 				<Route path='/about' element={authUser ? <AboutPage /> : <Navigate to='/' />} />
 				<Route path="/privacy-policy" element={<PrivacyPolicy />} />
+				<Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        		<Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 			</Routes>
 			</div>
 
