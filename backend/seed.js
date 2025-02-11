@@ -1,32 +1,29 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import User from "./models/user.model.js";
+import Route from "./models/route.model.js"; // Assuming you have a Route model
 
 dotenv.config(); // Load environment variables
 
 const seedData = async () => {
     try {
         // Connect to the database
-        await mongoose.connect(process.env.MONGO_URI);
+        await mongoose.connect(process.env.MONGODB_URI);
         console.log("Connected to MongoDB");
 
-        // Fetch all users
-        const users = await User.find(); 
+        // Fetch all routes
+        const routes = await Route.find(); 
 
-        // Loop through each user and add the new fields if they don't exist
-        for (let user of users) {
-            // Check if resetToken or resetTokenExpire are missing
-            if (user.resetToken === undefined || user.resetTokenExpire === undefined) {
-                // Add the resetToken and resetTokenExpire fields with null values
-                user.resetToken = null;
-                user.resetTokenExpire = null;
-
-                await user.save(); // Save the updated user
-                console.log(`Updated user ${user.username} with null resetToken and resetTokenExpire`);
+        // Loop through each route and add the 'sector' field if it doesn't exist
+        for (let route of routes) {
+            if (route.sector === undefined) {
+                // Add sector field
+                route.sector = "temp";
+                await route.save();
+                console.log(`Route ${route.name} updated with sector field`);
             }
         }
 
-        console.log("All users updated with resetToken and resetTokenExpire fields set to null");
+        console.log("All routes updated with sector field");
 
         process.exit(); // Exit script
     } catch (error) {

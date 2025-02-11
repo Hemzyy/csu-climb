@@ -32,6 +32,10 @@ const routeSchema = new mongoose.Schema({
       type: Number, 
       default: 0, // Number of successful climbs by users.
     },
+    sector: {
+      type: String,
+      required: true, // The sector of the route (e.g., "Secteur Gauche (G)", "Secteur Centre (C), "Secteur Droit (D)").
+    },
     validatedBy: [
       {
           type: mongoose.Schema.Types.ObjectId,

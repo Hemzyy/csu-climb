@@ -127,7 +127,7 @@ const LoginPage = () => {
 						<button className="btn rounded-full btn-primary text-white btn-outline w-full"> Créer un compte</button>
 					</Link>
 					<Link to='/forgot-password'>
-						<span className="text-white">Mot de passe oublié ?</span>
+						<span className="text-white underline">Mot de passe oublié ?</span>
 					</Link>
 				</div>
 			</div>

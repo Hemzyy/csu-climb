@@ -7,6 +7,8 @@ import useValidate from "../../hooks/useValidate";
 import useAddAsProject from "../../hooks/useAddAsProject";
 import RouteCardModal from "./RouteCardModal";
 
+import WallMap from "../../components/common/WallMap";
+
 const VoiePage = () => {
   const { data: authUser } = useQuery({ queryKey: ["authUser"] });
   const isAdmin = authUser?.isAdmin;
@@ -54,21 +56,30 @@ const VoiePage = () => {
   const [sortOrder, setSortOrder] = useState("asc"); // 'asc' or 'desc'
   const [sortField, setSortField] = useState("difficultyPoints"); // Default sorting by points
 
+  // State for selected sector  
+  const [selectedSector, setSelectedSector] = useState(null);
+
+  const handleSectorClick = (sector) => {
+    setSelectedSector((prevSector) => (prevSector === sector ? null : sector));
+  };
+
   // Filter and sort logic
   const filteredAndSortedRoutes = routes
-    ?.filter((route) => (filterGrade ? route.grade === filterGrade : true))
-    ?.sort((a, b) => {
-      let comparison;
-      if (sortField === "difficultyPoints") {
-        comparison = a.difficultyPoints - b.difficultyPoints;
-      } else if (sortField === "grade") {
-        comparison = a.grade.localeCompare(b.grade);
-      } else if (sortField === "createdAt") {
-        // Handle sorting by date
-        comparison = new Date(a.createdAt) - new Date(b.createdAt);
-      }
-      return sortOrder === "asc" ? comparison : -comparison;
-    });
+  ?.filter((route) => 
+    (!selectedSector || route.sector === selectedSector) && // Filter by sector
+    (filterGrade ? route.grade === filterGrade : true) // Existing grade filter
+  )
+  ?.sort((a, b) => {
+    let comparison;
+    if (sortField === "difficultyPoints") {
+      comparison = a.difficultyPoints - b.difficultyPoints;
+    } else if (sortField === "grade") {
+      comparison = a.grade.localeCompare(b.grade);
+    } else if (sortField === "createdAt") {
+      comparison = new Date(a.createdAt) - new Date(b.createdAt);
+    }
+    return sortOrder === "asc" ? comparison : -comparison;
+  });
 
   const handleFilterChange = (e) => {
     setFilterGrade(e.target.value);
@@ -101,6 +112,10 @@ const VoiePage = () => {
     <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white gap-5 pt-[5rem] sm:pb-0 pb-20">
 
       <h1 className="text-3xl font-bold text-center">List des voies</h1>
+
+       {/* Interactive Wall Map */}
+       {/* <WallMap onSectorClick={handleSectorClick} /> */}
+       <WallMap onSectorClick={handleSectorClick} selectedSector={selectedSector} />
 
       {/* Filters and Sorting */}
       <div className="flex flex-wrap justify-center gap-2 p-2 sm:justify-between sm:flex-nowrap">
