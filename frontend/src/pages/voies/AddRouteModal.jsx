@@ -8,7 +8,7 @@ const AddRouteModal = () => {
 		name: "",
 		grade: "",
 		difficultyPoints: "",
-		setter: "",
+		sector: "",
 		img: null,
 	});
 	const imgRef = useRef(null);
@@ -75,10 +75,10 @@ const AddRouteModal = () => {
 							/>
 							<input
 								type="text"
-								placeholder="Setter"
+								placeholder="Secteur"
 								className="flex-1 input border border-gray-700 rounded p-2 input-md"
-								value={formData.setter}
-								name="setter"
+								value={formData.sector}
+								name="sector"
 								onChange={handleInputChange}
 							/>
 						</div>

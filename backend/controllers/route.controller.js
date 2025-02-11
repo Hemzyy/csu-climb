@@ -118,7 +118,7 @@ export const addRemoveAsProject = async (req, res) => {
 
 export const addRoute = async (req, res) => {
 	try {
-		const { name, grade, difficultyPoints, setter, img } = req.body;
+		const { name, grade, difficultyPoints, sector, img } = req.body;
 
 		const currentUser = await User.findById(req.user._id);
 		if (!currentUser || !currentUser.isAdmin) {
@@ -141,7 +141,7 @@ export const addRoute = async (req, res) => {
 			name,
 			grade,
 			difficultyPoints,
-			setter,
+			sector,
 			img: imageUrl,
 		});
 
@@ -195,7 +195,7 @@ export const editRoute = async (req, res) => {
             return res.status(403).json({ error: "Only an Admin can edit routes." });
         }
 
-        const { routeId, name, grade, difficultyPoints, setter } = req.body;
+        const { routeId, name, grade, difficultyPoints, sector } = req.body;
         let { img } = req.body;
 
         let route = await Route.findById(routeId);
@@ -219,7 +219,7 @@ export const editRoute = async (req, res) => {
         route.name = name || route.name;
         route.grade = grade || route.grade;
         route.difficultyPoints = difficultyPoints || route.difficultyPoints;
-        route.setter = setter || route.setter;
+        route.sector = sector || route.sector;
         route.img = img || route.img;
 
         route = await route.save();

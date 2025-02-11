@@ -112,7 +112,7 @@ const EditRouteModal = ({ route, onClose }) => {
         name: route.name,
         grade: route.grade,
         difficultyPoints: route.difficultyPoints,
-        setter: route.setter,
+        sector: route.sector,
         img: route.img || '', // Include a default image or leave empty
     });
 
@@ -177,10 +177,10 @@ const EditRouteModal = ({ route, onClose }) => {
                             />
                             <input
                                 type='text'
-                                placeholder='Setter'
+                                placeholder='Sector'
                                 className='flex-1 input border border-gray-700 rounded p-2 input-md'
-                                value={formData.setter}
-                                name='setter'
+                                value={formData.sector}
+                                name='sector'
                                 onChange={handleInputChange}
                             />
                         </div>
