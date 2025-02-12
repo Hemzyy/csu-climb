@@ -2,15 +2,15 @@ import React from "react";
 
 const WallMap = ({ onSectorClick, selectedSector }) => {
   return (
-    <svg width="424" height="96" viewBox="0 0 424 96" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+    <svg width="424" height="96" viewBox="0 0 424 96" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-[85%] h-auto bg-[#626262] bg-opacity-20 rounded-xl self-center p-4">
       <g clipPath="url(#clip0_2_52)">
-        <rect width="424" height="96" fill="#626262" fillOpacity="0.2" />
+        <rect width="424" height="96" fill="#626262"  />
 
         {/* Secteur Gauche */}
         <g 
           className="cursor-pointer"
           onClick={() => onSectorClick("G")}
-          fill={selectedSector === "G" ? "gray" : "black"}
+          fill={selectedSector === "G" ? "#FE5F55" : "#374151"}
           
         >
           <rect width="12" height="82" />
@@ -27,7 +27,7 @@ const WallMap = ({ onSectorClick, selectedSector }) => {
         <g 
           className="cursor-pointer"
           onClick={() => onSectorClick("C")}
-          fill={selectedSector === "C" ? "gray" : "black"}
+          fill={selectedSector === "C" ? "#FE5F55" : "#374151"}
         >
           <rect x="267" width="14" height="25" />
           <rect x="154" width="98" height="15" />
@@ -39,7 +39,7 @@ const WallMap = ({ onSectorClick, selectedSector }) => {
         <g 
           className="cursor-pointer"
           onClick={() => onSectorClick("D")}
-          fill={selectedSector === "D" ? "gray" : "black"}
+          fill={selectedSector === "D" ? "#FE5F55" : "#374151"}
         >
           <rect x="281" width="37" height="15" />
           <rect x="403" width="11" height="15" />
