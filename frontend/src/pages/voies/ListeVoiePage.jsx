@@ -113,6 +113,10 @@ const VoiePage = () => {
 
       <h1 className="text-3xl font-bold text-center">List des voies</h1>
 
+      <p className="text-center text-gray-600 mt-2">
+        Cliquez sur un secteur pour filtrer les voies disponibles.
+      </p>
+
        {/* Interactive Wall Map */}
        {/* <WallMap onSectorClick={handleSectorClick} /> */}
        <WallMap onSectorClick={handleSectorClick} selectedSector={selectedSector} />
