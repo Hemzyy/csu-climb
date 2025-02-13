@@ -87,7 +87,7 @@ const MobileNavbar = ({ profileImg, logout, authUser }) => {
               }}
               className="text-white hover:text-gray-400 py-2"
             >
-              Logout
+              Se déconnecter
             </button>
             {/* Add more links/buttons here as needed */}
           </div>

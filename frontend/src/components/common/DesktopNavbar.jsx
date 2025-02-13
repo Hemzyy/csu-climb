@@ -66,7 +66,7 @@ const DesktopNavbar = ({ profileImg, logout, authUser }) => {
               </Link>
             </li>
             <li>
-              <a onClick={() => logout()}>Logout</a>
+              <a onClick={() => logout()}>Se déconnecter</a>
             </li>
           </ul>
         </div>
