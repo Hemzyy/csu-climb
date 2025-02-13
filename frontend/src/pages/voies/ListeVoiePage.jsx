@@ -23,6 +23,10 @@ const VoiePage = () => {
     },
   });
 
+  // for auto scrolling
+  const routesListRef = useRef(null);
+
+
   // Validate Route Mutation
   const validateRouteMutation = useValidate();
 
@@ -61,25 +65,33 @@ const VoiePage = () => {
 
   const handleSectorClick = (sector) => {
     setSelectedSector((prevSector) => (prevSector === sector ? null : sector));
+  
+    // Scroll to the routes list after a short delay
+    setTimeout(() => {
+      if (routesListRef.current) {
+        routesListRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 200);
   };
+  
 
   // Filter and sort logic
   const filteredAndSortedRoutes = routes
-  ?.filter((route) => 
-    (!selectedSector || route.sector === selectedSector) && // Filter by sector
-    (filterGrade ? route.grade === filterGrade : true) // Existing grade filter
-  )
-  ?.sort((a, b) => {
-    let comparison;
-    if (sortField === "difficultyPoints") {
-      comparison = a.difficultyPoints - b.difficultyPoints;
-    } else if (sortField === "grade") {
-      comparison = a.grade.localeCompare(b.grade);
-    } else if (sortField === "createdAt") {
-      comparison = new Date(a.createdAt) - new Date(b.createdAt);
-    }
-    return sortOrder === "asc" ? comparison : -comparison;
-  });
+    ?.filter((route) =>
+      (!selectedSector || route.sector === selectedSector) && // Filter by sector
+      (filterGrade ? route.grade === filterGrade : true) // Existing grade filter
+    )
+    ?.sort((a, b) => {
+      let comparison;
+      if (sortField === "difficultyPoints") {
+        comparison = a.difficultyPoints - b.difficultyPoints;
+      } else if (sortField === "grade") {
+        comparison = a.grade.localeCompare(b.grade);
+      } else if (sortField === "createdAt") {
+        comparison = new Date(a.createdAt) - new Date(b.createdAt);
+      }
+      return sortOrder === "asc" ? comparison : -comparison;
+    });
 
   const handleFilterChange = (e) => {
     setFilterGrade(e.target.value);
@@ -108,21 +120,27 @@ const VoiePage = () => {
     }
   };
 
+    // Mapping of sector codes to names
+    const sectorNames = {
+      G: "Secteur Gauche",
+      C: "Secteur Central",
+      D: "Secteur Droit",
+    };
+
   return (
     <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white gap-5 pt-[5rem] sm:pb-0 pb-20">
 
       <h1 className="text-3xl font-bold text-center">List des voies</h1>
 
-      <p className="text-center text-gray-600 mt-2">
+      <p className="text-center text-gray-400 mt-1">
         Cliquez sur un secteur pour filtrer les voies disponibles.
       </p>
 
-       {/* Interactive Wall Map */}
-       {/* <WallMap onSectorClick={handleSectorClick} /> */}
-       <WallMap onSectorClick={handleSectorClick} selectedSector={selectedSector} />
+      {/* Interactive Wall Map */}
+      <WallMap onSectorClick={handleSectorClick} selectedSector={selectedSector} />
 
       {/* Filters and Sorting */}
-      <div className="flex flex-wrap justify-center gap-2 p-2 sm:justify-between sm:flex-nowrap">
+      <div ref={routesListRef} className="flex flex-wrap justify-center gap-2 p-2 sm:justify-between sm:flex-nowrap">
         <button
           onClick={() => handleSortChange("difficultyPoints")}
           className="bg-gray-700 text-white rounded px-2 py-1"
@@ -143,6 +161,22 @@ const VoiePage = () => {
         </button>
       </div>
 
+      {/* Selected Sector Message */}
+      <div  className="text-center text-white mt-2">
+        {selectedSector ? (
+          <p className="text-lg">
+            Secteur sélectionné : <span className="font-bold">{sectorNames[selectedSector]}</span>
+            <button
+              onClick={() => setSelectedSector(null)}
+              className="ml-2 text-red-500 underline hover:text-red-300"
+            >
+              Réinitialiser
+            </button>
+          </p>
+        ) : (
+          <p className="text-lg text-gray-400">Aucun secteur sélectionné</p>
+        )}
+      </div>
 
       {/* Routes Grid Section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:mx-0 mx-12 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
