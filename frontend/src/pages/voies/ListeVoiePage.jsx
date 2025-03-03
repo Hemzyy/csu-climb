@@ -23,9 +23,15 @@ const VoiePage = () => {
     },
   });
 
+  // State for selected tab (validated or unvalidated)
+  const [selectedTab, setSelectedTab] = useState("unvalidated");
+
+  // Calculate the number of validated routes and total routes
+  const validatedRoutesCount = authUser?.climbedRoutes?.length || 0;
+  const totalRoutesCount = routes?.length || 0;
+
   // for auto scrolling
   const routesListRef = useRef(null);
-
 
   // Validate Route Mutation
   const validateRouteMutation = useValidate();
@@ -73,7 +79,6 @@ const VoiePage = () => {
       }
     }, 200);
   };
-  
 
   // Filter and sort logic
   const filteredAndSortedRoutes = routes
@@ -92,6 +97,14 @@ const VoiePage = () => {
       }
       return sortOrder === "asc" ? comparison : -comparison;
     });
+
+  // Apply validated/unvalidated filtering
+  const finalFilteredRoutes = filteredAndSortedRoutes?.filter((route) => {
+    const isRouteValidated = authUser?.climbedRoutes.some(
+      (climbedRoute) => climbedRoute._id === route._id
+    );
+    return selectedTab === "validated" ? isRouteValidated : !isRouteValidated;
+  });
 
   const handleFilterChange = (e) => {
     setFilterGrade(e.target.value);
@@ -120,12 +133,12 @@ const VoiePage = () => {
     }
   };
 
-    // Mapping of sector codes to names
-    const sectorNames = {
-      G: "Secteur Gauche",
-      C: "Secteur Central",
-      D: "Secteur Droit",
-    };
+  // Mapping of sector codes to names
+  const sectorNames = {
+    G: "Secteur Gauche",
+    C: "Secteur Central",
+    D: "Secteur Droit",
+  };
 
   return (
     <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white gap-5 pt-[5rem] sm:pb-0 pb-20">
@@ -162,7 +175,7 @@ const VoiePage = () => {
       </div>
 
       {/* Selected Sector Message */}
-      <div  className="text-center text-white mt-2">
+      <div className="text-center text-white mt-2">
         {selectedSector ? (
           <p className="text-lg">
             Secteur sélectionné : <span className="font-bold">{sectorNames[selectedSector]}</span>
@@ -178,59 +191,91 @@ const VoiePage = () => {
         )}
       </div>
 
-      {/* Routes Grid Section */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:mx-0 mx-12 bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
-        {/* Admin Add Route Button */}
-        {isAdmin && <AddRouteModal />}
-
-        {/* Routes */}
-        {isLoading ? (
-          <p className="text-white text-center col-span-full">Loading...</p>
-        ) : filteredAndSortedRoutes && filteredAndSortedRoutes.length > 0 ? (
-          filteredAndSortedRoutes.map((route) => {
-            const isValidated = authUser?.climbedRoutes.some(
-              (climbedRoute) => climbedRoute._id === route._id
-            );
-            return (
-              <div
-                key={route._id}
-                className="bg-[#808080] rounded-lg shadow-md overflow-hidden relative hover:opacity-80 transition-opacity cursor-pointer"
-                onClick={() => setSelectedRoute(route)} // Open modal on click
-              >
-                <div className="w-full sm:h-44 h-72 bg-gray-400 flex items-center justify-center">
-                  <img
-                    src={route.img || "/route-img-placeholder.png"}
-                    alt={route.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="px-4 pb-2 text-gray-200 flex justify-between items-center">
-                  <div>
-                    <h2 className="text-lg font-bold">{route.name}</h2>
-                    <p className="text-sm text-gray-200">
-                      <strong>Niveau:</strong> {route.grade}
-                    </p>
-                    <p className="text-sm text-gray-200">
-                      <strong>Points:</strong> {route.difficultyPoints}
-                    </p>
-                    <p className="text-sm text-gray-200">
-                      <strong>Validations: </strong> {route.successfulClimbs}
-                    </p>
-                  </div>
-                  {isValidated && (
-                    <div className="text-green-400">
-                      <img src="/icons/check.png" alt="check" className="w-8 h-8" />
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
-          })
-        ) : (
-          <div className="text-white text-center col-span-full">
-            No routes available
+      {/* Routes Container */}
+      <div className="bg-[#626262] bg-opacity-20 rounded-xl py-6 px-8">
+        {/* Validated Routes Count and Tabs */}
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
+          <p className="text-lg text-white mb-4 sm:mb-0">
+            Vous avez validé <span className="font-bold">{validatedRoutesCount}</span> sur <span className="font-bold">{totalRoutesCount}</span> voies.
+          </p>
+          <div className="flex gap-4">
+            <button
+              onClick={() => setSelectedTab("unvalidated")}
+              className={`px-4 py-2 rounded-lg ${
+                selectedTab === "unvalidated"
+                  ? "bg-primary text-black font-bold"
+                  : "bg-gray-700 text-white"
+              }`}
+            >
+              Voies non validées
+            </button>
+            <button
+              onClick={() => setSelectedTab("validated")}
+              className={`px-4 py-2 rounded-lg ${
+                selectedTab === "validated"
+                  ? "bg-primary text-black font-bold"
+                  : "bg-gray-700 text-white"
+              }`}
+            >
+              Voies validées
+            </button>
           </div>
-        )}
+        </div>
+
+        {/* Routes Grid Section */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {/* Admin Add Route Button */}
+          {isAdmin && <AddRouteModal />}
+
+          {/* Routes */}
+          {isLoading ? (
+            <p className="text-white text-center col-span-full">Loading...</p>
+          ) : finalFilteredRoutes && finalFilteredRoutes.length > 0 ? (
+            finalFilteredRoutes.map((route) => {
+              const isValidated = authUser?.climbedRoutes.some(
+                (climbedRoute) => climbedRoute._id === route._id
+              );
+              return (
+                <div
+                  key={route._id}
+                  className="bg-[#808080] rounded-lg shadow-md overflow-hidden relative hover:opacity-80 transition-opacity cursor-pointer"
+                  onClick={() => setSelectedRoute(route)} // Open modal on click
+                >
+                  <div className="w-full sm:h-44 h-72 bg-gray-400 flex items-center justify-center">
+                    <img
+                      src={route.img || "/route-img-placeholder.png"}
+                      alt={route.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="px-4 pb-2 text-gray-200 flex justify-between items-center">
+                    <div>
+                      <h2 className="text-lg font-bold">{route.name}</h2>
+                      <p className="text-sm text-gray-200">
+                        <strong>Niveau:</strong> {route.grade}
+                      </p>
+                      <p className="text-sm text-gray-200">
+                        <strong>Points:</strong> {route.difficultyPoints}
+                      </p>
+                      <p className="text-sm text-gray-200">
+                        <strong>Validations: </strong> {route.successfulClimbs}
+                      </p>
+                    </div>
+                    {isValidated && (
+                      <div className="text-green-400">
+                        <img src="/icons/check.png" alt="check" className="w-8 h-8" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <div className="text-white text-center col-span-full">
+              Aucune voie disponible.
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Route Details Modal */}
