@@ -137,13 +137,13 @@ const VoiePage = () => {
   const sectorNames = {
     G: "Secteur Gauche",
     C: "Secteur Central",
-    D: "Secteur Droit",
+    D: "Secteur Droite",
   };
 
   return (
     <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white gap-5 pt-[5rem] sm:pb-0 pb-20">
 
-      <h1 className="text-3xl font-bold text-center">List des voies</h1>
+      <h1 className="text-3xl font-bold text-center">Liste des voies</h1>
 
       <p className="text-center text-gray-400 mt-1">
         Cliquez sur un secteur pour filtrer les voies disponibles.
