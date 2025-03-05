@@ -16,9 +16,9 @@ L'application est conçue pour être intuitive, responsive, et facile à utilise
 
 ## 📸 Captures d'Écran
 <div style="display: flex; justify-content: space-around;">
-  <img src="/frontend/public/screenshots/ss1.png" alt="HomePage" width="300" />
-  <img src="/frontend/public/screenshots/ss2.png" alt="ListeVoies" width="300" />
-  <img src="/frontend/public/screenshots/ss3.png" alt="Voie" width="300" />
+  <img src="/frontend/public/screenshots/ss1.png" alt="HomePage" width="250" />
+  <img src="/frontend/public/screenshots/ss2.png" alt="ListeVoies" width="250" />
+  <img src="/frontend/public/screenshots/ss3.png" alt="Voie" width="250" />
 </div>
 
 ---
