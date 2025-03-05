@@ -47,7 +47,7 @@ const WallMap = ({ onSectorClick, selectedSector }) => {
           <rect x="414" y="69" width="10" height="27" />
           <rect x="407" y="45" width="17" height="24" />
           <rect x="318" width="85" height="7" />
-          <text x="350" y="50" fill="white" fontSize="12" textAnchor="middle" className="font-bold">Secteur Droit</text>
+          <text x="350" y="50" fill="white" fontSize="12" textAnchor="middle" className="font-bold">Secteur Droite</text>
         </g>
         <line x1="154.5" y1="14" x2="154.5" stroke="#626262"/>
         <line x1="281.5" y1="14" x2="281.5" stroke="#626262"/>
