@@ -52,7 +52,7 @@ const HomePage = () => {
 
   return (
     // main div that will contain the three sections
-    <div className="flex flex-col justify-center w-full sm:w-[75%] max-w-6xl mx-auto min-h-screen text-white gap-5 sm:pt-[6rem] pt-[5rem] sm:pb-0 pb-10">
+    <div className="flex flex-col justify-center w-full max-w-6xl mx-auto min-h-screen text-white gap-5 sm:pt-[6rem] pt-[5rem] sm:pb-0 pb-10 overflow-x-hidden">
 
       <h1 className="text-3xl font-bold text-center">Accueil</h1>
 
@@ -108,7 +108,7 @@ const HomePage = () => {
         <div className="flex flex-col items-center justify-center gap-6 sm:justify-evenly p-4 space-y-2 sm:space-y-0 bg-[#626262] bg-opacity-20 rounded-xl motion-preset-expand motion-delay-100">
 
           <h1 className="text-4xl"> Classement </h1>
-          <div className="flex justify-evenly sm:gap-8 px-4 sm:px-8"> {/* TOP 3 DIV */}
+          <div className="flex justify-evenly sm:gap-8 px-4 sm:px-8 w-full"> {/* TOP 3 DIV */}
             {/* first place */}
             <div className="flex flex-col items-center order-1 sm:order-2 p-4 mt-4 motion-preset-pop motion-delay-150">
               <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#FFD700] flex items-center justify-center shadow-lg">
@@ -171,7 +171,7 @@ const HomePage = () => {
             
           </div>
 
-          <div className="flex flex-wrap justify-evenly sm:gap-6"> {/* NEXT 4 DIV */}
+          <div className="flex flex-wrap justify-evenly sm:gap-6 w-full"> {/* NEXT 4 DIV */}
             {validRestOfList.length > 0 ? (
               validRestOfList.slice(0, 4).map((user, index) => (
                 <div key={index} className="flex flex-col items-center p-4 mt-4">
@@ -210,7 +210,7 @@ const HomePage = () => {
       {/* Newly opened routes  (2 latest roures) */}
       <div className="flex flex-col items-center gap-8 justify-center p-4 space-y-2 sm:space-x-4 mb-8 bg-[#626262] bg-opacity-20 rounded-xl motion-preset-expand motion-delay-300">
         <h1 className="text-4xl"> Récemment ouvertes </h1>
-        <div className="flex flex-wrap justify-center gap-4">
+        <div className="flex flex-wrap justify-center gap-4 w-full">
           {routes?.length > 0 ? (
             routes.slice(0, 2).map((route, index) => (        
                 <div key={index} className="relative sm:w-60 w-56 h-64 rounded-2xl overflow-hidden shadow-lg m-2">
