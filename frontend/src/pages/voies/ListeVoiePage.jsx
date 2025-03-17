@@ -267,11 +267,11 @@ const VoiePage = () => {
           </div>
 
           {/* Validation Checkmark */}
-          {isValidated && (
+          {/* {isValidated && (
             <div className="ml-4 text-green-400">
               <img src="/icons/check.png" alt="check" className="w-6 h-6" />
             </div>
-          )}
+          )} */}
         </div>
       );
     })
