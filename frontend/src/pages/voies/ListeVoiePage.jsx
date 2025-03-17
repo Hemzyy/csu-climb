@@ -220,67 +220,67 @@ const VoiePage = () => {
           </div>
         </div>
 
-        {/* Routes List Section */}
-        <div className="space-y-4">
-          {/* Admin Add Route Button */}
-          {isAdmin && <AddRouteModal />}
+       {/* Routes List Section */}
+<div className="space-y-2">
+  {/* Admin Add Route Button */}
+  {isAdmin && <AddRouteModal />}
 
-          {/* Routes */}
-          {isLoading ? (
-            <p className="text-white text-center">Loading...</p>
-          ) : finalFilteredRoutes && finalFilteredRoutes.length > 0 ? (
-            finalFilteredRoutes.map((route) => {
-              const isValidated = authUser?.climbedRoutes.some(
-                (climbedRoute) => climbedRoute._id === route._id
-              );
-              return (
-                <div
-                  key={route._id}
-                  className="flex items-center justify-between bg-[#808080] rounded-lg p-2 hover:opacity-80 transition-opacity cursor-pointer"
-                  onClick={() => setSelectedRoute(route)} // Open modal on click
-                >
-                  {/* Grade */}
-                  <div className="text-lg font-bold w-16">
-                    {route.grade}
-                  </div>
+  {/* Routes */}
+  {isLoading ? (
+    <p className="text-white text-center">Loading...</p>
+  ) : finalFilteredRoutes && finalFilteredRoutes.length > 0 ? (
+    finalFilteredRoutes.map((route) => {
+      const isValidated = authUser?.climbedRoutes.some(
+        (climbedRoute) => climbedRoute._id === route._id
+      );
+      return (
+        <div
+          key={route._id}
+          className="flex items-center justify-between bg-[#808080] rounded-lg p-2 hover:opacity-80 transition-opacity cursor-pointer"
+          onClick={() => setSelectedRoute(route)} // Open modal on click
+        >
+          {/* Grade */}
+          <div className="text-lg font-bold w-16 text-center">
+            {route.grade}
+          </div>
 
-                  {/* Thumbnail */}
-                  <div className="w-16 h-16 flex-shrink-0 mr-4">
-                    <img
-                      src={route.thumbnail || "/thumbnail-placeholder.png"}
-                      alt={route.name}
-                      className="w-full h-full object-cover rounded-full"
-                    />
-                  </div>
+          {/* Thumbnail */}
+          <div className="w-16 h-16 flex-shrink-0 mx-2">
+            <img
+              src={route.thumbnail || "/thumbnail-placeholder.png"}
+              alt={route.name}
+              className="w-full h-full object-cover rounded-full"
+            />
+          </div>
 
-                  {/* Route Name */}
-                  <div className="flex-grow">
-                    <h2 className="text-lg font-bold">{route.name}</h2>
-                  </div>
+          {/* Route Name */}
+          <div className="flex-grow mx-2">
+            <h2 className="text-lg font-bold">{route.name}</h2>
+          </div>
 
-                  {/* Difficulty Points and Validations */}
-                  <div className="text-right">
-                    <p className="text-lg font-bold">{route.difficultyPoints}</p>
-                    <p className="text-sm text-gray-200">
-                      {route.successfulClimbs} validations
-                    </p>
-                  </div>
+          {/* Difficulty Points and Validations */}
+          <div className="text-right w-24">
+            <p className="text-lg font-bold">{route.difficultyPoints}</p>
+            <p className="text-sm text-gray-200">
+              {route.successfulClimbs} validations
+            </p>
+          </div>
 
-                  {/* Validation Checkmark */}
-                  {isValidated && (
-                    <div className="ml-4 text-green-400">
-                      <img src="/icons/check.png" alt="check" className="w-6 h-6" />
-                    </div>
-                  )}
-                </div>
-              );
-            })
-          ) : (
-            <div className="text-white text-center">
-              Aucune voie disponible.
+          {/* Validation Checkmark */}
+          {isValidated && (
+            <div className="ml-4 text-green-400">
+              <img src="/icons/check.png" alt="check" className="w-6 h-6" />
             </div>
           )}
         </div>
+      );
+    })
+  ) : (
+    <div className="text-white text-center">
+      Aucune voie disponible.
+    </div>
+  )}
+</div>
 
       </div>
 
