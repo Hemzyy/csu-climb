@@ -26,8 +26,12 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 
-app.use(express.json( {limit:"5mb"} ));
-app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+// app.use(express.json( {limit:"10mb"} ));
+// app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+// Increase payload size limit to 10MB
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" })); // for parsing application/x-www-form-urlencoded
 
 app.use(cookieParser()); //middleware to parse cookies
 

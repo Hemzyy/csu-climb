@@ -71,7 +71,7 @@ const VoiePage = () => {
 
   const handleSectorClick = (sector) => {
     setSelectedSector((prevSector) => (prevSector === sector ? null : sector));
-  
+
     // Scroll to the routes list after a short delay
     setTimeout(() => {
       if (routesListRef.current) {
@@ -201,35 +201,33 @@ const VoiePage = () => {
           <div className="flex gap-4">
             <button
               onClick={() => setSelectedTab("unvalidated")}
-              className={`px-4 py-2 rounded-lg ${
-                selectedTab === "unvalidated"
+              className={`px-4 py-2 rounded-lg ${selectedTab === "unvalidated"
                   ? "bg-primary text-black font-bold"
                   : "bg-gray-700 text-white"
-              }`}
+                }`}
             >
               Voies non validées
             </button>
             <button
               onClick={() => setSelectedTab("validated")}
-              className={`px-4 py-2 rounded-lg ${
-                selectedTab === "validated"
+              className={`px-4 py-2 rounded-lg ${selectedTab === "validated"
                   ? "bg-primary text-black font-bold"
                   : "bg-gray-700 text-white"
-              }`}
+                }`}
             >
               Voies validées
             </button>
           </div>
         </div>
 
-        {/* Routes Grid Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {/* Routes List Section */}
+        <div className="space-y-4">
           {/* Admin Add Route Button */}
           {isAdmin && <AddRouteModal />}
 
           {/* Routes */}
           {isLoading ? (
-            <p className="text-white text-center col-span-full">Loading...</p>
+            <p className="text-white text-center">Loading...</p>
           ) : finalFilteredRoutes && finalFilteredRoutes.length > 0 ? (
             finalFilteredRoutes.map((route) => {
               const isValidated = authUser?.climbedRoutes.some(
@@ -238,44 +236,52 @@ const VoiePage = () => {
               return (
                 <div
                   key={route._id}
-                  className="bg-[#808080] rounded-lg shadow-md overflow-hidden relative hover:opacity-80 transition-opacity cursor-pointer"
+                  className="flex items-center justify-between bg-[#808080] rounded-lg p-2 hover:opacity-80 transition-opacity cursor-pointer"
                   onClick={() => setSelectedRoute(route)} // Open modal on click
                 >
-                  <div className="w-full sm:h-44 h-72 bg-gray-400 flex items-center justify-center">
+                  {/* Grade */}
+                  <div className="text-lg font-bold w-16">
+                    {route.grade}
+                  </div>
+
+                  {/* Thumbnail */}
+                  <div className="w-16 h-16 flex-shrink-0 mr-4">
                     <img
-                      src={route.img || "/route-img-placeholder.png"}
+                      src={route.thumbnail || "/thumbnail-placeholder.png"}
                       alt={route.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover rounded-full"
                     />
                   </div>
-                  <div className="px-4 pb-2 text-gray-200 flex justify-between items-center">
-                    <div>
-                      <h2 className="text-lg font-bold">{route.name}</h2>
-                      <p className="text-sm text-gray-200">
-                        <strong>Niveau:</strong> {route.grade}
-                      </p>
-                      <p className="text-sm text-gray-200">
-                        <strong>Points:</strong> {route.difficultyPoints}
-                      </p>
-                      <p className="text-sm text-gray-200">
-                        <strong>Validations: </strong> {route.successfulClimbs}
-                      </p>
-                    </div>
-                    {isValidated && (
-                      <div className="text-green-400">
-                        <img src="/icons/check.png" alt="check" className="w-8 h-8" />
-                      </div>
-                    )}
+
+                  {/* Route Name */}
+                  <div className="flex-grow">
+                    <h2 className="text-lg font-bold">{route.name}</h2>
                   </div>
+
+                  {/* Difficulty Points and Validations */}
+                  <div className="text-right">
+                    <p className="text-lg font-bold">{route.difficultyPoints}</p>
+                    <p className="text-sm text-gray-200">
+                      {route.successfulClimbs} validations
+                    </p>
+                  </div>
+
+                  {/* Validation Checkmark */}
+                  {isValidated && (
+                    <div className="ml-4 text-green-400">
+                      <img src="/icons/check.png" alt="check" className="w-6 h-6" />
+                    </div>
+                  )}
                 </div>
               );
             })
           ) : (
-            <div className="text-white text-center col-span-full">
+            <div className="text-white text-center">
               Aucune voie disponible.
             </div>
           )}
         </div>
+
       </div>
 
       {/* Route Details Modal */}

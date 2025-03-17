@@ -20,6 +20,11 @@ const routeSchema = new mongoose.Schema({
       required: false, // The URL of the image of the route.
       default: "",
     },
+    thumbnail:{
+      type: String,
+      required: false, // The URL of the thumbnail of the route.
+      default: "",
+    },
     setter: {
       type: mongoose.Schema.Types.Mixed, // Can hold a user ID (ObjectId) or a string
       required: false,

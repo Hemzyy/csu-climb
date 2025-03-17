@@ -117,51 +117,60 @@ export const addRemoveAsProject = async (req, res) => {
 };
 
 export const addRoute = async (req, res) => {
-	try {
-		const { name, grade, difficultyPoints, sector, img } = req.body;
-
-		const currentUser = await User.findById(req.user._id);
-		if (!currentUser || !currentUser.isAdmin) {
-			return res.status(403).json({ error: "Only an Admin can add routes." });
-		}
-
-		if (!grade || !difficultyPoints) {
-			return res.status(400).json({ error: "Grade and difficulty points are required" });
-		}
-
-		let imageUrl = null;
-		if (img) {
-			const uploadedResponse = await cloudinary.uploader.upload(img, {
-				folder: "routes",
-			});
-			imageUrl = uploadedResponse.secure_url;
-		}
-
-		const newRoute = new Route({
-			name,
-			grade,
-			difficultyPoints,
-			sector,
-			img: imageUrl,
-		});
-
-		await newRoute.save();
-
-		const newNotification = new Notification({
-			routeId: newRoute._id,
-			routeName: newRoute.name,
-			grade: newRoute.grade,
-			type: "newRoute",
-		});
-
-		await newNotification.save();
-
-		return res.status(201).json({ message: "Route added successfully", route: newRoute });
-	} catch (error) {
-		console.log("Error in addRoute: ", error.message);
-		res.status(500).json({ error: error.message });
-	}
-};
+    try {
+      const { name, grade, difficultyPoints, sector, img, thumbnail } = req.body;
+  
+      const currentUser = await User.findById(req.user._id);
+      if (!currentUser || !currentUser.isAdmin) {
+        return res.status(403).json({ error: "Only an Admin can add routes." });
+      }
+  
+      if (!grade || !difficultyPoints) {
+        return res.status(400).json({ error: "Grade and difficulty points are required" });
+      }
+  
+      let imageUrl = null;
+      if (img) {
+        const uploadedResponse = await cloudinary.uploader.upload(img, {
+          folder: "routes",
+        });
+        imageUrl = uploadedResponse.secure_url;
+      }
+  
+      let thumbnailUrl = null;
+      if (thumbnail) {
+        const uploadedThumbnailResponse = await cloudinary.uploader.upload(thumbnail, {
+          folder: "routes/thumbnails", // Optional: Store thumbnails in a separate folder
+        });
+        thumbnailUrl = uploadedThumbnailResponse.secure_url;
+      }
+  
+      const newRoute = new Route({
+        name,
+        grade,
+        difficultyPoints,
+        sector,
+        img: imageUrl,
+        thumbnail: thumbnailUrl, // Add the thumbnail URL
+      });
+  
+      await newRoute.save();
+  
+      const newNotification = new Notification({
+        routeId: newRoute._id,
+        routeName: newRoute.name,
+        grade: newRoute.grade,
+        type: "newRoute",
+      });
+  
+      await newNotification.save();
+  
+      return res.status(201).json({ message: "Route added successfully", route: newRoute });
+    } catch (error) {
+      console.log("Error in addRoute: ", error.message);
+      res.status(500).json({ error: error.message });
+    }
+  };
 
 export const getRoutes = async (req, res) => {
     try {
@@ -265,6 +274,10 @@ export const deleteRoute = async (req, res) => {
 
         if(route.img) {
             await cloudinary.uploader.destroy(route.img.split("/").pop().split(".")[0]);
+        }
+
+        if(route.thumbnail) {
+            await cloudinary.uploader.destroy(route.thumbnail.split("/").pop().split(".")[0]);
         }
 
         // remove the route from the database
