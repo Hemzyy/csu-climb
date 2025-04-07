@@ -105,8 +105,8 @@ const RouteCardModal = ({
               className={`absolute bottom-24 right-6 h-12 w-12 rounded-full shadow-md flex items-center justify-center transition-colors ${authUser?.projects.some(
                 (project) => project._id === selectedRoute._id
               )
-                  ? "bg-green-500 text-black"
-                  : "bg-[#FE5F55] text-black"
+                ? "bg-green-500 text-black"
+                : "bg-[#FE5F55] text-black"
                 }`}
               onClick={() => handleAddAsProject(selectedRoute._id)}
               disabled={addAsProjectMutation.isLoading}
@@ -119,7 +119,7 @@ const RouteCardModal = ({
               />
             </button>
             {/* Bottom-right Validate Button */}
-            <button
+            {/* <button
               className={`absolute bottom-4 right-4 h-16 w-16 rounded-full shadow-md flex items-center justify-center transition-colors ${animateValidateButton ? "motion-preset-confetti motion-duration-2000" : ""
                 } ${authUser?.climbedRoutes.some(
                   (climbedRoute) => climbedRoute._id === selectedRoute._id
@@ -135,6 +135,35 @@ const RouteCardModal = ({
                 src="/icons/coche.png"
                 alt="Checkmark Icon"
                 className="w-7 h-7"
+              />
+            </button> */}
+            <button
+              className={`absolute bottom-4 right-4 h-16 w-16 rounded-full shadow-md flex items-center justify-center transition-colors ${authUser?.climbedRoutes.some(
+                (climbedRoute) => climbedRoute._id === selectedRoute._id
+              )
+                  ? "bg-green-500 text-black"
+                  : !selectedRoute.active
+                    ? "bg-gray-500 text-gray-300 cursor-not-allowed"
+                    : animateValidateButton
+                      ? "motion-preset-confetti motion-duration-2000 bg-[#FE5F55]"
+                      : "bg-[#FE5F55] text-black"
+                }`}
+              onClick={() => {
+                if (!selectedRoute.active) return;
+                handleValidateClick(selectedRoute._id);
+              }}
+              disabled={validateRouteMutation.isLoading || !selectedRoute.active}
+              title={
+                !selectedRoute.active
+                  ? "This route is archived and cannot be validated"
+                  : "Validate this route"
+              }
+            >
+              <img
+                src="/icons/coche.png"
+                alt="Checkmark Icon"
+                className={`w-7 h-7 ${!selectedRoute.active ? "opacity-50" : ""
+                  }`}
               />
             </button>
           </div>

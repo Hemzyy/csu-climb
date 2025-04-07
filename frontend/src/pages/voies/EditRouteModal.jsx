@@ -38,6 +38,43 @@ const AdminToolsDropdown = ({ route }) => {
         deleteRoute();
     }
 
+    const {mutate:archiveRoute, isPending:isArchiving} = useMutation({
+        mutationFn: async () => {
+            try {
+                const res = await fetch(`/api/routes/${route._id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ active: false }),
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data.message || 'Something went wrong!');
+                }
+                return data;
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        },
+        onSuccess: () => {
+            toast.success("Route archived successfully");
+            // Invalidate the query to refetch the data
+            queryClient.invalidateQueries({ queryKey: ['routes'] });
+            queryClient.invalidateQueries({ queryKey: ['users'] });
+        },
+    })
+
+    const handleArchiveRoute = () => {
+        if (isArchiving) return;
+        archiveRoute();
+    }
+    // Update the handleArchiveClick function
+    const handleArchiveClick = () => {
+        setIsDropdownOpen(false);
+        handleArchiveRoute();
+    };
+
     const toggleDropdown = () => {
         setIsDropdownOpen((prev) => !prev);
     };
@@ -47,11 +84,11 @@ const AdminToolsDropdown = ({ route }) => {
         setIsEditModalOpen(true); // Open edit modal
     };
 
-    const handleArchiveClick = () => {
-        setIsDropdownOpen(false); // Close dropdown
-        // Logic for archiving the route
-        console.log("Archiving route:", route.name);
-    };
+    // const handleArchiveClick = () => {
+    //     setIsDropdownOpen(false); // Close dropdown
+    //     // Logic for archiving the route
+    //     console.log("Archiving route:", route.name);
+    // };
 
     const handleDeleteClick = () => {
         setIsDropdownOpen(false); // Close dropdown

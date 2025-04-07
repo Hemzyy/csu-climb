@@ -14,6 +14,10 @@ export const validateUnvalidateRoute = async (req, res) => {
             return res.status(404).json({ error: "User or route not found" });
         }
 
+        if (!route.active) {
+            return res.status(400).json({ error: "Route is not active" });
+        }
+
         // Check if the route is already validated by the user
         const isRouteValidated = currentUser.climbedRoutes.includes(routeId);
 
@@ -174,7 +178,7 @@ export const addRoute = async (req, res) => {
 
 export const getRoutes = async (req, res) => {
     try {
-        const routes = await Route.find().sort({createdAt: -1}); // Fetch all routes
+        const routes = await Route.find({ active: true }).sort({ createdAt: -1 });
         res.status(200).json(routes);
     } catch (error) {
         console.error("Error fetching routes:", error.message);
@@ -257,6 +261,7 @@ export const deleteRoute = async (req, res) => {
             return res.status(404).json({ error: "Route not found" });
         }
 
+        // Remove points from users who validated this route
         const users = await User.find();
 
         for (let user of users) {
@@ -287,6 +292,47 @@ export const deleteRoute = async (req, res) => {
 
     } catch (error) {
         console.log("Error in deleteRoute: ", error.message);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+// function archiveRoute that will go through every user and check if the route id passed in the request is in the user's climbedRoutes array. If it is, it will only decrement the user's leaderboardScore by the route's difficultyPoints. then it will save the user. After that, it will mark the route as inactive in the database
+export const archiveRoute = async (req, res) => {
+    try {
+        const currentUser = await User.findById(req.user._id); // Find the logged-in user
+
+        if (!currentUser || !currentUser.isAdmin) {
+            return res.status(403).json({ error: "Only an Admin can archive routes." });
+        }
+
+        const { routeId } = req.params;
+        const route = await Route.findById(routeId);
+
+        if (!route) {
+            return res.status(404).json({ error: "Route not found" });
+        }
+
+        // Remove points from users who validated this route
+        const users = await User.find();
+
+        for (let user of users) {
+            if (user.climbedRoutes.includes(routeId)) {
+                user.leaderboardScore -= route.difficultyPoints;
+                if (user.leaderboardScore < 0) {
+                    user.leaderboardScore = 0;
+                }
+                await user.save();
+            }
+        }
+
+        // mark the route as inactive in the database
+        route.active = false;
+        await route.save();
+
+        return res.status(200).json({ message: "Route archived successfully" });
+
+    } catch (error) {
+        console.log("Error in archiveRoute: ", error.message);
         res.status(500).json({ error: error.message });
     }
 }
